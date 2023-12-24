@@ -1,14 +1,14 @@
 import React from 'react'
-import './home.scss'
+import './register.scss'
 import NavBar from '../../components/navBar/NavBar'
 
-const Home = () => {
+const Register = () => {
   return (
     <div>
-        <NavBar />
-      <h1>Home</h1>
+         <NavBar />
+      <h1>Register</h1>
     </div>
   )
 }
 
-export default Home
+export default Register
