@@ -6,7 +6,7 @@ const Register = () => {
   return (
     <div>
          <NavBar />
-      <h1>Register</h1>
+      <button className='registerBtn'>Register 🎊</button>
     </div>
   )
 }

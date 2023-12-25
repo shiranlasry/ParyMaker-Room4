@@ -1,0 +1,28 @@
+body {
+    color: white;
+    background-color: #0000801e;
+    font-family: "Quicksand", sans-serif;
+    background-image: url(/src/imgs/confetti.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+  background-size: cover;
+  
+   .registerBtn {
+      background-color: rgb(37, 45, 106);
+      border-radius: 12px;
+      color: white;
+      font-size: 23px;
+  
+      &:hover {
+          box-shadow:  0 12px 16px 0 rgba(0, 0, 0, 0.271),0 17px 50px 0 rgba(0,0,0,0.19);
+           font-weight: bold;
+           font-size: 24px;
+           
+      }
+   }
+  
+  }
+  
+  .error {
+    color: navy;
+  }
