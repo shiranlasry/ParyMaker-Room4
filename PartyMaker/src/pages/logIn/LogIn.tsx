@@ -6,7 +6,7 @@ const LogIn = () => {
   return (
     <div>
        <NavBar />
-      <h1>LogIn</h1>
+      <button className='loginBtn'>LogIn 🥳</button>
     </div>
   )
 }

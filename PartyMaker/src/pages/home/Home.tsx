@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
         <NavBar />
-      <h1>Home</h1>
+      <button className='homeBtn'>Create Party 🎉</button>
     </div>
   )
 }

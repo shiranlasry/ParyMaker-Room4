@@ -1,16 +1,36 @@
 .navbar{
-    background-color: #1a1a1a;
-    border-bottom: 1px solid #1a1a1a;
+    background-color: #000080;
+    border-bottom: 5px solid #fabce2;
     padding: 0;
     margin: 0;
     height: 60px;
     width: 100%;
     display: flex;
+    font-family: "Quicksand", sans-serif;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     z-index: 100;
+    transition: transform 0.3s ease-out;
+
+button {
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+background-color: #000080;
+
+
+&:hover {
+    background-color: #fabce2;
+    box-shadow:  0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+     color: #000080;
+     font-size: 19px;
+   
+}
+
+}
+
     &__logo{
         color: #fff;
         font-size: 1.5rem;
@@ -39,14 +59,24 @@
         }
     }
    
-   
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+        align-items: center;
 
-    @media screen and (max-width: 768px){
-        .menu-icon{
-            display: block;
+        .navbar__logo {
+            display: none; // Hide the logo
         }
-        .nav-links{
-            display: none;
+
+        .navbar__links {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+            margin: 0;
+
+            button {
+                margin: 0 0.5rem; // Adjust spacing between buttons as needed
+            }
         }
     }
 }
