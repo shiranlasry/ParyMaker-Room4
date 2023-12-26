@@ -1,0 +1,42 @@
+body {
+  color: #000080;
+
+  .partyWrap {
+    margin: auto;
+    width: 500px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.423);
+    border-radius: 10px;
+
+  }
+
+  form {
+   
+
+    margin: auto;
+    align-items: center;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+
+    input {
+        
+      width: 170px;
+      box-sizing: content-box;
+    }
+
+    label {
+        
+      text-shadow: 1px 2px 1px #fabce2;
+      font-size: 20px;
+    }
+
+    select {
+      width: 177px;
+
+      height: 30px;
+      border-radius: 6px;
+      border: 2px solid black;
+    }
+  }
+}
