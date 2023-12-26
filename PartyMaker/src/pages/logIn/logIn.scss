@@ -1,41 +1,64 @@
 body {
+  color: white;
+  background-color: #0000801e;
+  font-family: "Quicksand", sans-serif;
+  background-image: url(/src/imgs/confetti.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  .loginTitle {
+    color: #000080;
+  }
+
+  label {
+    margin: 0.5rem;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000080;
+    text-shadow: 1px 1px 1px #000080;
+  }
+
+  input {
+    margin: 0.5rem;
+    height: 25px;
+    border-radius: 7px;
+  }
+
+  .submitBtn {
+    height: 40px;
     color: white;
-    background-color: #0000801e;
-    font-family: "Quicksand", sans-serif;
-    background-image: url(/src/imgs/confetti.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  
-   .loginBtn {
-      background-color: rgb(37, 45, 106);
-      border-radius: 12px;
-      color: white;
-      font-size: 23px;
-  
-      &:hover {
-          box-shadow:  0 12px 16px 0 rgba(0, 0, 0, 0.271),0 17px 50px 0 rgba(0,0,0,0.19);
-           font-weight: bold;
-           font-size: 24px;
-           
-      }
-   }
-   .test {
+    font-weight: bold;
+    background-color: #000080;
+  }
+
+  .loginBtn {
+    background-color: rgb(37, 45, 106);
+    border-radius: 12px;
+    color: white;
+    font-size: 23px;
+
+    &:hover {
+      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      font-weight: bold;
+      font-size: 24px;
+    }
+  }
+  .test {
     background-color: black;
     padding: 10px;
     margin-top: 20px;
   }
-  
+
   code {
     //background-color: rgb(244, 231, 231);
     padding: 2px 4px;
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
   }
-  }
-  
-  .error {
-    color: navy;
-  }
+}
 
- 
+.error {
+  color: navy;
+}
