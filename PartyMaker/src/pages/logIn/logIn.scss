@@ -5,7 +5,7 @@ body {
     background-image: url(/src/imgs/confetti.png);
     background-repeat: no-repeat;
     background-position: center center;
-  background-size: cover;
+    background-size: cover;
   
    .loginBtn {
       background-color: rgb(37, 45, 106);
@@ -20,9 +20,22 @@ body {
            
       }
    }
+   .test {
+    background-color: black;
+    padding: 10px;
+    margin-top: 20px;
+  }
   
+  code {
+    //background-color: rgb(244, 231, 231);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+  }
   }
   
   .error {
     color: navy;
   }
+
+ 
