@@ -1,12 +1,16 @@
 import React from 'react'
 import './home.scss'
 import NavBar from '../../components/navBar/NavBar'
+import { useNavigate } from 'react-router';
 
 const Home = () => {
+    const navigate = useNavigate();
   return (
     <div>
         <NavBar />
-      <button className='homeBtn'>Create Party 🎉</button>
+      <button
+      onClick={() => navigate( '/addNewParty')}
+       className='homeBtn'>Create Party 🎉</button>
     </div>
   )
 }

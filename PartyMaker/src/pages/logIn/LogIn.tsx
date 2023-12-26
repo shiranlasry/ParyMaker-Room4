@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usersData from "../../utils/data";
+import {usersData}  from "../../utils/data";
 import "./logIn.scss";
+import NavBar from "../../components/navBar/NavBar";
+import { User } from "../../types-env";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +25,7 @@ const LogIn = () => {
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const user = usersData.find(
+    const user:User | undefined = usersData.find(
       (user) => user.email === email && user.password === password
     );
 
@@ -41,6 +43,7 @@ const LogIn = () => {
 
   return (
     <div className="container-main">
+       <NavBar />
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <label>
