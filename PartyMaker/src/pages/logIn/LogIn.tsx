@@ -44,7 +44,7 @@ const LogIn = () => {
   return (
     <div className="container-main">
        <NavBar />
-      <h1>Login</h1>
+      <h1 className="loginTitle">Login</h1>
       <form onSubmit={handleLogin}>
         <label>
           Email:
@@ -64,7 +64,7 @@ const LogIn = () => {
             required
           />
         </label>
-        <button type="submit">Login</button>
+        <button type="submit" className="submitBtn">Login</button>
 
         <div className='test'>
         <p>For testing</p>
