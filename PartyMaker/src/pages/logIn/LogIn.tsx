@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usersData from "../../utils/data";
+import {usersData}  from "../../utils/data";
 import "./logIn.scss";
 import NavBar from "../../components/navBar/NavBar";
 import { User } from "../../types-env";

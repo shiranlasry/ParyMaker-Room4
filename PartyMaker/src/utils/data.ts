@@ -1,4 +1,4 @@
-import { User } from "../types-env";
+import { Party, PartyType, User } from "../types-env";
 
 const usersData:User[] = [
   {
@@ -74,4 +74,98 @@ const usersData:User[] = [
  }
 ];
 
-export default usersData;
+const partyTypesData: PartyType[] = [
+  {
+    partyTypeName: "Birthday",
+    createdAt: new Date()
+  },
+  {
+    partyTypeName: "Wedding",
+    createdAt: new Date()
+  },
+  {
+    partyTypeName: "Bar Mitzva",
+    createdAt: new Date()
+  },
+  {
+    partyTypeName: "Brit",
+    createdAt: new Date()
+  },
+  {
+    partyTypeName: "Graduation",
+    createdAt: new Date()
+  }
+];
+
+const partiesData:Party[] = [
+  {
+    partyName: "John's Birthday",
+    partyDate: "2021-01-01",
+    partyTime: "12:00",
+    partyLocation: "Tel Aviv",
+    partyType: partyTypesData[0],
+    partyDescription: "John's Birthday",
+    partyPrice: 100,
+    partyImage: "https://picsum.photos/200",
+    partyCreator: usersData[0],
+    partyParticipants: [usersData[0], usersData[1]],
+    createdAt: new Date()
+  },
+  {
+    partyName: "Shiran's Birthday",
+    partyDate: "2021-01-01",
+    partyTime: "12:00",
+    partyLocation: "Tel Aviv",
+    partyType: partyTypesData[0],
+    partyDescription: "Shiran's Birthday",
+    partyPrice: 100,
+    partyImage: "https://picsum.photos/200",
+    partyCreator: usersData[1],
+    partyParticipants: [usersData[0], usersData[1]],
+    createdAt: new Date()
+  },
+  {
+    partyName: "Doriel's Birthday",
+    partyDate: "2021-01-01",
+    partyTime: "12:00",
+    partyLocation: "Tel Aviv",
+    partyType: partyTypesData[0],
+    partyDescription: "Doriel's Birthday",
+    partyPrice: 100,
+    partyImage: "https://picsum.photos/200",
+    partyCreator: usersData[2],
+    partyParticipants: [usersData[0], usersData[1]],
+    createdAt: new Date()
+  },
+  {
+    partyName: "Lee's Birthday",
+    partyDate: "2021-01-01",
+    partyTime: "12:00",
+    partyLocation: "Tel Aviv",
+    partyType: partyTypesData[0],
+    partyDescription: "Lee's Birthday",
+    partyPrice: 100,
+    partyImage: "https://picsum.photos/200",
+    partyCreator: usersData[3],
+    partyParticipants: [usersData[0], usersData[1]],
+    createdAt: new Date()
+  },
+  {
+    partyName: "Hadar's Birthday",
+    partyDate: "2021-01-01",
+    partyTime: "12:00",
+    partyLocation: "Tel Aviv",
+    partyType: partyTypesData[0],
+    partyDescription: "Hadar's Birthday",
+    partyPrice: 100,
+    partyImage: "https://picsum.photos/200",
+    partyCreator: usersData[4],
+    partyParticipants: [usersData[0], usersData[1]],
+    createdAt: new Date()
+  },
+]
+
+
+
+
+export { usersData, partyTypesData, partiesData };

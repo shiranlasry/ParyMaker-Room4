@@ -15,5 +15,20 @@ interface Address{
     houseNumber: number;
 }
 export interface Party{
+    partyName: string;
+    partyDate: string;
+    partyTime: string;
+    partyLocation: string;
+    partyType: PartyType;
+    partyDescription: string;
+    partyPrice: number;
+    partyImage: string;
+    partyCreator: User;
+    partyParticipants: User[];
+    createdAt: Date;
 
+}
+export interface PartyType{
+    partyTypeName: string;
+    createdAt: Date;    
 }
