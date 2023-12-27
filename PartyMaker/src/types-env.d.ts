@@ -25,6 +25,7 @@ export interface Party{
     partyImage: string;
     partyCreator: User;
     partyParticipants: User[];
+    thingsToBring?: string[];
     createdAt: Date;
 
 }

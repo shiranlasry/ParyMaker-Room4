@@ -3,10 +3,12 @@ body {
 
   .partyWrap {
     margin: auto;
-    width: 500px;
+    width: 600px;
+    height: auto;
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.423);
     border-radius: 10px;
+   
 
   }
 
@@ -17,7 +19,14 @@ body {
     align-items: center;
     width: 400px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.423);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    
 
     input {
         

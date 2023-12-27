@@ -1,118 +1,81 @@
 import React, { useState } from 'react';
 import './addNewParty.scss';
 import NavBar from '../../components/navBar/NavBar';
-
-interface Party {
-  partyType: string;
-  participants: string;
-  moneyPerParticipant: string;
-  thingsToBring: string[];
-}
+import { partyTypesData } from '../../utils/data';
+import { Party, User } from '../../types-env';
 
 const AddNewParty = () => {
-  const [partyType, setPartyType] = useState<string>('');
-  const [participants, setParticipants] = useState<string>('');
-  const [moneyPerParticipant, setMoneyPerParticipant] = useState<string>('');
-  const [thingsToBring, setThingsToBring] = useState<string>('');
-  const [partyItems, setPartyItems] = useState<string[]>([]);
-  const [createdParties, setCreatedParties] = useState<Party[]>([]);
-
-  const handlePartyTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPartyType(e.target.value);
+  const initialPartyState: Party = {
+    partyName: '',
+    partyDate: '',
+    partyTime: '',
+    partyLocation: '',
+    partyType: partyTypesData[0], // Default to the first party type
+    partyDescription: '',
+    partyPrice: 0,
+    partyImage: '',
+    partyCreator: {} as User,
+    partyParticipants: [],
+    thingsToBring: [],
+    createdAt: new Date(),
   };
 
-  const handleParticipantsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParticipants(e.target.value);
-  };
+  const [newParty, setNewParty] = useState<Party>(initialPartyState);
 
-  const handleMoneyPerParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMoneyPerParticipant(e.target.value);
-  };
-
-  const handleThingsToBringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setThingsToBring(e.target.value);
-  };
-
-  const handleAddThing = () => {
-    if (thingsToBring.trim() !== '') {
-      setPartyItems([...partyItems, thingsToBring]);
-      setThingsToBring('');
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setNewParty({  ...newParty,  [name]: value, });
   };
 
   const handleCreateParty = () => {
-    if (partyType.trim() !== '' && participants.trim() !== '') {
-      const newParty: Party = {
-        partyType,
-        participants,
-        moneyPerParticipant,
-        thingsToBring: partyItems,
-      };
-      setCreatedParties([...createdParties, newParty]);
-      // Clear form fields after creating a party
-      setPartyType('');
-      setParticipants('');
-      setMoneyPerParticipant('');
-      setThingsToBring('');
-      setPartyItems([]);
-    }
+    // You can add logic to handle the creation of the new party
+    // For now, let's just log the new party data to the console
+    console.log('New Party Data:', newParty);
+    // Reset the form after handling the data
+    setNewParty(initialPartyState);
   };
 
   return (
     <div>
       <NavBar />
-      
-      <div className='partyWrap'>
-      <h1>My Party</h1>
-      <form>
-        <label htmlFor="partyType">Choose Party Type:</label>
-        <select id="partyType" value={partyType} onChange={handlePartyTypeChange} required>
-          <option value="" disabled>Select Party Type</option>
-          <option value="Dance Party">Dance Party</option>
-          <option value="Birthday Party">Birthday Party</option>
-          <option value="Holiday Party">Holiday Party</option>
-          {/* Add other party types as options */}
-        </select>
+      <div className="partyWrap">
+        <h1>My New Party</h1>
+        <form>
+          <label>Party Name:</label>
+          <input type="text" name="partyName" value={newParty.partyName} onChange={handleInputChange} />
 
-        <label htmlFor="participants">Number of Participants:</label>
-        <input type="number" id="participants" value={participants} onChange={handleParticipantsChange} required />
+          <label>Party Date:</label>
+          <input type="date" name="partyDate" value={newParty.partyDate} onChange={handleInputChange} />
 
-        <label htmlFor="moneyPerParticipant">Money Per Participant:</label>
-        <input type="text" id="moneyPerParticipant" value={moneyPerParticipant} onChange={handleMoneyPerParticipantChange} />
+          <label>Party Time:</label>
+          <input type="time" name="partyTime" value={newParty.partyTime} onChange={handleInputChange} />
 
-        <label htmlFor="thingsToBring">Things to Bring:</label>
-        <input type="text" id="thingsToBring" value={thingsToBring} onChange={handleThingsToBringChange} />
-        
-        <button type="button" onClick={handleAddThing}>
-          Add
-        </button>
+          <label>Party Location:</label>
+          <input type="text" name="partyLocation" value={newParty.partyLocation} onChange={handleInputChange} />
 
-        <ul>
-          {partyItems.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
+          <label>Party Type:</label>
+          <select name="partyType" value={newParty.partyType.partyTypeName} onChange={handleInputChange}>
+            {partyTypesData.map((type) => (
+              <option key={type.partyTypeName} value={type.partyTypeName}>
+                {type.partyTypeName}
+              </option>
+            ))}
+          </select>
 
-        <button type="button" className="submitBtn" onClick={handleCreateParty}>
-          Create Party
-        </button>
-      </form>
+          <label>Party Description:</label>
+          <textarea name="partyDescription" value={newParty.partyDescription} onChange={handleInputChange} />
 
-      <div>
-        <h2>Created Parties</h2>
-        <ul>
-          {createdParties.map((party, index) => (
-            <li key={index}>
-              <strong>{party.partyType}</strong> - Participants: {party.participants}
-              {/* Add other party details as needed */}
-              <button type="button">
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
+          <label>Party Price:</label>
+          <input type="number" name="partyPrice" value={newParty.partyPrice} onChange={handleInputChange} />
+
+          <label>Party Image URL:</label>
+          <input type="text" name="partyImage" value={newParty.partyImage} onChange={handleInputChange} />
+
+          <button type="button" onClick={handleCreateParty}>
+            Create Party
+          </button>
+        </form>
       </div>
-    </div>
     </div>
   );
 };

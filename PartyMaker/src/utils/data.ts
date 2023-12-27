@@ -109,6 +109,7 @@ const partiesData:Party[] = [
     partyImage: "https://picsum.photos/200",
     partyCreator: usersData[0],
     partyParticipants: [usersData[0], usersData[1]],
+    thingsToBring: ["Cake", "Candles", "Balloons"],
     createdAt: new Date()
   },
   {
@@ -135,6 +136,7 @@ const partiesData:Party[] = [
     partyImage: "https://picsum.photos/200",
     partyCreator: usersData[2],
     partyParticipants: [usersData[0], usersData[1]],
+    thingsToBring: ["Cake", "Candles", "Balloons"],
     createdAt: new Date()
   },
   {
