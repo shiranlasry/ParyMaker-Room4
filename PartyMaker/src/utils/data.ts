@@ -2,6 +2,7 @@ import { Party, PartyType, User } from "../types-env";
 
 const usersData:User[] = [
   {
+    Userid: "1",
     email: "john.doe@gmail.com",
     password: "john123",
     username: "john_doe",
@@ -9,6 +10,7 @@ const usersData:User[] = [
     lastName: "Doe",
     phoneNumber: "0543432847",
     address: {
+      Addressid: "1",
       city: "Tel Aviv",
       street: "Ben Yehuda",
       houseNumber: 12
@@ -17,6 +19,7 @@ const usersData:User[] = [
   },
 
  {
+  Userid: "2",
   email: "shiran.doe@gmail.com",
     password: "shiran123",
     username: "shiran_shiran",
@@ -24,6 +27,7 @@ const usersData:User[] = [
     lastName: "shiran",
     phoneNumber: "0543432847",
     address: {
+      Addressid: "2", 
       city: "Tel Aviv",
       street: "Ben shiran",
       houseNumber: 124
@@ -31,6 +35,7 @@ const usersData:User[] = [
     role: "user"
  },
  {
+  Userid: "3",
   email: "doriel.doe@gmail.com",
   password: "doriel123",
   username: "doriel_doriel",
@@ -38,6 +43,7 @@ const usersData:User[] = [
   lastName: "doriel",
   phoneNumber: "056985685",
   address: {
+    Addressid: "3", 
     city: "Tel doriel",
     street: "Ben doriel",
     houseNumber: 1824
@@ -45,6 +51,7 @@ const usersData:User[] = [
   role: "user"
  },
  {
+  Userid: "4",
   email: "lee.doe@gmail.com",
     password: "lee123",
     username: "lee_lee",
@@ -52,6 +59,7 @@ const usersData:User[] = [
     lastName: "lee",
     phoneNumber: "0547856325",
     address: {
+      Addressid: "4", 
       city: "Tel lee",
       street: "Ben lee",
       houseNumber: 1524
@@ -59,6 +67,7 @@ const usersData:User[] = [
     role: "user"
  },
  {
+  Userid: "5",
   email: "hadar.doe@gmail.com",
   password: "hadar123",
   username: "hadar_hadar",
@@ -66,6 +75,7 @@ const usersData:User[] = [
   lastName: "hadar",
   phoneNumber: "02562548",
   address: {
+    Addressid: "5", 
     city: "Tel hadar",
     street: "Ben hadar",
     houseNumber: 1424
@@ -76,22 +86,27 @@ const usersData:User[] = [
 
 const partyTypesData: PartyType[] = [
   {
+    PartyTypeid: "1",
     partyTypeName: "Birthday",
     createdAt: new Date()
   },
   {
+    PartyTypeid: "2",
     partyTypeName: "Wedding",
     createdAt: new Date()
   },
   {
+    PartyTypeid: "3",
     partyTypeName: "Bar Mitzva",
     createdAt: new Date()
   },
   {
+    PartyTypeid: "4",
     partyTypeName: "Brit",
     createdAt: new Date()
   },
   {
+    PartyTypeid: "5",
     partyTypeName: "Graduation",
     createdAt: new Date()
   }
@@ -99,6 +114,7 @@ const partyTypesData: PartyType[] = [
 
 const partiesData:Party[] = [
   {
+    Partyid: "1", 
     partyName: "John's Birthday",
     partyDate: "2021-01-01",
     partyTime: "12:00",
@@ -113,6 +129,7 @@ const partiesData:Party[] = [
     createdAt: new Date()
   },
   {
+    Partyid: "2", 
     partyName: "Shiran's Birthday",
     partyDate: "2021-01-01",
     partyTime: "12:00",
@@ -126,6 +143,7 @@ const partiesData:Party[] = [
     createdAt: new Date()
   },
   {
+    Partyid: "3",
     partyName: "Doriel's Birthday",
     partyDate: "2021-01-01",
     partyTime: "12:00",
@@ -140,6 +158,7 @@ const partiesData:Party[] = [
     createdAt: new Date()
   },
   {
+    Partyid: "4",
     partyName: "Lee's Birthday",
     partyDate: "2021-01-01",
     partyTime: "12:00",
@@ -153,6 +172,7 @@ const partiesData:Party[] = [
     createdAt: new Date()
   },
   {
+    Partyid: "5",
     partyName: "Hadar's Birthday",
     partyDate: "2021-01-01",
     partyTime: "12:00",

@@ -1,4 +1,5 @@
 export interface User{
+    Userid: string;
     email: string;
     password: string;
     username: string;
@@ -9,12 +10,14 @@ export interface User{
     role: string;
 
 }
-interface Address{
+ export interface Address{
+    Addressid: string;
     city: string;
     street: string;
     houseNumber: number;
 }
 export interface Party{
+    Partyid: string;
     partyName: string;
     partyDate: string;
     partyTime: string;
@@ -30,6 +33,7 @@ export interface Party{
 
 }
 export interface PartyType{
+    PartyTypeid: string;
     partyTypeName: string;
     createdAt: Date;    
 }

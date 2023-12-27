@@ -22,7 +22,7 @@ const AddNewParty = () => {
 
   const [newParty, setNewParty] = useState<Party>(initialPartyState);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement |HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewParty({  ...newParty,  [name]: value, });
   };
