@@ -2,14 +2,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import { getUserApi } from "./userAPI"
-import { User } from "../../types-env"
+import {  User } from "../../types-env"
 
 enum Status {
     IDLE = "idle",
     LOADING = "loading",
     FAILED = "failed"
 }
-
 interface UserState {
     value: User | null ,
     status: Status

@@ -16,7 +16,7 @@ const LogIn = () => {
   const navigate = useNavigate();
 
  const dispatch = useAppDispatch();
-const user = useAppSelector(userSelector)
+
 
 
   const handleEmailChange = (e: {

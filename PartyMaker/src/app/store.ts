@@ -1,9 +1,11 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/loggedInUser/userSlice"
+import partiesReducer from "../features/parties/partiesSlice"
 
 export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    parties : partiesReducer  
   },
 });
 
