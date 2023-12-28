@@ -12,6 +12,7 @@ interface GetUserApiArgs {
 
 export const getUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-user', (arg) => {
     try {
+        debugger 
         const loggedInUser:User | undefined = usersData.find
         (user => user.email === arg.email && user.password === arg.password )
         if (!loggedInUser) throw new Error("User not found getUserApi()")

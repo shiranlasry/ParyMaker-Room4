@@ -34,21 +34,21 @@ const user = useAppSelector(userSelector)
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const arg = { email, password };
-    dispatch(getUserApi(arg));
+    dispatch(getUserApi(arg))
+    .then((resultAction) => {
+      if (getUserApi.fulfilled.match(resultAction)) {
+        const loggedInUser = {
+          username: resultAction.payload?.username,
+        };
+        localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+        console.log("Logged in user:", resultAction.payload);
+        navigate("/");
+      } else {
+        console.log("Invalid credentials");
+      }
+    });
+   
   
-    if (user) {
-      const loggedInUser = {
-        username: user.username,
-      };
-      // add dicpatch to redux
-     
-
-      localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-      console.log("Logged in user:", user);
-      navigate("/");
-    } else {
-      console.log("Invalid credentials");
-    }
   };
 
   return (
