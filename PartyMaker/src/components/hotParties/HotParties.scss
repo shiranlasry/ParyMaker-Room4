@@ -1,0 +1,15 @@
+// hOtParties.scss
+
+.hot-parties {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  
+    .party-card {
+      flex: 1;
+      max-width: 300px;
+      margin: 10px;
+    }
+  }
+  
