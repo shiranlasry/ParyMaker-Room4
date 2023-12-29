@@ -38,9 +38,9 @@ const AddNewParty = () => {
   return (
     <div>
       <NavBar />
-      <div className="partyWrap">
+      <div className="addPartyWrap">
         <h1>My New Party</h1>
-        <form>
+        <form className='partyForm'>
           <label>Party Name:</label>
           <input type="text" name="partyName" value={newParty.partyName} onChange={handleInputChange} />
 
@@ -62,16 +62,17 @@ const AddNewParty = () => {
             ))}
           </select>
 
-          <label>Party Description:</label>
-          <textarea name="partyDescription" value={newParty.partyDescription} onChange={handleInputChange} />
+          
 
           <label>Party Price:</label>
           <input type="number" name="partyPrice" value={newParty.partyPrice} onChange={handleInputChange} />
 
           <label>Party Image URL:</label>
           <input type="text" name="partyImage" value={newParty.partyImage} onChange={handleInputChange} />
+          <label>Party Description:</label>
+          <textarea name="partyDescription" value={newParty.partyDescription} onChange={handleInputChange} />
 
-          <button type="button" onClick={handleCreateParty}>
+          <button className='createPartyBtn' type="button" onClick={handleCreateParty}>
             Create Party
           </button>
         </form>
