@@ -13,7 +13,7 @@ const NavBar = () => {
             <h1>PartyMaker</h1>
         </div>
         <div className='navbar__user'>
-            <h1>hello {user? user.username: null}</h1>
+            <h1 className='greet'>hello {user? user.username: null}</h1>
         </div>
         <div className='navbar__links'>
         <button onClick={() => navigate( '/login')}>Login</button>
