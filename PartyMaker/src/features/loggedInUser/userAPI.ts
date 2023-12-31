@@ -1,7 +1,6 @@
 //users api
 
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
 import {usersData}  from "../../utils/data";
 import { User } from "../../types-env";
 
