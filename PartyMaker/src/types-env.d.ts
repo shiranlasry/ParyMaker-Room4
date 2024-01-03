@@ -1,23 +1,23 @@
 export interface User{
-    Userid: string;
+    user_id: string;
     email: string;
     password: string;
     username: string;
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    address: Address;
+    address_id: Address;
     role: string;
 
 }
  export interface Address{
-    Addressid: string;
+    address_id: string;
     city: string;
     street: string;
     houseNumber: number;
 }
 export interface Party{
-    Partyid: string;
+    party_id: string;
     partyName: string;
     partyDate: string;
     partyTime: string;
@@ -33,7 +33,7 @@ export interface Party{
 
 }
 export interface PartyType{
-    PartyTypeid: string;
+    partyType_id: string;
     partyTypeName: string;
     createdAt: Date;    
 }
