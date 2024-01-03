@@ -14,16 +14,6 @@ import userRoutes from "./API/users/usersRoutes"
 app.use("/api/users", userRoutes)
 
 
-app.get("/api/check", (req, res) => {
-  try {
-    console.log("test")
-    res.send({ ok: true, message: "hello" })
-  } catch (error) {
-    console.log(error);
-    res.send({ ok: false, error: error.message });
-  }
-})
-
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
