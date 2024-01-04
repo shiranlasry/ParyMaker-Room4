@@ -14,11 +14,9 @@ export const getUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-use
     try {
         const response = await axios.post("/api/users/login", arg);
         const { ok, user } = response.data;
-
         if (!ok) {
             throw new Error("Invalid credentials getUserApi()");
         }
-
         return user;
      
     } catch (error) {
@@ -26,3 +24,21 @@ export const getUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-use
         return null;
     }
 })
+
+export const registerUserApi = createAsyncThunk<User | null, GetUserApiArgs>('register-user',async (arg) => {
+    try {
+        const response = await axios.post("/api/users/register", arg);
+        debugger;
+        const { ok, user } = response.data;
+
+        if (!ok) {
+            throw new Error("Invalid credentials registerUserApi()");
+        }
+
+        return user;
+     
+    } catch (error) {
+        console.error(error); // this is temporary
+        return null;
+    }
+});
