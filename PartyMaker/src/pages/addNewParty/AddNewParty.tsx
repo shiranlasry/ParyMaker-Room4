@@ -6,6 +6,7 @@ import { Party, User } from '../../types-env';
 
 const AddNewParty = () => {
   const initialPartyState: Party = {
+    party_id: null,
     partyName: '',
     partyDate: '',
     partyTime: '',

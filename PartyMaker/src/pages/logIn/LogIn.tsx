@@ -33,7 +33,7 @@ const LogIn = () => {
       navigate("/");
     }
   }, [user, navigate]);
-  
+
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const arg = { email, password };
@@ -62,7 +62,7 @@ const LogIn = () => {
   
 
   return (
-    <div className="container-main">
+    <div className="login-main">
       <NavBar />
       <div className="loginForm">
         <h1 className="loginTitle">Login</h1>

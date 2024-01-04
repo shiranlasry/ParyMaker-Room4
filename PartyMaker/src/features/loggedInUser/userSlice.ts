@@ -1,8 +1,9 @@
 //userSlice.ts   client side
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { getUserApi } from "./userAPI"
+import { getUserApi, registerUserApi } from "./userAPI"
 import {  User } from "../../types-env"
+import { register } from "module"
 
 enum Status {
     IDLE = "idle",
@@ -35,6 +36,16 @@ export const userSlice = createSlice({
             state.value = action.payload
         })
         .addCase(getUserApi.rejected, (state) => {
+            state.status = Status.FAILED
+        })
+        .addCase(registerUserApi.pending, (state) => {
+            state.status = Status.LOADING
+        })
+        .addCase(registerUserApi.fulfilled, (state, action) => {
+            state.status = Status.IDLE;
+            state.value = action.payload
+        })  
+        .addCase(registerUserApi.rejected, (state) => {
             state.status = Status.FAILED
         })
     }
