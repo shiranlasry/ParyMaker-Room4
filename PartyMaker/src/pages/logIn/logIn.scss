@@ -1,3 +1,5 @@
+$navy: #000080;
+
 body {
   color: white;
   background-color: #0000801e;
@@ -10,21 +12,22 @@ body {
   .loginForm {
     margin: auto;
     display: block;
-    padding: .5rem 4rem .5rem 4rem;
+    padding: 0.5rem 4rem 0.5rem 4rem;
     width: 200px;
-    background-color: rgba(255, 255, 255, 0.473);
+    background-color: rgba(255, 255, 255, 0.527);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
     .loginTitle {
-      color: #000080;
+      font-size: 40px;
+      font-weight: bold;
+      color: $navy;
     }
 
     label {
       font-size: 18px;
       font-weight: bold;
-      color: #000080;
-      text-shadow: 1px 1px 1px #800073;
+      color: $navy;
     }
 
     input {
@@ -37,7 +40,7 @@ body {
     .submitBtn {
       color: white;
       font-weight: bold;
-      background-color: #000080;
+      background-color: $navy;
 
       &:hover {
         font-size: 18px;
@@ -45,16 +48,16 @@ body {
     }
 
     .loginBtn {
-      background-color: rgb(37, 45, 106);
+      margin: 0.5rem;
+      background-color: $navy;
       border-radius: 12px;
       color: white;
-      font-size: 23px;
+      font-size: 17px;
 
       &:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
           0 17px 50px 0 rgba(0, 0, 0, 0.19);
         font-weight: bold;
-        font-size: 24px;
       }
     }
   }
@@ -73,10 +76,10 @@ body {
 }
 
 .error {
-  color: navy;
+  color: $navy;
 }
 
-.error-message{
+.errorMessage {
   color: red;
   font-size: 12px;
   font-weight: bold;

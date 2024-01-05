@@ -66,7 +66,7 @@ const LogIn = () => {
       <NavBar />
       <div className="loginForm">
         <h1 className="loginTitle">Login</h1>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
         <form onSubmit={handleLogin}>
           <label>
             Email:
@@ -86,7 +86,7 @@ const LogIn = () => {
               required
             />
           </label>
-          <button type="submit" className="submitBtn">
+          <button type="submit" className="loginBtn">
             Login
           </button>
        

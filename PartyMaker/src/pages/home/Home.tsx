@@ -16,7 +16,7 @@ const Home = () => {
        <HOtParties  />
        <button
       onClick={() => navigate( '/addNewParty')}
-       className='homeBtn'>Create Party 🎉</button>
+       className='createPartyHP'>Create Party 🎉</button>
     </div>
   )
 }

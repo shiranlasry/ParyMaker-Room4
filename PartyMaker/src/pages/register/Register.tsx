@@ -57,11 +57,11 @@ const Register = () => {
     } catch (error) {}
   };
   return (
-    <div className="register-main">
+    <div className="registerMain">
       <NavBar />
-      <form className="register-form" onSubmit={hendalRegister}>
+      <form className="registerForm" onSubmit={hendalRegister}>
         {errorMessage && <p className="error">{errorMessage}</p>}
-        <h1 className="register-title">Register</h1>
+        <h1 className="registerTitle">Register</h1>
         <label>Email:</label>
         <input
           type="text"

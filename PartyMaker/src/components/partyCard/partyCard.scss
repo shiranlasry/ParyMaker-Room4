@@ -1,4 +1,4 @@
-// hOtParties.scss
+$navy: #000080;
 
 .party-card {
   border: 1px solid #ddd;
@@ -11,9 +11,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
- 
-
 
   .party-image {
     width: 100%;
@@ -40,7 +37,7 @@
 
   .join-button {
     background-color: #fa90d2;
-    color: navy;
+    color: $navy;
     font-size: 17px;
     font-weight: bold;
     border: none;
@@ -50,7 +47,7 @@
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: navy;
+      background-color: $navy;
       color: #fa90d2;
     }
   }
