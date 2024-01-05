@@ -9,11 +9,14 @@ const Home = () => {
   return (
     <div>
         <NavBar />
-      <button
-      onClick={() => navigate( '/addNewParty')}
-       className='homeBtn'>Create Party 🎉</button>
+    
+
+       <h2 className='upcoming'>Upcoming Events 📅</h2>
 
        <HOtParties  />
+       <button
+      onClick={() => navigate( '/addNewParty')}
+       className='homeBtn'>Create Party 🎉</button>
     </div>
   )
 }

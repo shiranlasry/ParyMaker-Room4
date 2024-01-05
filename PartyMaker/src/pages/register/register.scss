@@ -1,28 +1,44 @@
 body {
-    color: white;
-    background-color: #0000801e;
-    font-family: "Quicksand", sans-serif;
-    background-image: url(/src/imgs/confetti.png);
-    background-repeat: no-repeat;
-    background-position: center center;
+  color: white;
+  background-color: #0000801e;
+  font-family: "Quicksand", sans-serif;
+  background-image: url(/src/imgs/confetti.png);
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
-  
-   .registerBtn {
-      background-color: rgb(37, 45, 106);
-      border-radius: 12px;
+
+  .register-form {
+    height: auto;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    gap: 0.3rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000080;
+    text-shadow: 1px 1px 1px #800073;
+    background-color: rgba(255, 255, 255, 0.527);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .register-title {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .regBtn {
+      margin: 0.5rem;
+      background-color: navy;
       color: white;
-      font-size: 23px;
-  
-      &:hover {
-          box-shadow:  0 12px 16px 0 rgba(0, 0, 0, 0.271),0 17px 50px 0 rgba(0,0,0,0.19);
-           font-weight: bold;
-           font-size: 24px;
-           
-      }
-   }
-  
+    }
   }
-  
-  .error {
-    color: navy;
-  }
+}
+
+.error {
+  color: navy;
+}
