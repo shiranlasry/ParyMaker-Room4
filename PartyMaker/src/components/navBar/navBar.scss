@@ -19,6 +19,12 @@
     font-size: 20px;
     font-weight: 800;
     background-color: #000080;
+    outline: none;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
 
     &:hover {
       background-color: #fabce2;
@@ -76,6 +82,7 @@
 
       button {
         margin: 0.3rem;
+        
       }
     }
   }
