@@ -6,8 +6,22 @@ import Page404 from './pages/page404/Page404'
 import LogIn from './pages/logIn/LogIn'
 import Register from './pages/register/Register'
 import AddNewParty from './pages/addNewParty/AddNewParty'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { User } from './types-env'
+import { setUser } from './features/loggedInUser/userSlice'; 
+
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      const user:User = JSON.parse(storedUser);
+      dispatch(setUser(user));
+    }
+  }, [dispatch]);
   const router= createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/login", element: <LogIn />},
