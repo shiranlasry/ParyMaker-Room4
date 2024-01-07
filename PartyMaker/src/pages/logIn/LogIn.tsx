@@ -42,11 +42,11 @@ const LogIn = () => {
       const resultAction : any = await dispatch(getUserApi(arg));
      
       if (resultAction.payload && resultAction.payload.username) {
-        const loggedInUser = {
-          username: resultAction.payload?.username,
-        };
-        localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-        console.log("Logged in user:", resultAction.payload);
+        // const loggedInUser = {
+        //   username: resultAction.payload?.username,
+        // };
+        // localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+        // console.log("Logged in user:", resultAction.payload);
         
       } else {
         console.log("Invalid credentials");

@@ -5,6 +5,8 @@ import express from 'express';
 import connection from "../../DB/database";
 import { RowDataPacket } from 'mysql2';
 import bcrypt from 'bcryptjs'; // Import bcrypt
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 interface User{
     user_id: number | null;
     email: string;
@@ -75,6 +77,13 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
             const passwordMatch = await bcrypt.compare(password, user.password);
   
             if (passwordMatch) {
+              const token = jwt.sign({ user_id: user.user_id, email: user.email }, 'your-secret-key', {
+                expiresIn: '1h', // Set the expiration time as needed
+              });
+  
+              // Set the token in a cookie
+              res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
+              console.log("token", token)
               // Passwords match, send user data back to the client
               res.send({ ok: true, user });
             } else {
@@ -135,3 +144,33 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
       res.status(500).send({ ok: false, error });
     }
   };
+
+  export const getUserFromToken = async (req: express.Request, res: express.Response) => {
+    try {
+      const token = req.cookies.token;
+      const secret=process.env.SECRET_KEY
+  
+      if (!token) {
+        res.status(401).send({ ok: false, error: 'no token getUserFromToken() ' });
+      } else {
+        const {user_id} = jwt.verify(token, secret) as { user_id: number};
+  
+        const query = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+  
+        connection.query(query, [user_id], (err, results: RowDataPacket[], fields) => {
+          try {
+            if (err) throw err;
+  
+            const user :User = results[0] as User;
+            res.send({ ok: true, user });
+          } catch (error) {
+            console.error(error);
+            res.status(500).send({ ok: false, error });
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ ok: false, error });
+    }
+  }
