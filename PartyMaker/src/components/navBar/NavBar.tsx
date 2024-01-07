@@ -1,15 +1,18 @@
-import React from 'react';
+
 import './navBar.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { userSelector } from '../../features/loggedInUser/userSlice';
 import { logoutUser } from '../../features/loggedInUser/userSlice'; 
+import { useEffect } from 'react';
+import { getUserFromTokenApi } from '../../features/loggedInUser/userAPI';
 
 
 const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();  
+  
 
   const handelLogout = () => {
     localStorage.removeItem('loggedInUser');

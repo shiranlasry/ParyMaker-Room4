@@ -2,7 +2,7 @@ import "./register.scss";
 import NavBar from "../../components/navBar/NavBar";
 import { User } from "../../types-env";
 import { useEffect, useState } from "react";
-import { registerUserApi } from "../../features/loggedInUser/userAPI";
+import { getUserFromTokenApi, registerUserApi } from "../../features/loggedInUser/userAPI";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useNavigate } from "react-router";
@@ -43,14 +43,7 @@ const Register = () => {
       e.preventDefault();
       const resultAction: any = await dispatch(registerUserApi(newUser));
 
-      if (resultAction.payload && resultAction.payload.username) {
-        console.log("Registered user:", resultAction.payload);
-        localStorage.setItem(
-          "loggedInUser",
-          JSON.stringify(resultAction.payload.username)
-        );
-        console.log("Logged in user:", resultAction.payload);
-      } else {
+      if (!resultAction.payload)  {
         console.log("Invalid credentials");
         setErrorMessage("Invalid credentials"); // Set error message state
       }

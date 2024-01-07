@@ -1,9 +1,9 @@
 //userSlice.ts   client side
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { getUserApi, registerUserApi } from "./userAPI"
+import { logInUserApi, getUserFromTokenApi, registerUserApi } from "./userAPI"
 import {  User } from "../../types-env"
-import { register } from "module"
+
 
 enum Status {
     IDLE = "idle",
@@ -34,14 +34,14 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getUserApi.pending, (state) => {
+        .addCase(logInUserApi.pending, (state) => {
             state.status = Status.LOADING
         })
-        .addCase(getUserApi.fulfilled, (state, action) => {
+        .addCase(logInUserApi.fulfilled, (state, action) => {
             state.status = Status.IDLE;
             state.value = action.payload
         })
-        .addCase(getUserApi.rejected, (state) => {
+        .addCase(logInUserApi.rejected, (state) => {
             state.status = Status.FAILED
         })
         .addCase(registerUserApi.pending, (state) => {
@@ -52,6 +52,16 @@ export const userSlice = createSlice({
             state.value = action.payload
         })  
         .addCase(registerUserApi.rejected, (state) => {
+            state.status = Status.FAILED
+        })
+        .addCase(getUserFromTokenApi.pending, (state) => {
+            state.status = Status.LOADING
+        })
+        .addCase(getUserFromTokenApi.fulfilled, (state, action) => {
+            state.status = Status.IDLE;
+            state.value = action.payload
+        })
+        .addCase(getUserFromTokenApi.rejected, (state) => {
             state.status = Status.FAILED
         })
     }
