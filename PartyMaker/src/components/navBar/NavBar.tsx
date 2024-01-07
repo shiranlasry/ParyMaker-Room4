@@ -1,11 +1,14 @@
 
+//navbar component
+
 import './navBar.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { userSelector } from '../../features/loggedInUser/userSlice';
 import { logoutUser } from '../../features/loggedInUser/userSlice'; 
 import { useEffect } from 'react';
-import { getUserFromTokenApi } from '../../features/loggedInUser/userAPI';
+import {  getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+
 
 
 const NavBar = () => {
@@ -13,9 +16,12 @@ const NavBar = () => {
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();  
   
-
+// useEffect(() => {
+//   debugger
+//       dispatch(getUserFromTokenApi());
+// },[])
   const handelLogout = () => {
-    localStorage.removeItem('loggedInUser');
+    
     dispatch(logoutUser());
     navigate('/');
   };

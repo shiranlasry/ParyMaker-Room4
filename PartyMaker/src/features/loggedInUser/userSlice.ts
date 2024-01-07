@@ -29,6 +29,7 @@ export const userSlice = createSlice({
         },
         logoutUser: (state) => {
             state.value = null
+            //need to delete the cookie
         }
    
     },

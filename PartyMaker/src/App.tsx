@@ -6,8 +6,7 @@ import Page404 from './pages/page404/Page404'
 import LogIn from './pages/logIn/LogIn'
 import Register from './pages/register/Register'
 import AddNewParty from './pages/addNewParty/AddNewParty'
-import { getUserFromTokenApi } from './features/loggedInUser/userAPI'
-import { useEffect } from 'react'
+
 
 function App() {
 
@@ -26,7 +25,5 @@ function App() {
 }
 
 export default App
-function dispatch(arg0: any): any {
-  throw new Error('Function not implemented.')
-}
+
 
