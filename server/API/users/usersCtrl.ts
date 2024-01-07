@@ -99,7 +99,7 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
   
       // Hash the password before storing it in the database
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log('Hashed Password:', hashedPassword);
+      //console.log('Hashed Password:', hashedPassword);
   
       const query = `
         INSERT INTO party_maker.users (email, password, username, firstName, lastName, phoneNumber, address, role)

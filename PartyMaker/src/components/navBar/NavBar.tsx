@@ -18,9 +18,23 @@ const NavBar = () => {
         {user && <h1 className='greet'>hello {user.username}</h1>}
       </div>
       <div className='navbar__links'>
-        <button onClick={() => navigate('/login')}>Login</button>
-        <button onClick={() => navigate('/register')}>Register</button>
-        <button onClick={() => navigate('/')}>Home</button>
+        {
+          user? 
+          <div>
+            <button onClick={() => navigate('/')}>Logout</button>
+            <button onClick={() => navigate('/')}>My Profil</button>
+            <button onClick={() => navigate('/')}>Home</button>
+            </div>
+           :
+           <div>
+          <button onClick={() => navigate('/login')}>Login</button>
+          <button onClick={() => navigate('/register')}>Register</button>
+          <button onClick={() => navigate('/')}>Home</button>
+          </div>
+        }
+       
+       
+      
       </div>
     </div>
   );
