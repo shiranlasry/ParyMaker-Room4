@@ -3,15 +3,17 @@
 
 
 import express from "express";
-import { getAllUsers, loginUser, registerUser } from "./usersCtrl";
-import { register } from "module";
+import { getAllUsers, loginUser, registerUser,getUserFromToken } from "./usersCtrl";
+
 
 const router = express.Router()
 
 router
 .get("", getAllUsers)
+.get("/user-from-token", getUserFromToken)
 .post("/login", loginUser)
-.post("/register", registerUser);
+.post("/register", registerUser)
+;
 
 
 export default router

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./logIn.scss";
 import NavBar from "../../components/navBar/NavBar";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { getUserApi } from "../../features/loggedInUser/userAPI";
+import { logInUserApi, getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 
 const LogIn = () => {
@@ -39,16 +39,8 @@ const LogIn = () => {
     const arg = { email, password };
     try {
       // check what type is resultAction
-      const resultAction : any = await dispatch(getUserApi(arg));
-     
-      if (resultAction.payload && resultAction.payload.username) {
-        const loggedInUser = {
-          username: resultAction.payload?.username,
-        };
-        localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-        console.log("Logged in user:", resultAction.payload);
-        
-      } else {
+      const resultAction : any = await dispatch(logInUserApi(arg));
+      if (!resultAction.payload)  {
         console.log("Invalid credentials");
         setErrorMessage("Invalid email or password"); // Set error message state
         
