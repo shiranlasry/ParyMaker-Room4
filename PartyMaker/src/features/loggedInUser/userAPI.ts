@@ -24,7 +24,7 @@ export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-u
     }
 })
 
-export const registerUserApi = createAsyncThunk<User | null, GetUserApiArgs>('register-user',async (arg) => {
+export const registerUserApi = createAsyncThunk<User | null>('register-user',async (arg) => {
     try {
         const response = await axios.post("/api/users/register", arg);
         
@@ -42,11 +42,10 @@ export const registerUserApi = createAsyncThunk<User | null, GetUserApiArgs>('re
     }
 });
 
-export const getUserFromTokenApi = createAsyncThunk<User | null, void>('get-user-from-token',async () => {
+export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-token',async () => {
     try {
-       
+        
         const response = await axios.post("/api/users/user-from-token");
-     
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials getUserFromTokenApi()");

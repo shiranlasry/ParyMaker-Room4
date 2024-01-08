@@ -16,10 +16,10 @@ const NavBar = () => {
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();  
   
-// useEffect(() => {
-//   debugger
-//       dispatch(getUserFromTokenApi());
-// },[])
+useEffect(() => {
+  if (!user) 
+      dispatch(getUserFromTokenApi());
+},[])
   const handelLogout = () => {
     
     dispatch(logoutUser());
