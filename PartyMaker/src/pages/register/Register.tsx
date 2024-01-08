@@ -57,17 +57,19 @@ const Register = () => {
         <h1 className="registerTitle">Register</h1>
         <label>Email:</label>
         <input
-          type="text"
+          type="email"
           name="email"
           value={newUser.email}
           onChange={handleInputChange}
+          required
         />
         <label>Password:</label>
         <input
-          type="text"
+          type="password"
           name="password"
           value={newUser.password}
           onChange={handleInputChange}
+          required
         />
         <label>Username:</label>
         <input
@@ -75,6 +77,7 @@ const Register = () => {
           name="username"
           value={newUser.username}
           onChange={handleInputChange}
+          required
         />
         <label>First Name:</label>
         <input
@@ -82,6 +85,7 @@ const Register = () => {
           name="firstName"
           value={newUser.firstName}
           onChange={handleInputChange}
+          required
         />
         <label>Last Name:</label>
         <input
@@ -89,6 +93,7 @@ const Register = () => {
           name="lastName"
           value={newUser.lastName}
           onChange={handleInputChange}
+          required
         />
         <label>Phone Number:</label>
         <input
@@ -96,6 +101,7 @@ const Register = () => {
           name="phoneNumber"
           value={newUser.phoneNumber}
           onChange={handleInputChange}
+          required
         />
 
         <label>Address:</label>
@@ -104,6 +110,7 @@ const Register = () => {
           name="address"
           value={newUser.address}
           onChange={handleInputChange}
+          required
         />
 
         <button type="submit" className="regBtn">
