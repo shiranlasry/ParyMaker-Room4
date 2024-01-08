@@ -120,7 +120,7 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
       if (!hash) throw new Error("no hash password registerUser()")
 
       const query = `
-        INSERT INTO party_maker.users (email, password, username, firstName, lastName, phoneNumber, address, role)
+        INSERT INTO party_maker.users (email, password, username, first_name, last_name, phone_number, address, role)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       `;
       connection.query(
