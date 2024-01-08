@@ -60,6 +60,10 @@ export const getUserById = async (req:express.Request, res:express.Response) => 
 export const loginUser = async (req: express.Request, res: express.Response) => {
     try {
       const { email, password } = req.body;
+      if (!email || !password) {
+        res.status(400).send({ ok: false, error: 'Missing email or password loginUser()' });
+        return;
+      } 
       const query = `SELECT * FROM party_maker.users WHERE email = ?;`;
   
       connection.query(query, [email], async (err, results: RowDataPacket[], fields) => {
@@ -68,15 +72,16 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
   
           if (results.length === 0) {
             // No user found with the provided email
-            res.status(401).send({ ok: false, error: 'Invalid credentials' });
+            res.status(401).send({ ok: false, error: 'no mach email loginUser()' });
           } else {
             // User found, compare passwords
             const user = results[0] as User;
   
             // Compare the entered password with the stored hashed password
             const passwordMatch = await bcrypt.compare(password, user.password);
-            const secret=process.env.SECRET_KEY
+           
             if (passwordMatch) {
+              const secret=process.env.SECRET_KEY
               const cookie = {user_id: user.user_id}
               const token = jwt.sign(cookie, secret, {
                 expiresIn: '1h', // Set the expiration time as needed
@@ -104,17 +109,20 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
   export const registerUser = async (req: express.Request, res: express.Response) => {
     try {
       const { email, password, username, firstName, lastName, phoneNumber, address, role } = req.body;
-  
+  if (!email || !password || !username || !firstName || !lastName || !phoneNumber || !address || !role) { 
+    res.status(400).send({ ok: false, error: 'Missing detais registerUser()' });
+    return;
+  }
       const secret = process.env.SECRET_KEY
       if (!secret) throw new Error("no secret")
       
       const hash = await bcrypt.hash(password, saltRounds)
+      if (!hash) throw new Error("no hash password registerUser()")
 
       const query = `
         INSERT INTO party_maker.users (email, password, username, firstName, lastName, phoneNumber, address, role)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       `;
-  
       connection.query(
         query,
         [email, hash, username, firstName, lastName, phoneNumber, address, role],
@@ -123,7 +131,7 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
             if (err) throw err;
   
             const insertedUserId = resultsAdd.insertId;
-            if (!insertedUserId) throw new Error('No user ID returned');
+            if (!insertedUserId) throw new Error('No user ID returned registerUser()');
             console.log("insertedUserId", insertedUserId)
   
             // Retrieve the inserted user from the database
@@ -133,7 +141,6 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
               if (selectErr) throw selectErr;
   
               const user = selectResults[0] as User;
-              const secret=process.env.SECRET_KEY
               const cookie = { user_id: user.user_id };
               const token = jwt.sign(cookie, secret, {
                   expiresIn: '1h', // Set the expiration time as needed
@@ -157,34 +164,27 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
   export const getUserFromToken = async (req: express.Request, res: express.Response) => {
     try {
         const token = req.cookies.token;
+        if (!token) {
+            res.status(401).send({ ok: false, error: 'No token getUserFromToken()' });
+        }
+        console.log("token from getUserFromToken() ", token)
         const secret = process.env.SECRET_KEY;
-
         if (!token) {
             res.status(401).send({ ok: false, error: 'No token getUserFromToken()' });
         } else {
-            // Use jwt.verify to both decode and verify the token
-            jwt.verify(token, secret, (err, decodedToken) => {
-                if (err) {
-                    console.error(err);
-                    res.status(401).send({ ok: false, error: 'Token verification failed' });
-                } else {
-                    const user_id = decodedToken.user_id;
-                    console.log("decodedToken", decodedToken);
-                    console.log("user_id", user_id);
-
-                    const query = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
-
-                    connection.query(query, [user_id], (dbErr, results: RowDataPacket[], fields) => {
-                        try {
-                            if (dbErr) throw dbErr;
-
-                            const user: User = results[0] as User;
-                            res.send({ ok: true, user });
-                        } catch (error) {
-                            console.error(error);
-                            res.status(500).send({ ok: false, error });
-                        }
-                    });
+            if (!secret) throw new Error("no secret")
+            const decoded = jwt.verify(token, secret) as { user_id: number };
+            const { user_id } = decoded;
+            console.log("user_id from getUserFromToken() ", user_id)
+            const query = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+            connection.query(query, [user_id], (err, results: RowDataPacket[], fields) => {
+                try {
+                    if (err) throw err;
+                    const user = results[0] as User;
+                    res.send({ ok: true, user });
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).send({ ok: false, error });
                 }
             });
         }
