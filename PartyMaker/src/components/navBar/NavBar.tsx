@@ -1,61 +1,57 @@
-
-//navbar component
-
-import './navBar.scss';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hook';
-import { userSelector } from '../../features/loggedInUser/userSlice';
-import { logoutUser } from '../../features/loggedInUser/userSlice'; 
-import { useEffect } from 'react';
-import {  getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
-
-
+import "./navBar.scss";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
+import { userSelector } from "../../features/loggedInUser/userSlice";
+import { logoutUser } from "../../features/loggedInUser/userSlice";
+import { useEffect } from "react";
+import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
-  const dispatch = useAppDispatch();  
-  
-useEffect(() => {
-  if (!user) 
-      dispatch(getUserFromTokenApi());
-},[])
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!user) dispatch(getUserFromTokenApi());
+  }, []);
+
   const handelLogout = () => {
-    
     dispatch(logoutUser());
-    navigate('/');
+    navigate("/");
   };
 
   return (
-    <div className='navbar'>
-      <div className='navbar__logo'>
+    <div className="navbar">
+      <div className="navbar__logo">
         <h1>PartyMaker</h1>
       </div>
-      <div className='navbar__user'>
-        {/* Conditional check: Show the greeting only if there is a user logged in */}
-        {user && <h1 className='greet'>hello {user.username}</h1>}
+      <div className="navbar__user">
+        {/* No empty span here, only show the greeting when the user is logged in */}
+        {user && <span className="greet"></span>}
       </div>
-      <div className='navbar__links'>
-        {
-          user? 
-          <div>
+      <div className="navbar__links">
+        {user ? (
+          <>
+            <button onClick={() => navigate("/")}>
+              <FontAwesomeIcon icon={faUser} /> hello {user.username}
+            </button>
+            <button onClick={() => navigate("/")}>Home</button>
             <button onClick={handelLogout}>Logout</button>
-            <button onClick={() => navigate('/')}>My Profil</button>
-            <button onClick={() => navigate('/')}>Home</button>
-            </div>
-           :
-           <div>
-          <button onClick={() => navigate('/login')}>Login</button>
-          <button onClick={() => navigate('/register')}>Register</button>
-          <button onClick={() => navigate('/')}>Home</button>
-          </div>
-        }
-       
-       
-      
+          </>
+        ) : (
+          <>
+            <button onClick={() => navigate("/login")}>Login</button>
+            <button onClick={() => navigate("/register")}>Register</button>
+            <button onClick={() => navigate("/")}>Home</button>
+          </>
+        )}
       </div>
     </div>
   );
 };
+
+
 
 export default NavBar;
