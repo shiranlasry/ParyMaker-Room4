@@ -1,7 +1,8 @@
+//partiesSlice.ts   clinet side
 import { createSlice } from "@reduxjs/toolkit";
 import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
-import { getHotPartiesApi } from "./partiesAPI";
+import { getAllParties } from "./partiesAPI";
 
 
 enum Status {
@@ -25,14 +26,14 @@ export const partiesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getHotPartiesApi.pending, (state) => {
+        .addCase(getAllParties.pending, (state) => {
             state.status = Status.LOADING
         })
-        .addCase(getHotPartiesApi.fulfilled, (state, action) => {
+        .addCase(getAllParties.fulfilled, (state, action) => {
             state.status = Status.IDLE;
             state.value = action.payload ; // Update the type of state.value
         })
-        .addCase(getHotPartiesApi.rejected, (state) => {
+        .addCase(getAllParties.rejected, (state) => {
             state.status = Status.FAILED
         })
     }

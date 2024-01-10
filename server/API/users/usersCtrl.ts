@@ -166,8 +166,8 @@ export const getUserFromToken = async (req: express.Request, res: express.Respon
   try {
     const token = req.cookies.token;
     if (!token) {
-      res.status(401).send({ ok: false, error: 'No token getUserFromToken()' });
-      console.log("token from getUserFromToken() ", token)
+      //res.status(401).send({ ok: false, error: 'No token getUserFromToken()' });
+      console.log("no token from getUserFromToken() ", token)
     } else {
       const secret = process.env.SECRET_KEY;
       if (!secret) throw new Error("no secret")

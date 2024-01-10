@@ -18,18 +18,17 @@ export interface User{
 }
 export interface Party{
     party_id: number|null;
-    partyName: string;
-    partyDate: string;
-    partyTime: string;
-    partyLocation: string;
-    partyType: PartyType;
-    partyDescription: string;
-    partyPrice: number;
-    partyImage: string;
-    partyCreator: User;
-    partyParticipants: User[];
-    thingsToBring?: string[];
-    createdAt: Date;
+    party_name: string;
+    party_date: string;
+    party_time: string;
+    party_location: string;
+    party_type_id: number;
+    party_description: string;
+    party_price: number;
+    party_image: string;
+    party_creator: number;
+    things_to_pbring?: string[];
+    created_time: Date;
 
 }
 export interface PartyType{

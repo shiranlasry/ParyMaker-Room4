@@ -15,6 +15,8 @@ app.use(express.static("client"));
 
 import userRoutes from "./API/users/usersRoutes"
 app.use("/api/users", userRoutes)
+import partyRoutes from "./API/parties/partyRouters"
+app.use("/api/parties", partyRoutes)
 
 
 app.listen(port, () => {

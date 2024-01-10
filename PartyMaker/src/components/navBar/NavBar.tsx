@@ -7,14 +7,18 @@ import { useEffect } from "react";
 import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { getAllParties } from "../../features/parties/partiesAPI";
+import { partiesSelector } from "../../features/parties/partiesSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
+  const parties = useAppSelector(partiesSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!user) dispatch(getUserFromTokenApi());
+    if (!parties) dispatch(getAllParties());
   }, []);
 
   const handelLogout = () => {
