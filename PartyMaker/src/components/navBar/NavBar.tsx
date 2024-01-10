@@ -34,7 +34,7 @@ const NavBar = () => {
       <div className="navbar__links">
         {user ? (
           <>
-            <button onClick={() => navigate("/")}>
+            <button onClick={() => navigate("/userPage")}>
               <FontAwesomeIcon icon={faUser} /> hello {user.username}
             </button>
             <button onClick={() => navigate("/")}>Home</button>
