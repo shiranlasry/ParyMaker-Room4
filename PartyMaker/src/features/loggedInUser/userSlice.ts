@@ -12,6 +12,9 @@ enum Status {
 interface UserState {
     value: User | null ,
     status: Status
+    // isLoading: boolean,
+    // error: string,
+    // login: boolean
 }
 
 const initialState: UserState = {
@@ -29,7 +32,10 @@ export const userSlice = createSlice({
         logoutUser: (state) => {
             state.value = null
             //need to delete the cookie
-        }
+        },
+        // setIsLoading: (state, action) => {
+        //     state.isLoading = action.payload
+        // }
    
     },
     extraReducers: (builder) => {

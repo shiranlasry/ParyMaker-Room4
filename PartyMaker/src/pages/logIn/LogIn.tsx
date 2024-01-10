@@ -39,11 +39,11 @@ const LogIn = () => {
     const arg = { email, password };
     try {
       // check what type is resultAction
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const resultAction : any = await dispatch(logInUserApi(arg));
       if (!resultAction.payload)  {
         console.log("Invalid credentials");
         setErrorMessage("Invalid email or password"); // Set error message state
-        
       }
     } catch (error) {
       console.error("Error during login:", error);
