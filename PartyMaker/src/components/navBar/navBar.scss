@@ -1,3 +1,5 @@
+$font: white;
+
 .navbar {
   background-color: #000080;
   border-bottom: 5px solid #fabce2;
@@ -15,10 +17,16 @@
   transition: transform 0.3s ease-out;
 
   button {
-    color: white;
+    color: $font;
     font-size: 20px;
     font-weight: 800;
     background-color: #000080;
+    outline: none;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
 
     &:hover {
       background-color: #fabce2;
@@ -26,12 +34,13 @@
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
       color: #000080;
       font-size: 19px;
+      outline: none;
     }
   }
 
   &__logo,
   &__user {
-    color: #fff;
+    color: $font;
     font-size: 1.5rem;
     margin-left: 1rem;
     text-decoration: none;
@@ -45,15 +54,17 @@
     width: 30%;
     margin-right: 1rem;
     list-style: none;
+    outline: none;
     &__link {
-      color: #fff;
+      color: $font;
       text-decoration: none;
       font-size: 1.2rem;
       font-weight: 500;
       letter-spacing: 1px;
       &:hover {
-        color: #fff;
+        color: $font;
         text-decoration: none;
+        outline: none;
       }
     }
   }
@@ -73,15 +84,19 @@
       justify-content: center;
       width: 100%;
       margin: 0;
+      outline: none;
 
       button {
         margin: 0.3rem;
+  
       }
     }
   }
 
   .greet {
+    
     font-size: 20px;
-    color: #fabce2;
+    color: $font;
+    
   }
 }

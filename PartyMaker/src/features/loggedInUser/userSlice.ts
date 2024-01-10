@@ -1,4 +1,3 @@
-//userSlice.ts   client side
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import { logInUserApi, getUserFromTokenApi, registerUserApi } from "./userAPI"
