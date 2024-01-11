@@ -40,7 +40,7 @@ const AddNewParty = () => {
     <div>
       <NavBar />
       <div className="addPartyWrap">
-        <h1>My New Party 🎊</h1>
+        <h1 className='MyNewParty'>My New Party 🎊</h1>
         <form className='partyForm'>
           <label>Party Name:</label>
           <input type="text" name="partyName" value={newParty.partyName} onChange={handleInputChange} />

@@ -32,7 +32,12 @@ const UserPage = () => {
   return (
     <div>
       <NavBar />
-      <h1>My Events</h1>
+      <h2>My Events</h2>
+      <h2>Edit Profile</h2>
+      {/* in process - 11.1.2024 - editProfile.tsx components is going to 
+      go here and make the profile edit possible */}
+      <h2>Parties I joined</h2>
+      {/* The parties the user joined will be rendered here */}
       <button
         onClick={() => navigate("/addNewParty")}
         className="createPartyUP"

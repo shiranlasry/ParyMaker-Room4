@@ -69,9 +69,10 @@ $font: white;
     }
   }
 
-  @media screen and (max-width: 940px) {
+  @media screen and (max-width: 920px) {
     flex-direction: column;
     align-items: center;
+    height: 70px;
 
     .greet,
     .navbar__logo {
@@ -83,20 +84,33 @@ $font: white;
       flex-direction: row;
       justify-content: center;
       width: 100%;
-      margin: 0;
       outline: none;
 
       button {
         margin: 0.3rem;
-  
       }
     }
   }
 
-  .greet {
+  @media screen and (max-width: 1350px) {
+    .navbar {
+      height: 100px;
+    }
+
+    // .greet {
+    //   display: none;
+
     
-    font-size: 20px;
-    color: $font;
-    
+    // }
+
+    button {
+      font-size: 19px;
+    }
+
+    .greetBtn {
+      font-size: 15px;
+    }
+
+   
   }
 }
