@@ -2,6 +2,11 @@ $navy: #000080;
 
 body {
   color: $navy;
+  height: 100vh;
+
+  .MyNewParty {
+    margin-top: 5rem;
+  }
 
   .partyForm {
     height: auto;
@@ -15,6 +20,8 @@ body {
     background-color: rgba(255, 255, 255, 0.691);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    
 
     input {
       width: 170px;

@@ -38,8 +38,8 @@ const NavBar = () => {
       <div className="navbar__links">
         {user ? (
           <>
-            <button onClick={() => navigate("/userPage")}>
-              <FontAwesomeIcon icon={faUser} /> hello {user.username}
+            <button className="greetBtn" onClick={() => navigate("/userPage")}>
+              <FontAwesomeIcon icon={faUser} /> <span className="greet"> Hi {user.username} </span>
             </button>
             <button onClick={() => navigate("/")}>Home</button>
             <button onClick={handelLogout}>Logout</button>
