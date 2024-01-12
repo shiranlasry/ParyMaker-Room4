@@ -1,85 +1,122 @@
-import React, { useState } from 'react';
-import './addNewParty.scss';
-import NavBar from '../../components/navBar/NavBar';
-import { partyTypesData } from '../../utils/data';
-import { Party, User } from '../../types-env';
 
-const AddNewParty = () => {
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { createParty } from '../../features/parties/partiesAPI';
+import { partiesSelector } from '../../features/parties/partiesSlice';
+import { Party } from '../../types-env';
+import './addNewParty.scss';
+import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
+import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+
+const CreateNewPartyForm = () => {
+  const dispatch = useAppDispatch();
   const initialPartyState: Party = {
     party_id: null,
-    partyName: '',
-    partyDate: '',
-    partyTime: '',
-    partyLocation: '',
-    partyType: partyTypesData[0], // Default to the first party type
-    partyDescription: '',
-    partyPrice: 0,
-    partyImage: '',
-    partyCreator: {} as User,
-    partyParticipants: [],
-    thingsToBring: [],
-    createdAt: new Date(),
+    party_name: '',
+    party_date: null,
+    party_time:  '',
+    party_location:  '',
+    party_category_id:  null,
+    category_description:  '',
+    party_description: '',
+    party_price:  null,
+    party_image:'',
+    party_creator: null,
+    things_to_pbring: undefined,
+    created_time:new Date()
+    
   };
-
   const [newParty, setNewParty] = useState<Party>(initialPartyState);
+  const categories = useAppSelector(partiesCategoriesSelector);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement |HTMLTextAreaElement>) => {
+  useEffect(() => {
+    dispatch(getAllCategories());
+  },[] );
+
+  const handleInputChange = ( e: React.ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > )=>{
     const { name, value } = e.target;
-    setNewParty({  ...newParty,  [name]: value, });
+    setNewParty({ ...newParty, [name]: value });
   };
+  const parties = useAppSelector(partiesSelector);
 
-  const handleCreateParty = () => {
-    // You can add logic to handle the creation of the new party
-    // For now, let's just log the new party data to the console
-    console.log('New Party Data:', newParty);
-    // Reset the form after handling the data
-    setNewParty(initialPartyState);
+  const handleAddParty = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    dispatch(createParty(newParty));
   };
 
   return (
     <div>
-      <NavBar />
-      <div className="addPartyWrap">
-        <h1 className='MyNewParty'>My New Party 🎊</h1>
-        <form className='partyForm'>
-          <label>Party Name:</label>
-          <input type="text" name="partyName" value={newParty.partyName} onChange={handleInputChange} />
+      <h2>Create New Party</h2>
+      <form className='partyForm' onSubmit={handleAddParty}>
+        <label>Party Name:</label>
+        <input
+          type="text"
+          name="party_name"
+          value={newParty.party_name}
+          onChange={handleInputChange}
+        />
 
-          <label>Party Date:</label>
-          <input type="date" name="partyDate" value={newParty.partyDate} onChange={handleInputChange} />
+        <label>Party Date:</label>
+        <input
+          type="date"
+          name="party_date"
+          value={newParty.party_date?.toString() || ''}
+          onChange={handleInputChange}
+        />
 
-          <label>Party Time:</label>
-          <input type="time" name="partyTime" value={newParty.partyTime} onChange={handleInputChange} />
+        <label>Party Time:</label>
+        <input
+          type="time"
+          name="party_time"
+          value={newParty.party_time?.toString() || ''}
+          onChange={handleInputChange}
+        />
 
-          <label>Party Location:</label>
-          <input type="text" name="partyLocation" value={newParty.partyLocation} onChange={handleInputChange} />
+        <label>Party Location:</label>
+        <input
+          type="text"
+          name="party_location"
+          value={newParty.party_location}
+          onChange={handleInputChange}
+        />
 
-          <label>Party Type:</label>
-          <select name="partyType" value={newParty.partyType.partyTypeName} onChange={handleInputChange}>
-            {partyTypesData.map((type) => (
-              <option key={type.partyTypeName} value={type.partyTypeName}>
-                {type.partyTypeName}
+        <label>Category Description:</label>
+        {categories && (
+          <select
+            name="party_category_id"
+            value={newParty.party_category_id?.toString() || ''}
+            onChange={handleInputChange}
+          >
+            {categories.map((category) => (
+              <option key={category.category_id} value={category.category_id}>
+                {category.category_description}
               </option>
             ))}
           </select>
+        )}
 
-          
 
-          <label>Party Price:</label>
-          <input type="number" name="partyPrice" value={newParty.partyPrice} onChange={handleInputChange} />
+        <label>Party Description:</label>
+        <textarea
+          name="party_description"
+          value={newParty.party_description}
+          onChange={handleInputChange}
+        ></textarea>
 
-          <label>Party Image URL:</label>
-          <input type="text" name="partyImage" value={newParty.partyImage} onChange={handleInputChange} />
-          <label>Party Description:</label>
-          <textarea name="partyDescription" value={newParty.partyDescription} onChange={handleInputChange} />
+        <label>Party Price:</label>
+        <input
+          type="number"
+          name="party_price"
+          value={newParty.party_price?.toString() || ''}
+          onChange={handleInputChange}
+        />
 
-          <button className='createPartyBtn' type="button" onClick={handleCreateParty}>
-            Create Party
-          </button>
-        </form>
-      </div>
+        {/* Add more form fields for other party details */}
+
+        <button type="submit">Create Party</button>
+      </form>
     </div>
   );
 };
 
-export default AddNewParty;
+export default CreateNewPartyForm;

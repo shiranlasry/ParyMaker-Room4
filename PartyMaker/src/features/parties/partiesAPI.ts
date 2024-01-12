@@ -3,19 +3,7 @@
 import axios from "axios";
 import { Party } from "../../types-env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { partiesData } from "../../utils/data";
 
-
-// export const getHotPartiesApi = createAsyncThunk<Party[] |null>('get-hot-parties', async () => {
-//     try {
-//         const parties : Party[] = partiesData;
-//         return parties;
-//     } catch (error) {
-//         console.error(error) // this is temporary
-//         return null;
-//     }
-// }
-// )
 
 export const getAllParties = createAsyncThunk<Party[] | null >('get-all-parties', async () => {
     try {
@@ -31,3 +19,20 @@ export const getAllParties = createAsyncThunk<Party[] | null >('get-all-parties'
         return null;
     }
 })
+
+export const createParty = createAsyncThunk<Party[], Party>(
+    'create-party',
+    async (partyData) => {
+      try {
+        const response = await axios.post("/api/parties/create-party", partyData);
+        const { ok, results } = response.data;
+        if (!ok) {
+          throw new Error("Error creating party");
+        }
+        return results;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }
+  );

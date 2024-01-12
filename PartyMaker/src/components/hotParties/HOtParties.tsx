@@ -1,11 +1,9 @@
 
 import './hOtParties.scss'
-import { partiesSelector, partiesStatusSelector } from '../../features/parties/partiesSlice'
-import { useAppDispatch, useAppSelector } from '../../app/hook'
+import { partiesSelector } from '../../features/parties/partiesSlice'
+import { useAppSelector } from '../../app/hook'
 
 import PartyCard from '../partyCard/PartyCard'
-import { useEffect } from 'react'
-
 
 const HOtParties = () => {
  const parties = useAppSelector(partiesSelector);
