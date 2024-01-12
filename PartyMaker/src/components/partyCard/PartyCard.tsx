@@ -10,8 +10,9 @@ type PartyCardProps = {
   const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
     return (
         <div className="party-card">
-        <h1>{party.party_id}</h1>
-        <h2>{party.party_name}</h2>
+       
+        <h1>{party.party_name}</h1>
+        <h2> {party.category_description} Party</h2>
         <button className="join-button">Join Party</button>
       </div>
     );

@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
-import { getAllParties } from "./partiesAPI";
+import { createParty, getAllParties } from "./partiesAPI";
 
 
 enum Status {
@@ -11,7 +11,7 @@ enum Status {
     FAILED = "failed"
 }
 interface PartiesState {
-    value: Party []| null ,
+    value: Party []| null,
     status: Status
 }
 const initialState: PartiesState = {
@@ -36,6 +36,17 @@ export const partiesSlice = createSlice({
         .addCase(getAllParties.rejected, (state) => {
             state.status = Status.FAILED
         })
+        .addCase(createParty.pending, (state) => {
+            state.status = Status.LOADING;
+          })
+          .addCase(createParty.fulfilled, (state, action) => {
+            state.status = Status.IDLE;
+            // Assuming createParty will return the updated list of parties
+            state.value = action.payload;
+          })
+          .addCase(createParty.rejected, (state) => {
+            state.status = Status.FAILED;
+          });
     }
 })
 
