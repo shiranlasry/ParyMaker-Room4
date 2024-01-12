@@ -1,10 +1,12 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { createParty } from '../../features/parties/partiesAPI';
 import { partiesSelector } from '../../features/parties/partiesSlice';
 import { Party } from '../../types-env';
 import './addNewParty.scss';
+import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
+import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
 
 const CreateNewPartyForm = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +27,12 @@ const CreateNewPartyForm = () => {
     
   };
   const [newParty, setNewParty] = useState<Party>(initialPartyState);
-  
+  const categories = useAppSelector(partiesCategoriesSelector);
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  },[] );
+
   const handleInputChange = ( e: React.ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > )=>{
     const { name, value } = e.target;
     setNewParty({ ...newParty, [name]: value });
@@ -73,21 +80,21 @@ const CreateNewPartyForm = () => {
           onChange={handleInputChange}
         />
 
-        <label>Party Category ID:</label>
-        <input
-          type="number"
-          name="party_category_id"
-          value={newParty.party_category_id?.toString() || ''}
-          onChange={handleInputChange}
-        />
-
         <label>Category Description:</label>
-        <input
-          type="text"
-          name="category_description"
-          value={newParty.category_description}
-          onChange={handleInputChange}
-        />
+        {categories && (
+          <select
+            name="party_category_id"
+            value={newParty.party_category_id?.toString() || ''}
+            onChange={handleInputChange}
+          >
+            {categories.map((category) => (
+              <option key={category.category_id} value={category.category_id}>
+                {category.category_description}
+              </option>
+            ))}
+          </select>
+        )}
+
 
         <label>Party Description:</label>
         <textarea

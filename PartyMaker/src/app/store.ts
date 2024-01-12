@@ -1,11 +1,12 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/loggedInUser/userSlice"
 import partiesReducer from "../features/parties/partiesSlice"
-
+import partyCategoriesReducer from "../features/party_categories/party_categoriesSlice"
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    parties : partiesReducer  
+    parties : partiesReducer  ,
+    partyCategories :partyCategoriesReducer
   },
 });
 

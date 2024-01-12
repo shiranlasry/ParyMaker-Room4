@@ -16,6 +16,10 @@ export interface User{
     street: string| null;
     houseNumber: number| null;
 }
+export interface Category{
+    category_id: number;
+    category_description: string;
+}
 export interface Party{
     party_id: number|null;
     party_name: string;
