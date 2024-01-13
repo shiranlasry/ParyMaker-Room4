@@ -7,7 +7,7 @@ import Hero from "../../components/hero/Hero";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="container">
       <NavBar />
       <Hero />
 

@@ -113,7 +113,7 @@ const CreateNewPartyForm = () => {
 
         {/* Add more form fields for other party details */}
 
-        <button type="submit">Create Party</button>
+        <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
     </div>
   );
