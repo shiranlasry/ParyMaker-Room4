@@ -37,7 +37,7 @@ const CreateNewPartyForm = () => {
     const { name, value } = e.target;
     setNewParty({ ...newParty, [name]: value });
   };
-  const parties = useAppSelector(partiesSelector);
+  // const parties = useAppSelector(partiesSelector);
 
   const handleAddParty = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
