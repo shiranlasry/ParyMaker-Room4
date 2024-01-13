@@ -24,6 +24,7 @@ export const createParty = createAsyncThunk<Party[], Party>(
     'create-party',
     async (partyData) => {
       try {
+        
         const response = await axios.post("/api/parties/create-party", partyData);
         const { ok, results } = response.data;
         if (!ok) {
