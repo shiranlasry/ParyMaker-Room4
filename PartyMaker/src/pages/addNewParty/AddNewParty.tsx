@@ -45,8 +45,10 @@ const CreateNewPartyForm = () => {
   const handleAddParty = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     try {
+      
       if(!user) throw new Error('You must be logged in to create a party')
-      dispatch(createParty(newParty));
+      const updatedParty = { ...newParty, party_creator_id: user.user_id };
+      dispatch(createParty(updatedParty));
       
     } catch (error) {
       console.error(error);
