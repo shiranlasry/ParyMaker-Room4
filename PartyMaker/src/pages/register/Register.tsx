@@ -6,6 +6,7 @@ import { getUserFromTokenApi, registerUserApi } from "../../features/loggedInUse
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useNavigate } from "react-router";
+import { Footer } from "../../components/footer/Footer";
 
 const Register = () => {
   const initialUserState: User = {
@@ -113,6 +114,8 @@ const Register = () => {
           Register
         </button>
       </form>
+
+      <Footer />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { partiesCategoriesSelector } from '../../features/party_categories/party
 import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
 import { userSelector } from '../../features/loggedInUser/userSlice';
 import NavBar from '../../components/navBar/NavBar';
+import { Footer } from '../../components/footer/Footer';
 
 const CreateNewPartyForm = () => {
   const createdDate = new Date();
@@ -127,6 +128,9 @@ const CreateNewPartyForm = () => {
 
         <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
+
+
+      <Footer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { useAppSelector } from "../../app/hook";
 import { Party, User } from "../../types-env";
 import "./userPage.scss";
 import PartyCard from "../../components/partyCard/PartyCard";
+import { Footer } from "../../components/footer/Footer";
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const UserPage = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };
