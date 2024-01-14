@@ -6,6 +6,7 @@ import NavBar from "../../components/navBar/NavBar";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { logInUserApi, getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
+import { Footer } from "../../components/footer/Footer";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -84,6 +85,8 @@ const LogIn = () => {
        
       </form>
       </div>
+
+      <Footer />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { Party } from '../../types-env';
 import './addNewParty.scss';
 import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
 import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+import { Footer } from '../../components/footer/Footer';
 
 const CreateNewPartyForm = () => {
   const dispatch = useAppDispatch();
@@ -115,6 +116,9 @@ const CreateNewPartyForm = () => {
 
         <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
+
+
+      <Footer />
     </div>
   );
 };
