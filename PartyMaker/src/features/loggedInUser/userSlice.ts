@@ -1,6 +1,8 @@
+//userSlice.ts
+
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { logInUserApi, getUserFromTokenApi, registerUserApi } from "./userAPI"
+import { logInUserApi, getUserFromTokenApi, registerUserApi,deleteTokenApi } from "./userAPI"
 import {  User } from "../../types-env"
 
 
@@ -29,10 +31,10 @@ export const userSlice = createSlice({
         setUser: (state, action) => {
             state.value = action.payload
         },
-        logoutUser: (state) => {
-            state.value = null
-            //need to delete the cookie
-        },
+        // logoutUser: (state) => {
+        //     state.value = null
+        //     //need to delete the cookie
+        // },
         // setIsLoading: (state, action) => {
         //     state.isLoading = action.payload
         // }
@@ -70,10 +72,20 @@ export const userSlice = createSlice({
         .addCase(getUserFromTokenApi.rejected, (state) => {
             state.status = Status.FAILED
         })
+        .addCase(deleteTokenApi.pending, (state) => {
+            state.status = Status.LOADING
+        })
+        .addCase(deleteTokenApi.fulfilled, (state) => {
+            state.status = Status.IDLE;
+            state.value = null;
+        })
+        .addCase(deleteTokenApi.rejected, (state) => {
+            state.status = Status.FAILED
+        })
     }
 })
 
-export const { setUser, logoutUser } = userSlice.actions; // Export the actions
+export const { setUser } = userSlice.actions; // Export the actions
 
 export const userSelector = (state: RootState) => state.user.value
 export const userStatusSelector = (state: RootState) => state.user.status

@@ -3,7 +3,7 @@
 
 
 import express from "express";
-import { getAllUsers, loginUser, registerUser,getUserFromToken } from "./usersCtrl";
+import { getAllUsers, loginUser, registerUser,getUserFromToken,deleteToken } from "./usersCtrl";
 
 
 const router = express.Router()
@@ -13,6 +13,7 @@ router
 .get("/user-from-token", getUserFromToken)
 .post("/login", loginUser)
 .post("/register", registerUser)
+.delete("/delete-token",deleteToken )
 ;
 
 

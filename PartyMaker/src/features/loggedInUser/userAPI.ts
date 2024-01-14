@@ -57,3 +57,18 @@ export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-
         return null;
     }
 })
+
+export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
+    try {
+        const response = await axios.delete("/api/users/delete-token");
+        const { ok } = response.data;
+        if (!ok) {
+            throw new Error("Invalid credentials deleteTokenApi()");
+        }
+        return null;
+
+    } catch (error) {
+        console.error(error) // this is temporary
+        return null;
+    }
+})

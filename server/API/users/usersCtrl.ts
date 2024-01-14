@@ -191,3 +191,13 @@ export const getUserFromToken = async (req: express.Request, res: express.Respon
     res.status(500).send({ ok: false, error });
   }
 }
+
+export const deleteToken = async (req: express.Request, res: express.Response) => {
+  try {
+    res.clearCookie('token');
+    res.send({ ok: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+}

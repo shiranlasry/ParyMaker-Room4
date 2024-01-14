@@ -130,7 +130,7 @@ const CreateNewPartyForm = () => {
       </form>
 
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

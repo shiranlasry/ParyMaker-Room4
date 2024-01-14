@@ -1,10 +1,12 @@
+//navbar component
+
 import "./navBar.scss";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { userSelector } from "../../features/loggedInUser/userSlice";
-import { logoutUser } from "../../features/loggedInUser/userSlice";
+
 import { useEffect } from "react";
-import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+import { deleteTokenApi, getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getAllParties } from "../../features/parties/partiesAPI";
@@ -22,7 +24,7 @@ const NavBar = () => {
   }, []);
 
   const handelLogout = () => {
-    dispatch(logoutUser());
+    dispatch(deleteTokenApi());
     navigate("/");
   };
 
