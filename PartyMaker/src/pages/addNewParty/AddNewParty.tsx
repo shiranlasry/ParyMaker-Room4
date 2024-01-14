@@ -2,29 +2,31 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { createParty } from '../../features/parties/partiesAPI';
-import { partiesSelector } from '../../features/parties/partiesSlice';
 import { Party } from '../../types-env';
 import './addNewParty.scss';
 import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
 import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+import { userSelector } from '../../features/loggedInUser/userSlice';
+import NavBar from '../../components/navBar/NavBar';
 
 const CreateNewPartyForm = () => {
+  const createdDate = new Date();
   const dispatch = useAppDispatch();
+  const user=useAppSelector(userSelector)
   const initialPartyState: Party = {
     party_id: null,
     party_name: '',
     party_date: null,
-    party_time:  '',
     party_location:  '',
     party_category_id:  null,
     category_description:  '',
     party_description: '',
     party_price:  null,
-    party_image:'',
-    party_creator: null,
-    things_to_pbring: undefined,
-    created_time:new Date()
-    
+    party_image_id:1,
+    party_creator_id: user? user.user_id: null,
+    things_to_bring: "banana",
+    // created_time: `${createdDate.getDate}`
+    created_time:`${createdDate.getFullYear()}-${createdDate.getMonth()+1}-${createdDate.getDate()}`
   };
   const [newParty, setNewParty] = useState<Party>(initialPartyState);
   const categories = useAppSelector(partiesCategoriesSelector);
@@ -41,11 +43,20 @@ const CreateNewPartyForm = () => {
 
   const handleAddParty = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    dispatch(createParty(newParty));
+    try {
+      if(!user) throw new Error('You must be logged in to create a party')
+      dispatch(createParty(newParty));
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
+   
   };
 
   return (
     <div>
+      <NavBar/>
       <h2>Create New Party</h2>
       <form className='partyForm' onSubmit={handleAddParty}>
         <label>Party Name:</label>
@@ -64,13 +75,13 @@ const CreateNewPartyForm = () => {
           onChange={handleInputChange}
         />
 
-        <label>Party Time:</label>
+        {/* <label>Party Time:</label>
         <input
           type="time"
           name="party_time"
           value={newParty.party_time?.toString() || ''}
           onChange={handleInputChange}
-        />
+        /> */}
 
         <label>Party Location:</label>
         <input
@@ -87,6 +98,7 @@ const CreateNewPartyForm = () => {
             value={newParty.party_category_id?.toString() || ''}
             onChange={handleInputChange}
           >
+            <option value="">Select a category</option>
             {categories.map((category) => (
               <option key={category.category_id} value={category.category_id}>
                 {category.category_description}
