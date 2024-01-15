@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
-import { createParty, getAllParties } from "./partiesAPI";
+import { createParty, getAllParties ,saveImgtoDB} from "./partiesAPI";
 
 
 enum Status {
@@ -12,10 +12,12 @@ enum Status {
 }
 interface PartiesState {
     value: Party []| null,
+    img_id: number | null,
     status: Status
 }
 const initialState: PartiesState = {
     value: null,
+    img_id: 1111111123,
     status: Status.IDLE
 }
 export const partiesSlice = createSlice({
@@ -46,11 +48,24 @@ export const partiesSlice = createSlice({
           })
           .addCase(createParty.rejected, (state) => {
             state.status = Status.FAILED;
-          });
+          })
+          .addCase(saveImgtoDB.pending, (state) => {
+            state.status = Status.LOADING;
+          })
+          .addCase(saveImgtoDB.fulfilled, (state, action) => {
+                state.status = Status.IDLE;
+                // Assuming createParty will return the updated list of parties
+                debugger
+                state.img_id = action.payload.img_id;
+            })  
+          .addCase(saveImgtoDB.rejected, (state) => {
+                state.status = Status.FAILED;
+            });
     }
 })
 
 export const partiesSelector = (state: RootState) => state.parties.value
+export const partiesImgIdSelector = (state: RootState) => state.parties.img_id
 export const partiesStatusSelector = (state: RootState) => state.parties.status
 export const partiesStateSelector = (state: RootState) => state.parties
 

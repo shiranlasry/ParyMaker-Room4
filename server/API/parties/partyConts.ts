@@ -1,8 +1,46 @@
 //parties controller  server side
-
 import express from 'express';
 import connection from "../../DB/database";
-import { RowDataPacket } from 'mysql2';
+import fs from 'fs';
+import { ResultSetHeader } from 'mysql2';
+
+export const saveImgtoDB = async (req: express.Request, res: express.Response) => {
+  try {
+    const file = req.file as Express.Multer.File;
+
+    if (!file) {
+      throw new Error('No file uploaded.');
+    }
+
+    const imagePath = `public/party-img/_${Date.now()}_${file.originalname}`;
+    fs.writeFileSync(imagePath, file.buffer);
+
+    const query = `
+      INSERT INTO party_maker.party_img (party_img_name)
+      VALUES (?);
+    `;
+
+    connection.query(query, [file.originalname], (err, results: ResultSetHeader, fields) => {
+      try {
+        if (err) throw err;
+
+        const imgId = results.insertId;
+        res.send({ ok: true, img_id: imgId });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+};
+
+
+
+
+
 
 
 export const getAllParties = async (req: express.Request, res: express.Response) => {
