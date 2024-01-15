@@ -1,5 +1,6 @@
 $navy: #000080;
 
+
 body {
   color: white;
   background-color: #0000801e;
@@ -10,10 +11,13 @@ body {
   background-size: cover;
 
   .loginForm {
-    margin: auto;
-    display: block;
-    padding: 0.5rem 4rem 0.5rem 4rem;
-    width: 200px;
+    margin: 6rem auto 0 auto;
+    padding: 20px;
+   display: flex;
+   flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
     background-color: rgba(255, 255, 255, 0.527);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -72,6 +76,13 @@ body {
     padding: 2px 4px;
     border-radius: 4px;
     font-family: "Courier New", monospace;
+  }
+
+  @media (max-width: 960px) {
+    .footer {
+      height: 300px;
+     margin-bottom: 0;
+    }
   }
 }
 
