@@ -60,8 +60,9 @@ const CreateNewPartyForm = () => {
   return (
     <div>
       <NavBar/>
-      <h2>Create New Party</h2>
+      
       <form className='partyForm' onSubmit={handleAddParty}>
+      <h2 className='createPartyTitle'>Create New Party</h2>
         <label>Party Name:</label>
         <input
           type="text"
@@ -97,13 +98,15 @@ const CreateNewPartyForm = () => {
         <label>Category Description:</label>
         {categories && (
           <select
+          className='select'
             name="party_category_id"
             value={newParty.party_category_id?.toString() || ''}
             onChange={handleInputChange}
           >
             <option value="">Select a category</option>
             {categories.map((category) => (
-              <option key={category.category_id} value={category.category_id}>
+              <option
+               key={category.category_id} value={category.category_id}>
                 {category.category_description}
               </option>
             ))}
@@ -111,8 +114,9 @@ const CreateNewPartyForm = () => {
         )}
 
 
-        <label>Party Description:</label>
+        <label >Party Description:</label>
         <textarea
+        className='bring'
           name="party_description"
           value={newParty.party_description}
           onChange={handleInputChange}

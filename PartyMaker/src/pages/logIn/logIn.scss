@@ -23,7 +23,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
     .loginTitle {
-      font-size: 40px;
+      font-size: 30px;
+      margin-bottom: 1rem;
       font-weight: bold;
       color: $navy;
     }
@@ -41,10 +42,11 @@ body {
       border-radius: 7px;
     }
 
-    .submitBtn {
+    .loginBtn {
       color: white;
       font-weight: bold;
       background-color: $navy;
+      padding: 10px;
 
       &:hover {
         font-size: 18px;

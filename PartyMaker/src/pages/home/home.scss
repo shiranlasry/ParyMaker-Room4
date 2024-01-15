@@ -1,14 +1,13 @@
 $navy: #000080;
 
-
- body, .HPcontainer {
+body,
+.HPcontainer {
   margin: auto;
   padding: 0;
   background-image: url(/src/imgs/confetti.png);
   font-family: "Quicksand", sans-serif;
   background-position: center center;
   background-size: cover;
-  
 }
 
 footer {
@@ -68,36 +67,24 @@ footer {
   }
 }
 
+.createPartyHP {
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  background-color: $navy;
+  border-radius: 12px;
+  color: white;
+  font-size: 20px;
 
-body {
-  // color: white;
-  // background-color: $navy;
-  // font-family: "Quicksand", sans-serif;
-  // background-color: #0000801e;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // min-height: 100vh;
-
-  .createPartyHP {
-    margin-bottom: .5rem;
-    padding: 10px;
-    background-color: $navy;
-    border-radius: 12px;
-    color: white;
-    font-size: 20px;
-
-    &:hover {
-      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
-        0 17px 50px 0 rgba(0, 0, 0, 0.19);
-      font-size: 21px;
-    }
+  &:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    font-size: 21px;
   }
+}
 
-  .upcoming {
-    font-size: 30px;
-  }
+.upcoming {
+  font-size: 30px;
+  margin-top: 3rem;
 }
 
 .error {
