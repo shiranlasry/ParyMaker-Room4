@@ -10,7 +10,6 @@ body {
   background-size: cover;
 
   .registerForm {
-    height: auto;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -34,7 +33,7 @@ body {
     }
 
     .registerTitle {
-      font-size: 40px;
+      font-size: 32px;
       font-weight: bold;
       color: $navy;
     }
@@ -45,6 +44,7 @@ body {
       border-radius: 12px;
       color: white;
       font-size: 17px;
+      padding: 10px;
 
       &:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),

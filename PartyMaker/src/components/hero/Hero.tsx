@@ -8,7 +8,7 @@ const Hero = () => {
             <div className="row">
                 <div className="wrappers">
                     <h1 className="font-weight-bold">Welcome to PartyPlanner. Plan your party at a click of a button.</h1>
-                    <p>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on PartyPlanner. Events are happening every day—sign up to join the fun.</p>
+                    <p className='appDescription'>Whatever your interest, from hiking and reading to networking and skill sharing, there are thousands of people who share it on PartyPlanner. Events are happening every day—sign up to join the fun.</p>
                 </div>
                     <div className="wrappers">
                         <img src="https://wallpapercave.com/wp/wp7713640.jpg" className='image-container rounded-top-right' alt="PartyPlanner" />
