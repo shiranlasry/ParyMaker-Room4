@@ -115,7 +115,7 @@ const Register = () => {
         </button>
       </form>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
