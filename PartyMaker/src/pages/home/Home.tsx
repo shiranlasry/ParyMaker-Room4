@@ -8,13 +8,11 @@ import { Footer } from "../../components/footer/Footer";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div className="container">
+    <>
+    <div className="HPcontainer">
       <NavBar />
-      
       <Hero />
-
       <h2 className="upcoming">Upcoming Events 📅</h2>
-
       <HOtParties />
       <button
         onClick={() => navigate("/addNewParty")}
@@ -22,8 +20,12 @@ const Home = () => {
       >
         Create Party 🎉
       </button>
-      <Footer />
+      
     </div>
+    <div className="footer">
+    <Footer />
+    </div>
+    </>
   );
 };
 
