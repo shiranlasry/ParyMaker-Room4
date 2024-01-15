@@ -33,7 +33,6 @@ export interface Party{
     party_creator_id: number| null;
     things_to_bring?: string;
     created_time: string;
-
 }
 export interface PartyType{
     partyType_id: number;

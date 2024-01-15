@@ -1,7 +1,8 @@
 
+//add party tsx client side 
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
-import { createParty } from '../../features/parties/partiesAPI';
+import { createParty, saveImgtoDB } from '../../features/parties/partiesAPI';
 import { Party } from '../../types-env';
 import './addNewParty.scss';
 import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
@@ -9,11 +10,17 @@ import { getAllCategories } from '../../features/party_categories/party_categori
 import { userSelector } from '../../features/loggedInUser/userSlice';
 import NavBar from '../../components/navBar/NavBar';
 import { Footer } from '../../components/footer/Footer';
+import { useNavigate } from 'react-router-dom';
+import { partiesImgIdSelector } from '../../features/parties/partiesSlice';
 
 const CreateNewPartyForm = () => {
   const createdDate = new Date();
+  const img_id=useAppSelector(partiesImgIdSelector)
   const dispatch = useAppDispatch();
+  const navigate= useNavigate();
+  const [file, setFile] = useState<File>();
   const user=useAppSelector(userSelector)
+  // const [file, setFile] = useState<File>();  
   const initialPartyState: Party = {
     party_id: null,
     party_name: '',
@@ -27,7 +34,7 @@ const CreateNewPartyForm = () => {
     party_creator_id: user? user.user_id: null,
     things_to_bring: "banana",
     // created_time: `${createdDate.getDate}`
-    created_time:`${createdDate.getFullYear()}-${createdDate.getMonth()+1}-${createdDate.getDate()}`
+    created_time:`${createdDate.getFullYear()}-${createdDate.getMonth()+1}-${createdDate.getDate()}`,       
   };
   const [newParty, setNewParty] = useState<Party>(initialPartyState);
   const categories = useAppSelector(partiesCategoriesSelector);
@@ -35,6 +42,10 @@ const CreateNewPartyForm = () => {
   useEffect(() => {
     dispatch(getAllCategories());
   },[] );
+const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    setFile(file);
+}
 
   const handleInputChange = ( e: React.ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > )=>{
     const { name, value } = e.target;
@@ -47,8 +58,17 @@ const CreateNewPartyForm = () => {
     try {
       
       if(!user) throw new Error('You must be logged in to create a party')
-      const updatedParty = { ...newParty, party_creator_id: user.user_id };
+      if(!file) throw new Error('You must upload an image')
+
+      const formData = new FormData();
+      formData.append('file', file);
+      dispatch(saveImgtoDB(formData));
+
+    if(!img_id) throw new Error('Image not found')
+      const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
+
       dispatch(createParty(updatedParty));
+      
       
     } catch (error) {
       console.error(error);
@@ -113,8 +133,7 @@ const CreateNewPartyForm = () => {
           </select>
         )}
 
-
-        <label >Party Description:</label>
+        <label>Party Description:</label>
         <textarea
         className='bring'
           name="party_description"
@@ -129,9 +148,13 @@ const CreateNewPartyForm = () => {
           value={newParty.party_price?.toString() || ''}
           onChange={handleInputChange}
         />
-
-        {/* Add more form fields for other party details */}
-
+        <label>Add Image Party:</label>
+        <input
+          type="file"
+          name="party_image_id"
+          onChange={handleFileChange}
+        />
+    
         <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
 

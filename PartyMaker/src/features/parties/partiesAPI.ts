@@ -37,3 +37,19 @@ export const createParty = createAsyncThunk<Party[], Party>(
       }
     }
   );
+  export const saveImgtoDB = createAsyncThunk<number, FormData>(
+    'save-img-to-db',
+    async (imgData) => {
+      try {
+        const response = await axios.post("/api/parties/save-img-to-db", imgData);
+        const { ok, results } = response.data;
+        if (!ok) {
+          throw new Error("Error creating party");
+        }
+        return results;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }
+  );
