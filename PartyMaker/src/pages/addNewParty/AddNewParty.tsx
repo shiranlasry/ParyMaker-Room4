@@ -42,10 +42,10 @@ const CreateNewPartyForm = () => {
   useEffect(() => {
     dispatch(getAllCategories());
   },[] );
-const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setFile(file);
-}
+  }
 
   const handleInputChange = ( e: React.ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > )=>{
     const { name, value } = e.target;
@@ -53,29 +53,31 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
   // const parties = useAppSelector(partiesSelector);
 
-  const handleAddParty = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleAddParty = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     try {
-      
-      if(!user) throw new Error('You must be logged in to create a party')
-      if(!file) throw new Error('You must upload an image')
-
+      if (!user) throw new Error('You must be logged in to create a party');
+      if (!file) throw new Error('You must upload an image');
+  
       const formData = new FormData();
       formData.append('file', file);
-      dispatch(saveImgtoDB(formData));
-
-    if(!img_id) throw new Error('Image not found')
+  
+      await dispatch(saveImgtoDB(formData));
+ debugger
+      if(!img_id) throw new Error('Image not saved to DB');
       const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
-
-      dispatch(createParty(updatedParty));
-      
-      
+  
+      await dispatch(createParty(updatedParty));
+  
+      setNewParty(initialPartyState);
+      setFile(undefined);
     } catch (error) {
-      console.error(error);
-      
+      console.error(error.message);
     }
-   
   };
+  
+  
+  
 
   return (
     <div>
@@ -149,12 +151,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           onChange={handleInputChange}
         />
         <label>Add Image Party:</label>
-        <input
-          type="file"
-          name="party_image_id"
-          onChange={handleFileChange}
-        />
-    
+        <input type="file" name="file" onChange={handleFileChange} />
         <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
 
