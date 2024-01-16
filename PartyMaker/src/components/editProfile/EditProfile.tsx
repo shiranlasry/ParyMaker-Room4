@@ -1,9 +1,17 @@
 import { useState } from "react";
+import "../editProfile/editProfile.scss"
+import { User } from "../../types-env";
 
-const EditProfileModal = ({ user, onSave, onClose }) => {
+interface EditProfileModalProps {
+  user: User;
+  onSave: (editedUser: User) => void;
+  onClose: () => void;
+}
+
+const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClose }) => {
   const [editedUser, setEditedUser] = useState({ ...user });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditedUser({ ...editedUser, [name]: value });
   };
@@ -14,9 +22,10 @@ const EditProfileModal = ({ user, onSave, onClose }) => {
   };
 
   return (
-    <div className="edit-profile-modal">
-      <h2>Edit Profile</h2>
-      <form>
+    <div className="editProfileWrap">
+      
+      <form className="editProfileForm">
+      <h2 className="editProTitle">Edit Profile</h2>
         <label>Email:</label>
         <input
           type="email"
@@ -66,12 +75,14 @@ const EditProfileModal = ({ user, onSave, onClose }) => {
           value={editedUser.address}
           onChange={handleInputChange}
         />
-        <button type="button" onClick={handleSave}>
+        <div>
+        <button className="saveBtn" type="button" onClick={handleSave}>
           Save
         </button>
-        <button type="button" onClick={onClose}>
+        <button className="cancelBtn" type="button" onClick={onClose}>
           Cancel
         </button>
+        </div>
       </form>
     </div>
   );

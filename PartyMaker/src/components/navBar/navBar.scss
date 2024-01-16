@@ -1,7 +1,9 @@
 $font: white;
 
-
-
+*{ 
+  font-family: "Quicksand", sans-serif;
+  
+}
 
 .navbar {
   background-color: #000080;
@@ -25,6 +27,7 @@ $font: white;
     font-weight: 800;
     background-color: #000080;
     outline: none;
+    border: none;
 
     &:focus {
       box-shadow: none;
@@ -40,8 +43,6 @@ $font: white;
       outline: none;
       border-radius: 7px;
       padding: 10px;
-      
-
     }
   }
 
@@ -92,6 +93,7 @@ $font: white;
       justify-content: center;
       width: 100%;
       outline: none;
+      margin-bottom: 1rem;
 
       button {
         margin: 0.3rem;
@@ -107,7 +109,6 @@ $font: white;
     // .greet {
     //   display: none;
 
-    
     // }
 
     button {
@@ -115,9 +116,7 @@ $font: white;
     }
 
     .greetBtn {
-      font-size: 15px;
+      font-size: 17px;
     }
-
-   
   }
 }
