@@ -11,16 +11,16 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
     if (!file) {
       throw new Error('No file uploaded.');
     }
-
-    const imagePath = `public/party-img/_${Date.now()}_${file.originalname}`;
+    const file_name = `${Date.now()}_${file.originalname}`;
+    const imagePath = `public/party-img/${file_name}`;
     fs.writeFileSync(imagePath, file.buffer);
 
     const query = `
       INSERT INTO party_maker.party_img (party_img_name)
       VALUES (?);
     `;
-
-    connection.query(query, [file.originalname], (err, results: ResultSetHeader, fields) => {
+    
+    connection.query(query, [file_name], (err, results: ResultSetHeader, fields) => {
       try {
         if (err) throw err;
 

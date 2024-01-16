@@ -15,11 +15,11 @@ import { partiesImgIdSelector } from '../../features/parties/partiesSlice';
 
 const CreateNewPartyForm = () => {
   const createdDate = new Date();
-  const img_id=useAppSelector(partiesImgIdSelector)
   const dispatch = useAppDispatch();
   const navigate= useNavigate();
   const [file, setFile] = useState<File>();
   const user=useAppSelector(userSelector)
+  const img_id=useAppSelector(partiesImgIdSelector)
   // const [file, setFile] = useState<File>();  
   const initialPartyState: Party = {
     party_id: null,
@@ -61,10 +61,16 @@ const CreateNewPartyForm = () => {
   
       const formData = new FormData();
       formData.append('file', file);
-  
-      await dispatch(saveImgtoDB(formData));
- debugger
-      if(!img_id) throw new Error('Image not saved to DB');
+
+    const response = await dispatch(saveImgtoDB(formData));
+    debugger
+   // Access img_id after the Promise has resolved
+   const img_id = (response.payload as { img_id: number }).img_id || null;
+    console.log( `handleAddParty  img_id : ${img_id}`)
+
+    if (!img_id ) {
+      throw new Error('Error saving image to DB');
+    }
       const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
   
       await dispatch(createParty(updatedParty));
@@ -72,7 +78,7 @@ const CreateNewPartyForm = () => {
       setNewParty(initialPartyState);
       setFile(undefined);
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   };
   
