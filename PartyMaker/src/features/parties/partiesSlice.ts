@@ -53,9 +53,7 @@ export const partiesSlice = createSlice({
             state.status = Status.LOADING;
           })
           .addCase(saveImgtoDB.fulfilled, (state, action) => {
-                state.status = Status.IDLE;
-                // Assuming createParty will return the updated list of parties
-                debugger
+                state.status = Status.IDLE; 
                 state.img_id = action.payload.img_id;
             })  
           .addCase(saveImgtoDB.rejected, (state) => {

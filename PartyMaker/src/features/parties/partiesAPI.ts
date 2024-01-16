@@ -24,7 +24,7 @@ export const createParty = createAsyncThunk<Party[], Party>(
     'create-party',
     async (partyData) => {
       try {
-        debugger  
+          
         const response = await axios.post("/api/parties/create-party", partyData);
         const { ok, results } = response.data;
         if (!ok) {
@@ -43,14 +43,14 @@ export const createParty = createAsyncThunk<Party[], Party>(
       try {
         const response = await axios.post("/api/parties/save-img-to-db", file);
         console.log(response)
-        debugger
-        const { ok, results } = response.data;
+        
+        const { ok, img_id } = response.data;
   
         if (!ok) {
           throw new Error("Error creating party");
         }
-  
-        return { ok, img_id: results.img_id };
+        
+        return { ok, img_id };
       } catch (error) {
         console.error(error);
         throw error;
