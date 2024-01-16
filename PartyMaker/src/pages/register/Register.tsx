@@ -43,8 +43,12 @@ const Register = () => {
       if (!resultAction.payload)  {
         console.log("Invalid credentials");
         setErrorMessage("Invalid credentials"); // Set error message state
+      } else {
+        console.log("Registration successful. User data:", resultAction.payload);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Registration error:", error);
+    }
   };
   return (
     <div className="registerMain">

@@ -1,23 +1,45 @@
 $navy: #000080;
 
-.UserWrapper {
+.userWrapper {
   margin-top: 5rem;
-  
+
   h2 {
     margin: 2.5rem;
   }
-}
 
-.createPartyUP {
+  .userDetails {
+    p {
+      margin: 0.6rem;
+    }
+  }
+
+  .editProfileBtn {
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 7px;
+    color: white;
+    font-weight: bold;
+    background-color: #000080;
+    border: none;
+
+    &:hover {
+      font-size: 18px;
+      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+    
+  }
+  .createPartyUP {
     background-color: $navy;
     border-radius: 12px;
     color: white;
     font-size: 22px;
     padding: 10px;
-    
+
     &:hover {
-        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
-          0 17px 50px 0 rgba(0, 0, 0, 0.19);
-        font-weight: bold;
-      }
+      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      font-weight: bold;
+    }
+  }
 }

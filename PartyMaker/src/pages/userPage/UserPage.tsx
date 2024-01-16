@@ -1,63 +1,78 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar/NavBar";
 import { useAppSelector } from "../../app/hook";
-import { Party, User } from "../../types-env";
+import { User } from "../../types-env";
 import "./userPage.scss";
-import PartyCard from "../../components/partyCard/PartyCard";
+import "../../components/editProfile/editProfile.scss";
 import { Footer } from "../../components/footer/Footer";
+import EditProfileModal from "../../components/editProfile/EditProfile";
 
-const UserPage = () => {
-  const navigate = useNavigate();
+const UserPage: React.FC = () => {
   const user: User | null = useAppSelector((state) => state.user.value);
-  const [userParties, setUserParties] = useState<Party[]>([]);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserParties = async () => {
+    const fetchUserDetails = async () => {
       if (user) {
         try {
-          const response = await fetch(
-            `/api/parties/get-user-parties/${user.user_id}`
-          );
+          const response = await fetch(`/party_maker/api/users/${user.user_id}`);
           const data = await response.json();
-          setUserParties(data.parties);
+          // Assuming data contains the complete user details
+          console.log("User Details:", data);
         } catch (error) {
           console.error(error);
         }
       }
     };
 
-    fetchUserParties();
+    fetchUserDetails();
   }, [user]);
 
+  const handleSaveProfile = async (editedUser: User) => {
+    try {
+      // Handle the logic to save the edited user profile
+      // You may need to send a request to the server to update the user details
+      console.log("Saving user profile:", editedUser);
+      // Example: Send a request to update the user details
+      // await updateUserProfileApi(editedUser);
+      setShowEditProfile(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEditProfile = () => {
+    setShowEditProfile(true);
+  };
+
+  const handleCloseEditProfile = () => {
+    setShowEditProfile(false);
+  };
+
   return (
-    <div className="UserWrapper">
+    <div className="userWrapper">
       <NavBar />
       <h2>My Profile</h2>
-      <h2>My Events</h2>
-          {/* in process - 11.1.2024 - editProfile.tsx components is going to 
-      go here and make the profile edit possible */}
-      <h2>Parties I joined</h2>
-      {/* The parties the user joined will be rendered here */}
-      <button
-        onClick={() => navigate("/addNewParty")}
-        className="createPartyUP"
-      >
-        Create Party 🎉
-      </button>
-
-      {/* Display parties created by the user */}
-      <div className="userParties">
-        {userParties.map((party) => (
-          <div key={party.party_id} className="partyItem">
-            <h3>{party.partyName}</h3>
-            <PartyCard party={party} />
-            <button onClick={() => navigate(`/editParty/${party.party_id}`)}>
-              Edit Party 🎉
-            </button>
-          </div>
-        ))}
+      {/* Display user details here */}
+      <div className="userDetails">
+      <p>Porfil Picture: </p>
+        <p>Name: {user?.firstName} {user?.lastName}</p>
+        <p>Email: {user?.email}</p>
+        <p>Username: {user?.username}</p>
+        <p>Phone Number: {user?.phoneNumber}</p>
+        <p>Address: {user?.address}</p>
       </div>
+
+      <button className="editProfileBtn" onClick={handleEditProfile}>
+        Edit Profile
+      </button>
+      {showEditProfile && (
+        // Use the non-null assertion operator (!) here
+        <EditProfileModal user={user!} onSave={handleSaveProfile} onClose={handleCloseEditProfile} />
+      )}
+      <h2>My Events</h2>
       <Footer />
     </div>
   );
