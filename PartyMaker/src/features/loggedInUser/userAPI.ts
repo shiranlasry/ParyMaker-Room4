@@ -24,7 +24,7 @@ export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-u
     }
 })
 
-export const registerUserApi = createAsyncThunk<User | null>('register-user', async (arg) => {
+export const registerUserApi = createAsyncThunk<User | null,User>('register-user', async (arg) => {
     try {
         const response = await axios.post("/api/users/register", arg);
 
@@ -66,6 +66,21 @@ export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
             throw new Error("Invalid credentials deleteTokenApi()");
         }
         return null;
+
+    } catch (error) {
+        console.error(error) // this is temporary
+        return null;
+    }
+})
+export const editUserApi = createAsyncThunk<User | null, User>('edit-user', async (arg) => {
+    try {
+        const response = await axios.put("/api/users/edit-user", arg);
+        debugger
+        const { ok, user } = response.data;
+        if (!ok) {
+            throw new Error("Invalid credentials editUserApi()");
+        }
+        return user;
 
     } catch (error) {
         console.error(error) // this is temporary

@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar/NavBar";
-import { useAppSelector } from "../../app/hook";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { User } from "../../types-env";
 import "./userPage.scss";
 import "../../components/editProfile/editProfile.scss";
 import { Footer } from "../../components/footer/Footer";
 import EditProfileModal from "../../components/editProfile/EditProfile";
 import { userSelector } from "../../features/loggedInUser/userSlice";
+import { editUserApi } from "../../features/loggedInUser/userAPI";
+
 
 const UserPage: React.FC = () => {
   const user: User | null = useAppSelector(userSelector);
-  const [showEditProfile, setShowEditProfile] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [showEditProfile, setShowEditProfile] = useState(false);
+ 
 
   const handleSaveProfile = async (editedUser: User) => {
     try {
-      // Handle the logic to save the edited user profile
-      // You may need to send a request to the server to update the user details
-      console.log("Saving user profile:", editedUser);
-      // Example: Send a request to update the user details
-      // await updateUserProfileApi(editedUser);
+     const respons = await dispatch(editUserApi(editedUser))
+     if (respons) {
+       alert("Profile updated successfully");
+       navigate("/");
+      }
+   
       setShowEditProfile(false);
     } catch (error) {
       console.error(error);
@@ -44,11 +49,13 @@ const UserPage: React.FC = () => {
     <div className="user-page__details">
     {user ? (
           <>
-            <h1>{user.email}</h1>
-            <h1>{user.first_name}</h1>
-            <h1>{user.last_name}</h1>
-            <h1>{user.address}</h1>
-            <h1>{user.phone_number}</h1>
+            <h1>Personal Information</h1>
+            <h2>{user.username}</h2>
+            <h2>{user.email}</h2>
+            <h2>{user.first_name}</h2>
+            <h2>{user.last_name}</h2>
+            <h2>{user.address}</h2>
+            <h2>{user.phone_number}</h2>
             
           </>
         ) : (

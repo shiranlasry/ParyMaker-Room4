@@ -6,7 +6,8 @@ import Page404 from './pages/page404/Page404'
 import LogIn from './pages/logIn/LogIn'
 import Register from './pages/register/Register'
 import AddNewParty from './pages/addNewParty/AddNewParty'
-import UserPage from './pages/userPage/userPage';
+import UserPage from './pages/userPage/UserPage'
+import PartyPage from './pages/partyPage/PartyPage' 
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     { path: "/addNewParty", element: <AddNewParty />},
     { path: "/userPage", element: <UserPage />},
     { path: "*", element: <Page404 /> },
+    { path: "/partyPage", element: <PartyPage />},
   ])
 
   return (

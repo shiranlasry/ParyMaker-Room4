@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { logInUserApi, getUserFromTokenApi, registerUserApi,deleteTokenApi } from "./userAPI"
+import { logInUserApi,editUserApi, getUserFromTokenApi, registerUserApi,deleteTokenApi } from "./userAPI"
 import {  User } from "../../types-env"
 
 
@@ -80,6 +80,16 @@ export const userSlice = createSlice({
             state.value = null;
         })
         .addCase(deleteTokenApi.rejected, (state) => {
+            state.status = Status.FAILED
+        })
+        .addCase(editUserApi.pending, (state) => {
+            state.status = Status.LOADING
+        })
+        .addCase(editUserApi.fulfilled, (state, action) => {
+            state.status = Status.IDLE;
+            state.value = action.payload
+        })
+        .addCase(editUserApi.rejected, (state) => {
             state.status = Status.FAILED
         })
     }

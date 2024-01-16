@@ -2,7 +2,7 @@ export interface User {
   user_id: number | null;
   email: string;
   password: string;
-  user_name: string;
+  username: string;
   first_name: string;
   last_name: string;
   phone_number: string;

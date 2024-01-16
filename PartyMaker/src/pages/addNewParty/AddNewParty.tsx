@@ -32,7 +32,7 @@ const CreateNewPartyForm = () => {
     party_price:  null,
     party_image_id:1,
     party_creator_id: user? user.user_id: null,
-    things_to_bring: "banana",
+    things_to_bring: "nothing",
     // created_time: `${createdDate.getDate}`
     created_time:`${createdDate.getFullYear()}-${createdDate.getMonth()+1}-${createdDate.getDate()}`,       
   };
@@ -63,11 +63,9 @@ const CreateNewPartyForm = () => {
       formData.append('file', file);
 
     const response = await dispatch(saveImgtoDB(formData));
-    debugger
    // Access img_id after the Promise has resolved
    const img_id = (response.payload as { img_id: number }).img_id || null;
-    console.log( `handleAddParty  img_id : ${img_id}`)
-
+    
     if (!img_id ) {
       throw new Error('Error saving image to DB');
     }
@@ -75,8 +73,10 @@ const CreateNewPartyForm = () => {
   
       await dispatch(createParty(updatedParty));
   
-      setNewParty(initialPartyState);
-      setFile(undefined);
+      // setNewParty(initialPartyState);
+      // setFile(undefined);
+      alert('Party created successfully');
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
@@ -157,7 +157,18 @@ const CreateNewPartyForm = () => {
           onChange={handleInputChange}
         />
         <label>Add Image Party:</label>
-        <input type="file" name="file" onChange={handleFileChange} />
+        <input type="file"
+         name="file"
+         onChange={handleFileChange}
+        />
+        <label>Things to Bring:</label>
+        <textarea
+        className='bring'
+          name="things_to_bring"
+          value={newParty.things_to_bring}
+          onChange={handleInputChange}
+        ></textarea>
+
         <button className="createPartyBtn" type="submit">Create Party</button>
       </form>
 

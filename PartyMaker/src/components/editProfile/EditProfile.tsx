@@ -12,6 +12,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClo
   const [editedUser, setEditedUser] = useState({ ...user });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
     const { name, value } = e.target;
     setEditedUser({ ...editedUser, [name]: value });
   };
@@ -33,14 +34,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClo
           value={editedUser.email}
           onChange={handleInputChange}
         />
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={editedUser.password}
-          onChange={handleInputChange}
-        />
-        <label>Username:</label>
+        <label>User Name:</label>
         <input
           type="text"
           name="username"
@@ -50,22 +44,22 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClo
         <label>First Name:</label>
         <input
           type="text"
-          name="firstName"
-          value={editedUser.firstName}
+          name="first_name"
+          value={editedUser.first_name}
           onChange={handleInputChange}
         />
         <label>Last Name:</label>
         <input
           type="text"
-          name="lastName"
-          value={editedUser.lastName}
+          name="last_name"
+          value={editedUser.last_name}
           onChange={handleInputChange}
         />
         <label>Phone Number:</label>
         <input
           type="text"
-          name="phoneNumber"
-          value={editedUser.phoneNumber}
+          name="phone_number"
+          value={editedUser.phone_number}
           onChange={handleInputChange}
         />
         <label>Address:</label>

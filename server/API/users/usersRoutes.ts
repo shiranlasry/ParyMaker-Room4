@@ -3,7 +3,7 @@
 
 
 import express from "express";
-import { getAllUsers, loginUser, registerUser,getUserFromToken,deleteToken } from "./usersCtrl";
+import { getAllUsers,updateUser, loginUser, registerUser,getUserFromToken,deleteToken } from "./usersCtrl";
 
 
 const router = express.Router()
@@ -14,6 +14,7 @@ router
 .post("/login", loginUser)
 .post("/register", registerUser)
 .delete("/delete-token",deleteToken )
+.put("/edit-user", updateUser)
 ;
 
 

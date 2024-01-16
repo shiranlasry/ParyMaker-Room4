@@ -12,9 +12,9 @@ interface User {
   email: string;
   password: string;
   username: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
   address: string;
   role: string;
 
@@ -201,3 +201,53 @@ export const deleteToken = async (req: express.Request, res: express.Response) =
     res.status(500).send({ ok: false, error });
   }
 }
+export const updateUser = async (req: express.Request, res: express.Response) => {
+  try {
+    const {user_id, email, username, first_name, last_name, phone_number, address } = req.body;
+    if (!email  || !username || !first_name || !last_name || !phone_number || !address ) {
+      res.status(400).send({ ok: false, error: 'Missing detais updateUser()' });
+      return;
+    }
+   console.log("user_id from updateUser() ", user_id)
+    const query = `
+        UPDATE party_maker.users SET email = ?, username = ?, first_name = ?, last_name = ?, phone_number = ?, address = ?
+        WHERE user_id = ?;
+      `;
+    connection.query(
+      query,
+      [email, username, first_name, last_name, phone_number, address,user_id],
+      async (err, resultsAdd: any, fields) => {
+        try {
+          if (err) throw err;
+
+          const insertedUserId = resultsAdd.insertId;
+          if (!insertedUserId) throw new Error('No user ID returned updateUser()');
+          
+
+          // Retrieve the inserted user from the database
+          const selectQuery = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+
+          connection.query(selectQuery, [insertedUserId], (selectErr, selectResults: RowDataPacket[], selectFields) => {
+            if (selectErr) throw selectErr;
+
+            const user = selectResults[0] as User;
+            const cookie = { user_id: user.user_id };
+            const secret = process.env.SECRET_KEY;
+            const token = jwt.sign(cookie, secret, {
+              expiresIn: '1h', // Set the expiration time as needed
+            });
+            // Set the token in a cookie
+            res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
+            res.send({ ok: true, user });
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ ok: false, error });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+};

@@ -37,12 +37,6 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
   }
 };
 
-
-
-
-
-
-
 export const getAllParties = async (req: express.Request, res: express.Response) => {
   try {
     const query = `

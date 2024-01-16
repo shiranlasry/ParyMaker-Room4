@@ -14,9 +14,9 @@ const Register = () => {
     email: "",
     password: "",
     username: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
     address: "",
     role: "user",
   };
@@ -25,10 +25,13 @@ const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
-  const handleInputChange = ( e: React.ChangeEvent< HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement > )=>{
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
+  
 
   useEffect(() => {
     if (user) {
@@ -83,24 +86,24 @@ const Register = () => {
         <label>First Name:</label>
         <input
           type="text"
-          name="firstName"
-          value={newUser.firstName}
+          name="first_name"
+          value={newUser.first_name}
           onChange={handleInputChange}
           required
         />
         <label>Last Name:</label>
         <input
           type="text"
-          name="lastName"
-          value={newUser.lastName}
+          name="last_name"
+          value={newUser.last_name}
           onChange={handleInputChange}
           required
         />
         <label>Phone Number:</label>
         <input
           type="text"
-          name="phoneNumber"
-          value={newUser.phoneNumber}
+          name="phone_number"
+          value={newUser.phone_number}
           onChange={handleInputChange}
           required
         />
