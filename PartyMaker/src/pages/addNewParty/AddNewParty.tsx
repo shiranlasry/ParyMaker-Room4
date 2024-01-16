@@ -76,7 +76,7 @@ const CreateNewPartyForm = () => {
       // setNewParty(initialPartyState);
       // setFile(undefined);
       alert('Party created successfully');
-      navigate('/');
+      navigate('/partyPage');
     } catch (error) {
       console.error(error);
     }
