@@ -109,8 +109,8 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
 
 export const registerUser = async (req: express.Request, res: express.Response) => {
   try {
-    const { email, password, username, firstName, lastName, phoneNumber, address, role } = req.body;
-    if (!email || !password || !username || !firstName || !lastName || !phoneNumber || !address || !role) {
+    const { email, password, username, first_name, last_name, phone_number, address, role } = req.body;
+    if (!email || !password || !username || !first_name || !last_name || !phone_number || !address || !role) {
       res.status(400).send({ ok: false, error: 'Missing detais registerUser()' });
       return;
     }
@@ -126,14 +126,14 @@ export const registerUser = async (req: express.Request, res: express.Response) 
       `;
     connection.query(
       query,
-      [email, hash, username, firstName, lastName, phoneNumber, address, role],
+      [email, hash, username, first_name, last_name, phone_number, address, role],
       async (err, resultsAdd: any, fields) => {
         try {
           if (err) throw err;
 
           const insertedUserId = resultsAdd.insertId;
           if (!insertedUserId) throw new Error('No user ID returned registerUser()');
-          console.log("insertedUserId", insertedUserId)
+          
 
           // Retrieve the inserted user from the database
           const selectQuery = `SELECT * FROM party_maker.users WHERE user_id = ?;`;

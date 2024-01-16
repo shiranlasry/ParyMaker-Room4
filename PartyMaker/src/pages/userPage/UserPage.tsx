@@ -7,28 +7,12 @@ import "./userPage.scss";
 import "../../components/editProfile/editProfile.scss";
 import { Footer } from "../../components/footer/Footer";
 import EditProfileModal from "../../components/editProfile/EditProfile";
+import { userSelector } from "../../features/loggedInUser/userSlice";
 
 const UserPage: React.FC = () => {
-  const user: User | null = useAppSelector((state) => state.user.value);
+  const user: User | null = useAppSelector(userSelector);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (user) {
-        try {
-          const response = await fetch(`/party_maker/api/users/${user.user_id}`);
-          const data = await response.json();
-          // Assuming data contains the complete user details
-          console.log("User Details:", data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    fetchUserDetails();
-  }, [user]);
 
   const handleSaveProfile = async (editedUser: User) => {
     try {
@@ -52,20 +36,36 @@ const UserPage: React.FC = () => {
   };
 
   return (
-    <div className="userWrapper">
-      <NavBar />
-      <h2>My Profile</h2>
-      {/* Display user details here */}
-      <div className="userDetails">
-      <p>Porfil Picture: </p>
-        <p>Name: {user?.firstName} {user?.lastName}</p>
-        <p>Email: {user?.email}</p>
-        <p>Username: {user?.username}</p>
-        <p>Phone Number: {user?.phoneNumber}</p>
-        <p>Address: {user?.address}</p>
-      </div>
+ <div className="user-page-main">
+    <NavBar />
+  <div className="user-page">
+    
 
-      <button className="editProfileBtn" onClick={handleEditProfile}>
+    <div className="user-page__details">
+    {user ? (
+          <>
+            <h1>{user.email}</h1>
+            <h1>{user.first_name}</h1>
+            <h1>{user.last_name}</h1>
+            <h1>{user.address}</h1>
+            <h1>{user.phone_number}</h1>
+            
+          </>
+        ) : (
+          <>
+           <p>no user found</p>
+          </>
+        )}
+    
+        
+
+    </div>
+    <div className="user-page__prties"></div>
+
+    </div>
+
+
+    <button className="editProfileBtn" onClick={handleEditProfile}>
         Edit Profile
       </button>
       {showEditProfile && (
@@ -73,7 +73,6 @@ const UserPage: React.FC = () => {
         <EditProfileModal user={user!} onSave={handleSaveProfile} onClose={handleCloseEditProfile} />
       )}
       <h2>My Events</h2>
-      <Footer />
     </div>
   );
 };
