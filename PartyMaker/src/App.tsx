@@ -20,7 +20,7 @@ function App() {
     { path: "/addNewParty", element: <AddNewParty />},
     { path: "/userPage", element: <UserPage />},
     { path: "*", element: <Page404 /> },
-    { path: "/partyPage", element: <PartyPage />},
+    { path: "/partyPage/:party_id", element: <PartyPage />},
   ])
 
   return (

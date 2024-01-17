@@ -2,7 +2,7 @@
 import express from 'express';
 import connection from "../../DB/database";
 import fs from 'fs';
-import { ResultSetHeader } from 'mysql2';
+import { OkPacket, ResultSetHeader } from 'mysql2';
 
 export const saveImgtoDB = async (req: express.Request, res: express.Response) => {
   try {
@@ -99,7 +99,6 @@ export const createNewParty = async (req: express.Request, res: express.Response
     if (
       !party_name ||
       !party_date ||
-      
       !party_location ||
       !party_category_id ||
       !party_description ||
@@ -134,10 +133,29 @@ export const createNewParty = async (req: express.Request, res: express.Response
         things_to_bring,
         created_time,
       ],
-      (err, results, fields) => {
+      async (err, results: any, fields) => {
         try {
           if (err) throw err;
-          res.send({ ok: true, results });
+          const partyId = results.insertId;
+          const selectQuery = `
+            SELECT p.*, pc.category_description
+            FROM party_maker.parties p
+            JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+            WHERE p.party_id = ?;
+          `;
+          connection.query(selectQuery, [partyId], (selectErr, selectResults, selectFields) => {
+            try {
+              if (selectErr) throw selectErr;
+              res.send({ ok: true, incomingParty: selectResults[0] });
+              
+            } catch (error) {
+              console.error(error);
+              res.status(500).send({ ok: false, error });
+              
+            }
+           
+          });
+
         } catch (error) {
           console.error(error);
           res.status(500).send({ ok: false, error });
@@ -149,4 +167,36 @@ export const createNewParty = async (req: express.Request, res: express.Response
     res.status(500).send({ ok: false, error });
   }
 };
+
+
+export const getPartyById = async (req: express.Request, res: express.Response) => {
+  try {
+    const { party_id } = req.params;
+
+    const query = `
+      SELECT p.*, pc.category_description
+      FROM party_maker.parties p
+      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+      WHERE p.party_id = ?;
+    `;
+
+    connection.query(query, [party_id], (err, results:any, fields) => {
+      try {
+        if (err) throw err;
+        if (results.length === 0) {
+          res.status(404).send({ ok: false, error: "Party not found" });
+        } else {
+          res.send({ ok: true, result: results[0] });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+};
+
 

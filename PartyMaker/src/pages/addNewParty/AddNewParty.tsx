@@ -11,7 +11,7 @@ import { userSelector } from '../../features/loggedInUser/userSlice';
 import NavBar from '../../components/navBar/NavBar';
 import { Footer } from '../../components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import { partiesImgIdSelector } from '../../features/parties/partiesSlice';
+import { partiesImgIdSelector ,incomingPartySelector} from '../../features/parties/partiesSlice';
 
 const CreateNewPartyForm = () => {
   const createdDate = new Date();
@@ -20,6 +20,7 @@ const CreateNewPartyForm = () => {
   const [file, setFile] = useState<File>();
   const user=useAppSelector(userSelector)
   const img_id=useAppSelector(partiesImgIdSelector)
+  const incomingParty=useAppSelector(incomingPartySelector) 
   // const [file, setFile] = useState<File>();  
   const initialPartyState: Party = {
     party_id: null,
@@ -71,12 +72,14 @@ const CreateNewPartyForm = () => {
     }
       const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
   
-      await dispatch(createParty(updatedParty));
+      const responseCreateParty= await dispatch(createParty(updatedParty));
   
       // setNewParty(initialPartyState);
       // setFile(undefined);
+      debugger
       alert('Party created successfully');
-      navigate('/partyPage');
+      const incomingParty = responseCreateParty.payload as Party;
+      navigate(`/partyPage/${incomingParty?.party_id}`);
     } catch (error) {
       console.error(error);
     }

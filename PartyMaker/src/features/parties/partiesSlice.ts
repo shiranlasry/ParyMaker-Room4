@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
-import { createParty, getAllParties ,saveImgtoDB} from "./partiesAPI";
+import { createParty, getAllParties ,saveImgtoDB,getPartyById} from "./partiesAPI";
 
 
 enum Status {
@@ -13,11 +13,13 @@ enum Status {
 interface PartiesState {
     value: Party []| null,
     img_id: number | null,
+    incomingParty: Party | null,    
     status: Status
 }
 const initialState: PartiesState = {
     value: null,
-    img_id: 1111111123,
+    img_id: null,
+    incomingParty: null,
     status: Status.IDLE
 }
 export const partiesSlice = createSlice({
@@ -44,7 +46,7 @@ export const partiesSlice = createSlice({
           .addCase(createParty.fulfilled, (state, action) => {
             state.status = Status.IDLE;
             // Assuming createParty will return the updated list of parties
-            state.value = action.payload;
+            state.incomingParty = action.payload;
           })
           .addCase(createParty.rejected, (state) => {
             state.status = Status.FAILED;
@@ -58,12 +60,25 @@ export const partiesSlice = createSlice({
             })  
           .addCase(saveImgtoDB.rejected, (state) => {
                 state.status = Status.FAILED;
-            });
+            })
+            .addCase(getPartyById.pending, (state) => {
+                state.status = Status.LOADING;
+              })
+              .addCase(getPartyById.fulfilled, (state, action) => {
+                state.status = Status.IDLE;
+                debugger
+                state.incomingParty = action.payload;
+              })
+              .addCase(getPartyById.rejected, (state) => {
+                state.status = Status.FAILED;
+              });
+            
     }
 })
 
 export const partiesSelector = (state: RootState) => state.parties.value
 export const partiesImgIdSelector = (state: RootState) => state.parties.img_id
+export const incomingPartySelector = (state: RootState) => state.parties.incomingParty
 export const partiesStatusSelector = (state: RootState) => state.parties.status
 export const partiesStateSelector = (state: RootState) => state.parties
 
