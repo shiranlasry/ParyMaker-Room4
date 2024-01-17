@@ -22,7 +22,9 @@ const NavBar = () => {
     if (!user) dispatch(getUserFromTokenApi());
     if (!parties) dispatch(getAllParties());
   }, []);
-
+ const hendalAdminPage = () => {
+    navigate(`/admin/${user?.user_id}`);
+ }
   const handelLogout = () => {
     dispatch(deleteTokenApi());
     navigate("/");
@@ -45,12 +47,14 @@ const NavBar = () => {
             </button>
             <button onClick={() => navigate("/")}>Home</button>
             <button onClick={handelLogout}>Logout</button>
+            {user.role === "admin" && <button onClick={hendalAdminPage}>Admin</button>}
           </>
         ) : (
           <>
             <button onClick={() => navigate("/login")}>Login</button>
             <button onClick={() => navigate("/register")}>Register</button>
             <button onClick={() => navigate("/")}>Home</button>
+
           </>
         )}
       </div>

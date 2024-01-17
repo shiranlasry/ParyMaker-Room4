@@ -8,6 +8,9 @@ import Register from './pages/register/Register'
 import AddNewParty from './pages/addNewParty/AddNewParty'
 import UserPage from './pages/userPage/UserPage'
 import PartyPage from './pages/partyPage/PartyPage' 
+import AdminMain from './pages/admin-main/AdminMain'
+import AdminParties from './components/admin-paries/AdminParties'
+import AdminUsers from './components/admin-users/AdminUsers'  
 
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
     { path: "/userPage", element: <UserPage />},
     { path: "*", element: <Page404 /> },
     { path: "/partyPage/:party_id", element: <PartyPage />},
+    { path: "/admin/:user_id", element: <AdminMain />},
+    { path: "/admin/parties", element: <AdminParties />},
+    { path: "/admin/users", element: <AdminUsers />},
   ])
 
   return (

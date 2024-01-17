@@ -66,7 +66,6 @@ export const partiesSlice = createSlice({
               })
               .addCase(getPartyById.fulfilled, (state, action) => {
                 state.status = Status.IDLE;
-                debugger
                 state.incomingParty = action.payload;
               })
               .addCase(getPartyById.rejected, (state) => {

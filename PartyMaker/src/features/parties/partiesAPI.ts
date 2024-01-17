@@ -9,6 +9,7 @@ export const getPartyById = createAsyncThunk<Party | null, number>(
   async (partyId) => {
     try {
       const response = await axios.get(`/api/parties/get-party-by-id/${partyId}`);
+       
       const { ok, result } = response.data;
       if (!ok) {
         throw new Error("Error getting party by ID");

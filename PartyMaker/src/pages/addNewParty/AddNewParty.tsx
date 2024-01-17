@@ -32,6 +32,7 @@ const CreateNewPartyForm = () => {
     party_description: '',
     party_price:  null,
     party_image_id:1,
+    party_img_name: '',
     party_creator_id: user? user.user_id: null,
     things_to_bring: "nothing",
     // created_time: `${createdDate.getDate}`
@@ -76,7 +77,7 @@ const CreateNewPartyForm = () => {
   
       // setNewParty(initialPartyState);
       // setFile(undefined);
-      debugger
+      
       alert('Party created successfully');
       const incomingParty = responseCreateParty.payload as Party;
       navigate(`/partyPage/${incomingParty?.party_id}`);

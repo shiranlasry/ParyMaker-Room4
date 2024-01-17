@@ -75,7 +75,7 @@ export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
 export const editUserApi = createAsyncThunk<User | null, User>('edit-user', async (arg) => {
     try {
         const response = await axios.put("/api/users/edit-user", arg);
-        debugger
+        console.log(response)
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials editUserApi()");

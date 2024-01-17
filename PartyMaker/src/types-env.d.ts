@@ -29,6 +29,7 @@ export interface Party {
   party_description: string;
   party_price: number | null;
   party_image_id: number | null;
+  party_img_name: string;
   party_creator_id: number | null;
   things_to_bring?: string;
   created_time: string;

@@ -8,12 +8,9 @@ import { useEffect } from 'react'
 
 const HOtParties = () => {
  const parties = useAppSelector(partiesSelector);
- const status = useAppSelector(partiesStatusSelector);
-
+ 
 useEffect (()=>{
-  debugger
-  console.log("parties", parties)
-  console.log("status", status)
+ 
 },[])
   return (
     <div className="hot-parties">

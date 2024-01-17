@@ -21,9 +21,10 @@ const UserPage: React.FC = () => {
   const handleSaveProfile = async (editedUser: User) => {
     try {
      const respons = await dispatch(editUserApi(editedUser))
+     
      if (respons) {
        alert("Profile updated successfully");
-       navigate("/");
+       //navigate("/");
       }
    
       setShowEditProfile(false);

@@ -40,10 +40,11 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
 export const getAllParties = async (req: express.Request, res: express.Response) => {
   try {
     const query = `
-      SELECT p.*, pc.category_description
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id;
-    `;
+    SELECT p.*, pc.category_description, pi.party_img_name
+    FROM party_maker.parties p
+    JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+    LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+  `;
 
     connection.query(query, (err, results, fields) => {
       try {
@@ -174,11 +175,12 @@ export const getPartyById = async (req: express.Request, res: express.Response) 
     const { party_id } = req.params;
 
     const query = `
-      SELECT p.*, pc.category_description
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-      WHERE p.party_id = ?;
-    `;
+    SELECT p.*, pc.category_description, pi.party_img_name
+    FROM party_maker.parties p
+    JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+    LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+    WHERE p.party_id = ?;
+  `;
 
     connection.query(query, [party_id], (err, results:any, fields) => {
       try {
