@@ -84,15 +84,17 @@ const UserPage: React.FC = () => {
         <>
           <div className="UPdetails">
             {user ? (
-              <>
-                <h1>Personal Information</h1>
-                <h2>{user.username}</h2>
-                <h2>{user.email}</h2>
-                <h2>{user.first_name}</h2>
-                <h2>{user.last_name}</h2>
-                <h2>{user.address}</h2>
-                <h2>{user.phone_number}</h2>
-              </>
+              <div className="userProfile">
+                <h1>My Profile</h1>
+                <div className="profile">
+                <h2><span>Username: </span>{user.username}</h2>
+                <h2><span>Email: </span>{user.email}</h2>
+                <h2><span>First Name: </span>{user.first_name}</h2>
+                <h2><span>Last Name: </span>{user.last_name}</h2>
+                <h2><span>Adress: </span>{user.address}</h2>
+                <h2><span>Phone Number: </span>{user.phone_number}</h2>
+                </div>
+              </div>
             ) : (
               <>
                 <p>no user found</p>
