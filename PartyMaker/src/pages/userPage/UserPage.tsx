@@ -81,7 +81,6 @@ const UserPage: React.FC = () => {
           <EditProfileModal user={user!} onSave={handleSaveProfile} onClose={handleCloseEditProfile} />
         </>
       ) : (
-        // If showEditProfile is false, render the user details
         <>
           <div className="UPdetails">
             {user ? (
@@ -104,9 +103,11 @@ const UserPage: React.FC = () => {
         </>
       )}
 
+{(!showEditProfile && user) && (
       <button className="editProfileBtn" onClick={handleEditProfile}>
         Edit Profile
       </button>
+)}
       {showResetPassword && (
         <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
       )}
