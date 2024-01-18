@@ -1,5 +1,5 @@
 
-//add party tsx client side 
+//addparty.tsx client side 
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { createParty, saveImgtoDB } from '../../features/parties/partiesAPI';
@@ -11,16 +11,14 @@ import { userSelector } from '../../features/loggedInUser/userSlice';
 import NavBar from '../../components/navBar/NavBar';
 import { Footer } from '../../components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import { partiesImgIdSelector ,incomingPartySelector} from '../../features/parties/partiesSlice';
 
-const CreateNewPartyForm = () => {
+
+const AddNewParty = () => {
   const createdDate = new Date();
   const dispatch = useAppDispatch();
   const navigate= useNavigate();
   const [file, setFile] = useState<File>();
   const user=useAppSelector(userSelector)
-  const img_id=useAppSelector(partiesImgIdSelector)
-  const incomingParty=useAppSelector(incomingPartySelector) 
   // const [file, setFile] = useState<File>();  
   const initialPartyState: Party = {
     party_id: null,
@@ -31,8 +29,9 @@ const CreateNewPartyForm = () => {
     category_description:  '',
     party_description: '',
     party_price:  null,
-    party_image_id:1,
+    party_image_id: null,
     party_img_name: '',
+    party_img_data: '',
     party_creator_id: user? user.user_id: null,
     things_to_bring: "nothing",
     // created_time: `${createdDate.getDate}`
@@ -182,4 +181,4 @@ const CreateNewPartyForm = () => {
   );
 };
 
-export default CreateNewPartyForm;
+export default AddNewParty;

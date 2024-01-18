@@ -7,23 +7,24 @@ import { OkPacket, ResultSetHeader } from 'mysql2';
 export const saveImgtoDB = async (req: express.Request, res: express.Response) => {
   try {
     const file = req.file as Express.Multer.File;
-
     if (!file) {
-      throw new Error('No file uploaded.');
+      throw new Error('No file uploaded. saveImgtoDB()');
     }
+
+    const file_data = file.buffer;
+
     const file_name = `${Date.now()}_${file.originalname}`;
-    const imagePath = `public/party-img/${file_name}`;
-    fs.writeFileSync(imagePath, file.buffer);
 
     const query = `
-      INSERT INTO party_maker.party_img (party_img_name)
-      VALUES (?);
-    `;
+    INSERT INTO party_maker.party_img (party_img_name, party_img_data)
+    VALUES (?, ?);
+  `;
     
-    connection.query(query, [file_name], (err, results: ResultSetHeader, fields) => {
+  connection.query(query, [file_name, file_data], (err, results: ResultSetHeader, fields) => {
       try {
         if (err) throw err;
 
+        console.log(results); 
         const imgId = results.insertId;
         res.send({ ok: true, img_id: imgId });
       } catch (error) {
@@ -40,16 +41,23 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
 export const getAllParties = async (req: express.Request, res: express.Response) => {
   try {
     const query = `
-    SELECT p.*, pc.category_description, pi.party_img_name
-    FROM party_maker.parties p
-    JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-    LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
-  `;
+      SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+      FROM party_maker.parties p
+      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+    `;
 
-    connection.query(query, (err, results, fields) => {
+    connection.query(query, (err, results: any[], fields) => {
       try {
         if (err) throw err;
-        res.send({ ok: true, results });
+
+        // Convert image data to base64
+        const partiesWithImageData = results.map((party) => ({
+          ...party,
+          party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+        }));
+
+        res.send({ ok: true, results: partiesWithImageData });
       } catch (error) {
         console.error(error);
         res.status(500).send({ ok: false, error });
@@ -60,6 +68,7 @@ export const getAllParties = async (req: express.Request, res: express.Response)
     res.status(500).send({ ok: false, error });
   }
 };
+
 
 export const getAllCategories = async (req: express.Request, res: express.Response) => {
     try {
@@ -169,26 +178,31 @@ export const createNewParty = async (req: express.Request, res: express.Response
   }
 };
 
-
+// Modify the getPartyById controller to convert image data to base64
 export const getPartyById = async (req: express.Request, res: express.Response) => {
   try {
     const { party_id } = req.params;
 
     const query = `
-    SELECT p.*, pc.category_description, pi.party_img_name
-    FROM party_maker.parties p
-    JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-    LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
-    WHERE p.party_id = ?;
-  `;
+      SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+      FROM party_maker.parties p
+      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+      WHERE p.party_id = ?;
+    `;
 
-    connection.query(query, [party_id], (err, results:any, fields) => {
+    connection.query(query, [party_id], (err, results: any[], fields) => {
       try {
         if (err) throw err;
         if (results.length === 0) {
           res.status(404).send({ ok: false, error: "Party not found" });
         } else {
-          res.send({ ok: true, result: results[0] });
+          const partyData = results[0];
+          const partyWithImage = {
+            ...partyData,
+            party_img_data: partyData.party_img_data.toString('base64'),
+          };
+          res.send({ ok: true, result: partyWithImage });
         }
       } catch (error) {
         console.error(error);
@@ -200,5 +214,6 @@ export const getPartyById = async (req: express.Request, res: express.Response) 
     res.status(500).send({ ok: false, error });
   }
 };
+
 
 

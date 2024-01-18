@@ -10,7 +10,7 @@ import { getPartyById } from '../../features/parties/partiesAPI';
 const PartyPage = () => {
   const party :Party |null= useAppSelector(incomingPartySelector)
   const dispatch = useAppDispatch();
-  const navigate= useNavigate();
+  
   const { party_id } = useParams<{ party_id: string }>();
   // Convert partyId to a number if needed
   if (!party_id) throw new Error('No partyId provided');
@@ -41,7 +41,14 @@ const PartyPage = () => {
             <p>Category: {party.category_description}</p>
             <p>Description: {party.party_description}</p>
             <p>Price: {party.party_price}</p>
-            {/* Add other party details as needed */}
+            <div>
+            <p>Image:</p>
+            <img
+              src={`data:image/png;base64,${party.party_img_data}`}
+              alt={party.party_img_name}
+              className='party-image'
+            />
+          </div>
           </div>
         ) : (
           <p>Loading...</p>

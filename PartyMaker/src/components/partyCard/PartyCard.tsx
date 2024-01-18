@@ -9,23 +9,9 @@ type PartyCardProps = {
 };
 
 const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
-  const [imgurl, setImgurl] = useState("");
-
-  // useEffect(() => {
-  //   const getUrl = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${import.meta.env.REACT_APP_IMG_URL}/${party.party_img_name}`
-  //       );
-  //       console.log(response.data);
-  //       setImgurl(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching image:', error);
-  //     }
-  //   };
-
-  //   getUrl();
-  // }, [party.party_img_name]);
+  useEffect(() => {
+    console.log(party);
+  }, [party.party_id]);
 
   return (
     <div className="party-card">
@@ -41,13 +27,11 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
           <p>Category: {party.category_description}</p>
           <p>Description: {party.party_description}</p>
           <p>Price: {party.party_price}</p>
-          {/* {party.party_img_name && (
-            <img
-              src={imgurl}
-              alt={party.party_name}
-              className="party-image"
+          <img
+              src={`data:image/png;base64,${party.party_img_data}`}
+              alt={party.party_img_name}
+              className='party-image'
             />
-          )} */}
           <button>Join Party</button>
         </div>
       ) : (
