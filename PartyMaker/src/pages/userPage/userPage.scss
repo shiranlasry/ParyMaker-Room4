@@ -13,9 +13,29 @@ $navy: #000080;
     }
   }
 
+.userProfile {
+  margin: auto;
+  width: fit-content;
+  background-color: rgba(255, 255, 255, 0.567);
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.271),
+        0 13px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  padding: 10px;
+  
+
+  .profile {
+    text-align: left;
+    
+    span {
+      text-shadow: 1px 2px 1px #fabce2;
+      font-size: 22px;
+    }
+
+  }
+}
   .editProfileBtn {
     padding: 10px;
-    margin: 7px;
+    margin: 15px;
     font-size: 17px;
     border-radius: 7px;
     color: white;
@@ -26,9 +46,8 @@ $navy: #000080;
     &:hover {
       font-size: 18px;
       box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
-      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
     }
-    
   }
   .createPartyUP {
     background-color: $navy;

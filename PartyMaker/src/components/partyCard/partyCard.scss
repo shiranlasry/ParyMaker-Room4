@@ -1,54 +1,76 @@
 $navy: #000080;
 
-.party-card {
+.partyCard {
   border: 1px solid #ddd;
-  min-width: 320px;
-  height: 520px;
+  margin: 0.4rem;
+  min-width: 300px;
+  height: 480px;
   border-radius: 8px;
-  padding: 14px;
-  background-color: rgba(255, 255, 255, 0.691);
+  background-color: rgba(255, 255, 255, 0.735);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 20px;
+  justify-content: center;
 
-  .party-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
+  .partyName {
+    margin: 1rem;
   }
 
-  .party-details {
-    text-align: left;
-    margin-bottom: 10px;
-    min-height: 260px;
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
+  .partyDetails {
+    width: 100%;
+    background-color: #010136b3;
+    border-radius: 4px;
+    margin-top: 15rem;
 
     p {
-      margin: 5px 0;
+      color: white;
+      font-weight: 500;
+      padding: 4px;
     }
   }
 
-  .join-button {
-    background-color: #fa90d2;
-    color: $navy;
-    font-size: 17px;
-    font-weight: bold;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  .partyContent {
+    position: relative;
+    min-height: 300px;
 
-    &:hover {
-      background-color: $navy;
-      color: #fa90d2;
+    .imageOverlay {
+      position: absolute;
+      width: 260px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .party-description {
+    h4 {
+      margin: 8px 0;
+    }
+
+    .joinPartyBtn {
+      background-color: #fa90d2;
+      margin-bottom: 1rem;
+      color: $navy;
+      font-size: 17px;
+      font-weight: bold;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $navy;
+        color: #fa90d2;
+      }
     }
   }
 }
