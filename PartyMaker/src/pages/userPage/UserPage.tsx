@@ -9,12 +9,14 @@ import { Footer } from "../../components/footer/Footer";
 import EditProfileModal from "../../components/editProfile/EditProfile";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { editUserApi } from "../../features/loggedInUser/userAPI";
+import ResetPassword from "../../components/rest-password/ResetPassword";
+import {updatePasswordApi} from "../../features/loggedInUser/userAPI";
 
 
 const UserPage: React.FC = () => {
   const user: User | null = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  
   const [showEditProfile, setShowEditProfile] = useState(false);
  
 
@@ -40,6 +42,33 @@ const UserPage: React.FC = () => {
   const handleCloseEditProfile = () => {
     setShowEditProfile(false);
   };
+  const [showResetPassword, setShowResetPassword] = useState(false);
+
+  const handleResetPassword = () => {
+    setShowResetPassword(true);
+  };
+  
+  const handleCloseResetPassword = () => {
+    setShowResetPassword(false);
+  };
+  const handleSaveResetPassword = async (user_id: number,password: string, newPassword: string, role: string) => {
+    try {
+      debugger
+      const args = {user_id, password, newPassword, role };
+      const response = await dispatch(updatePasswordApi(args));
+  
+      if (response) {
+        alert("Password updated successfully");
+        // navigate("/");
+      }
+  
+      setShowResetPassword(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
 
   return (
  <div className="user-page-main">
@@ -80,6 +109,14 @@ const UserPage: React.FC = () => {
         // Use the non-null assertion operator (!) here
         <EditProfileModal user={user!} onSave={handleSaveProfile} onClose={handleCloseEditProfile} />
       )}
+
+<button className="resetPasswordBtn" onClick={handleResetPassword}>
+  Reset Password
+</button>
+
+{showResetPassword && (
+  <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
+)}
       <h2>My Events</h2>
     </div>
   );

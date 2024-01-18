@@ -8,7 +8,6 @@ interface GetUserApiArgs {
     email: string;
     password: string;
 }
-
 export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-user', async (arg) => {
     try {
         const response = await axios.post("/api/users/login", arg);
@@ -23,7 +22,6 @@ export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-u
         return null;
     }
 })
-
 export const registerUserApi = createAsyncThunk<User | null,User>('register-user', async (arg) => {
     try {
         const response = await axios.post("/api/users/register", arg);
@@ -41,7 +39,6 @@ export const registerUserApi = createAsyncThunk<User | null,User>('register-user
         return null;
     }
 });
-
 export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-token', async () => {
     try {
 
@@ -57,7 +54,6 @@ export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-
         return null;
     }
 })
-
 export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
     try {
         const response = await axios.delete("/api/users/delete-token");
@@ -87,3 +83,19 @@ export const editUserApi = createAsyncThunk<User | null, User>('edit-user', asyn
         return null;
     }
 })
+export const updatePasswordApi = createAsyncThunk<User | null, { user_id:number,password: string, newPassword: string,role:string }>('update-password', async (arg) => {
+    try {
+        const response = await axios.put("/api/users/update-password", arg);
+        const { ok, user } = response.data;
+        if (!ok) {
+            throw new Error("Invalid credentials updatePasswordApi()");
+        }
+        return user;
+
+    } catch (error) {
+        console.error(error) // this is temporary
+        return null;
+    }
+})
+
+
