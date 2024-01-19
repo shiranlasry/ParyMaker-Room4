@@ -7,6 +7,7 @@ import { Footer } from "../../components/footer/Footer";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useAppSelector } from "../../app/hook";
 import { User } from "../../types-env";
+import { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const user: User | null = useAppSelector(userSelector);
@@ -16,6 +17,7 @@ const Home = () => {
     <div className="HPcontainer">
       <NavBar />
       <Hero />
+      <Toaster position="top-right"/>
       <h2 className="upcoming">Upcoming Events 📅</h2>
       <HOtParties />
       {user && <button
