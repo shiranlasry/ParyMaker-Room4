@@ -13,26 +13,25 @@ $navy: #000080;
     }
   }
 
-.userProfile {
-  margin: auto;
-  width: fit-content;
-  background-color: rgba(255, 255, 255, 0.567);
-  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.271),
-        0 13px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 10px;
-  padding: 10px;
-  
+  .userProfile {
+    margin: auto;
+    width: fit-content;
+    background-color: rgba(255, 255, 255, 0.567);
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.271),
+      0 13px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    padding: 10px;
 
-  .profile {
-    text-align: left;
-    
-    span {
-      text-shadow: 1px 2px 1px #fabce2;
-      font-size: 22px;
+    .profile {
+      text-align: left;
+
+      span {
+        text-shadow: 1px 2px 1px #fabce2;
+        font-size: 22px;
+      }
     }
-
   }
-}
+  .resetPasswordBtn,
   .editProfileBtn {
     padding: 10px;
     margin: 15px;
@@ -61,5 +60,16 @@ $navy: #000080;
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
       font-weight: bold;
     }
+  }
+  .parties-by-user-id {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .myEventsTitle {
+    font-size: 40px;
+    text-shadow: 2px 3px 1px #fabce2;
   }
 }

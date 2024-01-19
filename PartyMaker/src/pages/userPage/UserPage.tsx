@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar/NavBar";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { Party, User } from "../../types-env";
-import "./userPage.scss";
 import "../../components/editProfile/editProfile.scss";
 import { Footer } from "../../components/footer/Footer";
 import EditProfileModal from "../../components/editProfile/EditProfile";
@@ -14,6 +13,8 @@ import ResetPassword from "../../components/rest-password/ResetPassword";
 import { updatePasswordApi } from "../../features/loggedInUser/userAPI";
 import {partiesByUserId} from "../../features/parties/partiesAPI";
 import PartyCard from "../../components/partyCard/PartyCard";
+import "./userPage.scss";
+
 
 const UserPage: React.FC = () => {
   const user: User | null = useAppSelector(userSelector);
@@ -131,7 +132,7 @@ const UserPage: React.FC = () => {
 {showResetPassword && (
   <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
 )}
-      <h2>My Events</h2>
+      <h2 className="myEventsTitle">🎊My Events💃</h2>
       <div className="parties-by-user-id">
       {partiesByUserIdArr && partiesByUserIdArr.map((party) => (
         <PartyCard key={party.party_id} party={party} />
