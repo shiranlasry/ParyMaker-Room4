@@ -11,6 +11,7 @@ import { userSelector } from '../../features/loggedInUser/userSlice';
 import NavBar from '../../components/navBar/NavBar';
 import { Footer } from '../../components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const AddNewParty = () => {
@@ -77,7 +78,7 @@ const AddNewParty = () => {
       // setNewParty(initialPartyState);
       // setFile(undefined);
       
-      alert('Party created successfully');
+      toast.success('Party created successfully');
       const incomingParty = responseCreateParty.payload as Party;
       navigate(`/partyPage/${incomingParty?.party_id}`);
     } catch (error) {
@@ -91,6 +92,7 @@ const AddNewParty = () => {
   return (
     <div>
       <NavBar/>
+      <Toaster position="top-right" />
       
       <form className='partyForm' onSubmit={handleAddParty}>
       <h2 className='createPartyTitle'>Create New Party</h2>
