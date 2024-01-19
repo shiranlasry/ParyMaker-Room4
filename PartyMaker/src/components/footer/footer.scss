@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
 
+$navy: #000080;
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -101,7 +103,8 @@ footer {
   color: #fa90d2;
 }
 .office a:hover {
-  color: #fff;
+  color: #fa90d2;
+  font-weight: bold;
 }
 .num {
   font-size: 1rem;
@@ -121,6 +124,7 @@ footer {
 
 .link-des a:hover {
   color: #fa90d2;
+  font-weight: bold;
   transition: linear 0.3s;
 }
 
