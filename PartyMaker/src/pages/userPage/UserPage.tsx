@@ -2,19 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar/NavBar";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { User } from "../../types-env";
+import { Party, User } from "../../types-env";
 import "./userPage.scss";
 import "../../components/editProfile/editProfile.scss";
 import { Footer } from "../../components/footer/Footer";
 import EditProfileModal from "../../components/editProfile/EditProfile";
 import { userSelector } from "../../features/loggedInUser/userSlice";
+import {partiesByUserIdSelector} from "../../features/parties/partiesSlice";
 import { editUserApi } from "../../features/loggedInUser/userAPI";
 import ResetPassword from "../../components/rest-password/ResetPassword";
 import { updatePasswordApi } from "../../features/loggedInUser/userAPI";
+import {partiesByUserId} from "../../features/parties/partiesAPI";
+import PartyCard from "../../components/partyCard/PartyCard";
 
 const UserPage: React.FC = () => {
   const user: User | null = useAppSelector(userSelector);
+  const partiesByUserIdArr :Party[] |null = useAppSelector(partiesByUserIdSelector);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (user) {
+      if(!user.user_id) {
+        alert("You must be logged in to view this page");
+      }
+      dispatch(partiesByUserId(user.user_id));
+      console.log(`partiesByUserIdArr : ${partiesByUserIdArr}`);
+    }
+
+  },[]);
 
   const [showEditProfile, setShowEditProfile] = useState(false);
 
@@ -118,6 +132,11 @@ const UserPage: React.FC = () => {
   <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
 )}
       <h2>My Events</h2>
+      <div className="parties-by-user-id">
+      {partiesByUserIdArr && partiesByUserIdArr.map((party) => (
+        <PartyCard key={party.party_id} party={party} />
+      ))}
+    </div>
     </div>
   </div>
 );

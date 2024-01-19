@@ -73,3 +73,19 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+  export const partiesByUserId = createAsyncThunk<Party[] | null, number|null>(
+    'parties-by-user-id',
+    async (userId) => {
+      try {
+        const response = await axios.get(`/api/parties/parties-by-user-id/${userId}`);
+        const { ok, results } = response.data;
+        if (!ok) {
+          throw new Error("Invalid credentials getUserApi()");
+        }
+        return results;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );

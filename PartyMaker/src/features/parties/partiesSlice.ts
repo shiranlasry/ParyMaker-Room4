@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
-import { createParty, getAllParties ,saveImgtoDB,getPartyById} from "./partiesAPI";
+import { createParty,partiesByUserId, getAllParties ,saveImgtoDB,getPartyById} from "./partiesAPI";
 
 
 enum Status {
@@ -12,12 +12,14 @@ enum Status {
 }
 interface PartiesState {
     value: Party []| null,
+    valueByUserId: Party[] | null,
     img_id: number | null,
     incomingParty: Party | null,    
     status: Status
 }
 const initialState: PartiesState = {
     value: null,
+    valueByUserId: null,
     img_id: null,
     incomingParty: null,
     status: Status.IDLE
@@ -70,7 +72,19 @@ export const partiesSlice = createSlice({
               })
               .addCase(getPartyById.rejected, (state) => {
                 state.status = Status.FAILED;
+              })
+              .addCase(partiesByUserId.pending, (state) => {
+                state.status = Status.LOADING;
+              })
+              .addCase(partiesByUserId.fulfilled, (state, action) => {
+                state.status = Status.IDLE;
+                state.valueByUserId = action.payload;
+              })
+              .addCase(partiesByUserId.rejected, (state) => {
+                state.status = Status.FAILED;
               });
+
+
             
     }
 })
@@ -80,5 +94,6 @@ export const partiesImgIdSelector = (state: RootState) => state.parties.img_id
 export const incomingPartySelector = (state: RootState) => state.parties.incomingParty
 export const partiesStatusSelector = (state: RootState) => state.parties.status
 export const partiesStateSelector = (state: RootState) => state.parties
+export const partiesByUserIdSelector = (state: RootState) => state.parties.valueByUserId  
 
 export default partiesSlice.reducer
