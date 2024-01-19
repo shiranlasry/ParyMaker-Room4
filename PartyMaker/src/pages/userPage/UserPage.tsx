@@ -56,7 +56,7 @@ const UserPage: React.FC = () => {
     role: string
   ) => {
     try {
-      debugger;
+      
       const args = { user_id, password, newPassword, role };
       const response = await dispatch(updatePasswordApi(args));
 
@@ -110,9 +110,13 @@ const UserPage: React.FC = () => {
         Edit Profile
       </button>
 )}
-      {showResetPassword && (
-        <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
-      )}
+      <button className="resetPasswordBtn" onClick={handleResetPassword}>
+  Reset Password
+</button>
+
+{showResetPassword && (
+  <ResetPassword user={user!} onClose={handleCloseResetPassword} onSave={handleSaveResetPassword} />
+)}
       <h2>My Events</h2>
     </div>
   </div>

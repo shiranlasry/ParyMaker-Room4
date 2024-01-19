@@ -26,7 +26,7 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
             <div className="imageOverlay" style={{ backgroundImage: `url(data:image/png;base64,${party.party_img_data})` }}>
               {party.party_date !== null ? (
                 <div className='partyDetails'>
-                  <p>{party.category_description} | {party.party_location} | {formatDate(party.party_date)}</p>
+                  <p>{party.category_description} | {party.party_location} | {formatDate(party.party_date.toString())}</p>
                 </div>
               ) : (
                 <p>Date: Not available</p>
