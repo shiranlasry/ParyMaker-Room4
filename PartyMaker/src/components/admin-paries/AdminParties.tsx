@@ -4,7 +4,7 @@ import NavBar from '../navBar/NavBar';
 import './AdminParties.scss';
 import { useAppSelector } from '../../app/hook';
 import { partiesSelector } from '../../features/parties/partiesSlice';
-import { updateParty, deleteParty } from '../../api/parties/partyConts';
+import { updateParty, deleteParty } from '../../../../server/API/parties/partyConts';
 
 const AdminParties = () => {
   const parties = useAppSelector(partiesSelector);

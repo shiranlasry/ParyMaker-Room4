@@ -320,3 +320,33 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
     res.status(500).send({ ok: false, error });
   }
 };
+
+export async function deleteUser(req, res) {
+  try {
+      const {UserId} = req.params;
+      if (!UserId) throw new Error("no Id")
+
+      const query= `DELETE FROM party_maker WHERE (user_id = ${UserId});`;
+
+      connection.query(query, (err, results) => {
+          try {
+              if (err) throw err;
+              //@ts-ignore
+              if (results.affectedRows) {
+                  res.send({ok: true, results})
+              } else {
+                  res.send({ok: true, results: "No rows were deleted"})
+              }
+          } catch (error) {
+              console.log(error)
+              res.status(500).send({ ok: false, error }) 
+          }
+      })
+  } catch (error) {
+      console.log(error)
+      res.status(500).send({ ok: false, error }) 
+  }
+}
+
+
+
