@@ -73,3 +73,20 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+
+  export const getPartiesByUserId = createAsyncThunk<Party[] | null, number>(
+    'get-parties-by-user-id',
+    async (userId) => {
+      try {
+        const response = await axios.get(`/api/parties/get-user-parties/${userId}`);
+        const { ok, parties } = response.data;
+        if (!ok) {
+          throw new Error("Error getting parties by user ID");
+        }
+        return parties;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
