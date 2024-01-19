@@ -14,6 +14,7 @@ import { updatePasswordApi } from "../../features/loggedInUser/userAPI";
 import {partiesByUserId} from "../../features/parties/partiesAPI";
 import PartyCard from "../../components/partyCard/PartyCard";
 import "./userPage.scss";
+import toast, { Toaster } from "react-hot-toast";
 
 
 const UserPage: React.FC = () => {
@@ -23,7 +24,7 @@ const UserPage: React.FC = () => {
   useEffect(() => {
     if (user) {
       if(!user.user_id) {
-        alert("You must be logged in to view this page");
+        toast.error("You must be logged in to view this page");
       }
       dispatch(partiesByUserId(user.user_id));
       console.log(`partiesByUserIdArr : ${partiesByUserIdArr}`);
@@ -38,7 +39,7 @@ const UserPage: React.FC = () => {
       const respons = await dispatch(editUserApi(editedUser));
 
       if (respons) {
-        alert("Profile updated successfully");
+        toast.success("Profile updated successfully");
         //navigate("/");
       }
 
@@ -76,7 +77,7 @@ const UserPage: React.FC = () => {
       const response = await dispatch(updatePasswordApi(args));
 
       if (response) {
-        alert("Password updated successfully");
+        toast.success("Password updated successfully");
         // navigate("/");
       }
 
@@ -89,6 +90,7 @@ const UserPage: React.FC = () => {
   return (
     <div className="UPmain">
     <NavBar />
+    <Toaster position="top-right"/>
     <div className="userPage">
       {showEditProfile ? (
         // If showEditProfile is true, render the edit profile form
