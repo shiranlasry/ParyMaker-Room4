@@ -8,6 +8,8 @@ import {
   getAllParties,
   saveImgtoDB,
   getPartyById,
+  deletePartyAPI,
+  updatePartyAPI,
 } from "./partiesAPI";
 
 enum Status {
@@ -85,7 +87,28 @@ export const partiesSlice = createSlice({
       })
       .addCase(partiesByUserId.rejected, (state) => {
         state.status = Status.FAILED;
+      })
+      .addCase(deletePartyAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(deletePartyAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.value = action.payload;
+      })
+      .addCase(deletePartyAPI.rejected, (state) => {
+        state.status = Status.FAILED;
+      })
+      .addCase(updatePartyAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(updatePartyAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.value = action.payload;
+      })
+      .addCase(updatePartyAPI.rejected, (state) => {
+        state.status = Status.FAILED;
       });
+
   },
 });
 

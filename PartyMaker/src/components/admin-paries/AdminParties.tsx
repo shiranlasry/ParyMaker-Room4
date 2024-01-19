@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import NavBar from '../navBar/NavBar';
 import './AdminParties.scss';
-import { useAppSelector } from '../../app/hook';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { partiesSelector } from '../../features/parties/partiesSlice';
-import { updateParty, deleteParty } from '../../../../server/API/parties/partyConts';
+import { deletePartyAPI } from '../../features/parties/partiesAPI';
+
 
 const AdminParties = () => {
   const parties = useAppSelector(partiesSelector);
-  if (!parties) return null;
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useAppDispatch();
 
-  const filteredParties = parties.filter(
+  const filteredParties = parties?.filter(
     (party) =>
       party.party_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (party.party_date &&
@@ -20,8 +20,8 @@ const AdminParties = () => {
 
   const handleDeleteParty = async (partyId: number | null) => {
     try {
-      await axios.delete(`/api/parties/${partyId}`);
-      dispatch(deleteParty({ partyId }));
+      if (!partyId || partyId === null) throw new Error('No party id');
+      dispatch(deletePartyAPI(partyId));
     } catch (error) {
       console.error('Error deleting party:', error);
     }
@@ -29,8 +29,8 @@ const AdminParties = () => {
 
   const handleUpdateParty = async (partyId: number | null) => {
     try {
-      await axios.put(`/api/parties/partyConts/${partyId}`);
-      dispatch(updateParty({ partyId }));
+      // await axios.put(`/api/parties/partyConts/${partyId}`);
+      // dispatch(updateParty({ partyId }));
     } catch (error) {
       console.error('Error updating party:', error);
     }
@@ -49,7 +49,7 @@ const AdminParties = () => {
       />
 
       <ul>
-        {filteredParties.map((party) => (
+        {filteredParties && filteredParties.map((party) => (
           <li key={party.party_id}>
             <p>Name: {party.party_name}</p>
             <p>Create Date: {party.party_date?.toLocaleString()}</p>
@@ -63,7 +63,5 @@ const AdminParties = () => {
 };
 
 export default AdminParties;
-function dispatch(arg0: void) {
-  throw new Error('Function not implemented.');
-}
+
 

@@ -175,7 +175,6 @@ export const createNewParty = async (req: express.Request, res: express.Response
     res.status(500).send({ ok: false, error });
   }
 };
-
 // Modify the getPartyById controller to convert image data to base64
 export const getPartyById = async (req: express.Request, res: express.Response) => {
   try {
@@ -245,19 +244,36 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
 export async function deleteParty(req, res) {
   try {
       const {PartyId} = req.params;
-      if (!PartyId) throw new Error("no Id")
+      if (!PartyId) throw new Error("no PartyId deleteParty()")
 
-      const query= `DELETE FROM party_maker WHERE (party_id = ${PartyId});`;
+      const query= `DELETE FROM party_maker.parties WHERE (party_id = ${PartyId});`;
 
-      connection.query(query, (err, results) => {
+      connection.query(query, (err, results:any) => {
           try {
               if (err) throw err;
-              //@ts-ignore
-              if (results.affectedRows) {
-                  res.send({ok: true, results})
-              } else {
-                  res.send({ok: true, results: "No rows were deleted"})
+              console.log(`deleteParty :results ${results} `)
+              const selectQuery= `
+              SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+              FROM party_maker.parties p
+              JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+              LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+            `;
+            connection.query(selectQuery, (err, results: any[], fields) => {
+              try {
+                if (err) throw err;
+                // Convert image data to base64
+                const partiesWithImageData = results.map((party) => ({
+                  ...party,
+                  party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+                }));
+        
+                res.send({ ok: true, results: partiesWithImageData });
+              } catch (error) {
+                console.error(error);
+                res.status(500).send({ ok: false, error });
               }
+            });
+            
           } catch (error) {
               console.log(error)
               res.status(500).send({ ok: false, error }) 
@@ -268,9 +284,6 @@ export async function deleteParty(req, res) {
       res.status(500).send({ ok: false, error }) 
   }
 }
-
-
-
 export async function updateParty(req: express.Request, res: express.Response) {
   try {
       const { updateField, updateContent } = req.body
