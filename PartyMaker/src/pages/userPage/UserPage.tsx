@@ -19,6 +19,8 @@ import toast, { Toaster } from "react-hot-toast";
 
 const UserPage: React.FC = () => {
   const user: User | null = useAppSelector(userSelector);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const partiesByUserIdArr :Party[] |null = useAppSelector(partiesByUserIdSelector);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -32,8 +34,7 @@ const UserPage: React.FC = () => {
 
   },[]);
 
-  const [showEditProfile, setShowEditProfile] = useState(false);
-
+ 
   const handleSaveProfile = async (editedUser: User) => {
     try {
       const respons = await dispatch(editUserApi(editedUser));
@@ -56,7 +57,7 @@ const UserPage: React.FC = () => {
   const handleCloseEditProfile = () => {
     setShowEditProfile(false);
   };
-  const [showResetPassword, setShowResetPassword] = useState(false);
+ 
 
   const handleResetPassword = () => {
     setShowResetPassword(true);

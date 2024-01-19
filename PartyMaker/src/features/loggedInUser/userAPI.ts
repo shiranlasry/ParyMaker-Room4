@@ -8,6 +8,7 @@ interface GetUserApiArgs {
     email: string;
     password: string;
 }
+
 export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-user', async (arg) => {
     try {
         const response = await axios.post("/api/users/login", arg);

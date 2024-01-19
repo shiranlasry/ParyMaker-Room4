@@ -3,6 +3,8 @@ import express from 'express';
 import connection from "../../DB/database";
 import fs from 'fs';
 import { OkPacket, ResultSetHeader } from 'mysql2';
+import jwt from 'jsonwebtoken';
+import { getUserById } from '../users/usersCtrl';
 
 export const saveImgtoDB = async (req: express.Request, res: express.Response) => {
   try {
@@ -24,7 +26,6 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
       try {
         if (err) throw err;
 
-        console.log(results); 
         const imgId = results.insertId;
         res.send({ ok: true, img_id: imgId });
       } catch (error) {
@@ -90,7 +91,7 @@ export const getAllCategories = async (req: express.Request, res: express.Respon
 };
 export const createNewParty = async (req: express.Request, res: express.Response) => {
   try {
-    console.log(req.body); // Log the request body
+
     const {
       party_name,
       party_date,
@@ -243,68 +244,133 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
 
 export async function deleteParty(req, res) {
   try {
-      const {PartyId} = req.params;
-      if (!PartyId) throw new Error("no PartyId deleteParty()")
+    
+    const { partyId, role } = req.body;
+    if (!partyId || !role) throw new Error("No PartyId or role provided for deleteParty()");
 
-      const query= `DELETE FROM party_maker.parties WHERE (party_id = ${PartyId});`;
+    if (role !== 'admin') {
+      // get user id from token
+      const selectByIdQuery = `
+        SELECT party_creator_id FROM party_maker.parties WHERE party_id = ?;
+      `;
+      connection.query(selectByIdQuery, [partyId], (err, results: any[], fields) => {
+        try {
+          if (err) throw err;
+          const token = req.cookies.token;
+          const secret = process.env.SECRET_KEY;
 
-      connection.query(query, (err, results:any) => {
-          try {
-              if (err) throw err;
-              console.log(`deleteParty :results ${results} `)
-              const selectQuery= `
-              SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-              FROM party_maker.parties p
-              JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-              LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
-            `;
-            connection.query(selectQuery, (err, results: any[], fields) => {
-              try {
-                if (err) throw err;
-                // Convert image data to base64
-                const partiesWithImageData = results.map((party) => ({
-                  ...party,
-                  party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
-                }));
-        
-                res.send({ ok: true, results: partiesWithImageData });
-              } catch (error) {
-                console.error(error);
-                res.status(500).send({ ok: false, error });
-              }
-            });
-            
-          } catch (error) {
-              console.log(error)
-              res.status(500).send({ ok: false, error }) 
+          if (!secret) throw new Error("No secret");
+          if (!token) {
+            res.status(401).send({ ok: false, error: 'No token updatePassword()' });
+            return;
           }
-      })
+
+          const partyCreatorId = results[0].party_creator_id;
+          const decodedToken = jwt.verify(token, secret) as { user_id: number };
+
+          if (decodedToken.user_id !== partyCreatorId) {
+            res.status(401).send({ ok: false, error: 'User can delete only their own parties deleteParty()' });
+            return;
+          }
+
+          // If the user is the party creator, proceed with deletion
+          performDeletion();
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ ok: false, error });
+        }
+      });
+    } else {
+      // If the user is an admin, proceed with deletion
+      performDeletion();
+    }
+
+    function performDeletion() {
+      const query = `DELETE FROM party_maker.parties WHERE party_id = ?;`;
+      connection.query(query, [partyId], (err, results) => {
+        try {
+          if (err) throw err;
+
+          const selectAllquery = `
+            SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+            FROM party_maker.parties p
+            JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+            LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+          `;
+          connection.query(selectAllquery, (err, results: any[], fields) => {
+            try {
+              if (err) throw err;
+
+              const partiesWithImageData = results.map((party) => ({
+                ...party,
+                party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+              }));
+              
+              res.send({ ok: true, results: partiesWithImageData });
+            } catch (error) {
+              console.error(error);
+              res.status(500).send({ ok: false, error });
+            }
+          });
+        } catch (error) {
+          res.status(500).send({ ok: false, error });
+        }
+      });
+    }
   } catch (error) {
-      console.log(error)
-      res.status(500).send({ ok: false, error }) 
+    console.log(error);
+    res.status(500).send({ ok: false, error });
   }
 }
+
 export async function updateParty(req: express.Request, res: express.Response) {
   try {
-      const { updateField, updateContent } = req.body
-      const { partyId } = req.params
-      if (!updateContent || !updateField) throw new Error("no data in FUNCTION createNewParty in FILE partyConts.ts")
+    const { party_id } = req.params;
+    const { party_name} = req.body;
+    console.log(`partyId: ${party_id}, party_name: ${party_name}`);
 
-      const query = `UPDATE party_maker SET ${updateField} = "${updateContent}" WHERE (party_id = '${partyId}');`;
+    // Construct your update query based on the fields you want to update
+    const query = `
+      UPDATE party_maker.parties
+      SET party_name = ?
+      WHERE party_id = ?;
+    `;
 
-      console.log(query)
-      connection.query(query, (err, results) => {
+    connection.query(query, [party_name, party_id], (err, results) => {
+      try {
+        if (err) throw err;
+        const selectAllquery = `
+          SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+          FROM party_maker.parties p
+          JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+          LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+        `;
+        connection.query(selectAllquery, (err, results: any[], fields) => {
           try {
-              if (err) throw err;
-              res.send({ ok: true, results })
+            if (err) throw err;
+
+            const partiesWithImageData = results.map((party) => ({
+              ...party,
+              party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+            }));
+            res.send({ ok: true, results: partiesWithImageData });
           } catch (error) {
-              res.status(500).send({ ok: false, error })
+            console.error(error);
+            res.status(500).send({ ok: false, error });
           }
-      })
+        });
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
   } catch (error) {
-      res.status(500).send({ ok: false, error })
+    console.error(error);
+    res.status(500).send({ ok: false, error });
   }
 }
+
 
 
 

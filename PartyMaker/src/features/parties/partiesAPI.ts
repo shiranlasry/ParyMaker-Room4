@@ -88,12 +88,16 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
-  export const deletePartyAPI = createAsyncThunk<Party[] | null, number>(
+  interface deletePartyArg {
+    partyId: number;
+    role: string;
+  }
+  export const deletePartyAPI = createAsyncThunk<Party[] | null, deletePartyArg>(
     'delete-party',
-    async (partyId) => {
+    async (args) => {
       try {
-        if (!partyId) throw new Error("no Party Id deletePartyAPI()")
-        const response = await axios.delete(`/api/parties/${partyId}`);
+        debugger;
+        const response = await axios.delete(`/api/parties/delete`, { data: args });
         const { ok, results } = response.data;
         if (!ok) {
           throw new Error("Invalid credentials getUserApi()");
@@ -105,16 +109,17 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+  
 
-  export const updatePartyAPI = createAsyncThunk<Party[] | null, {partyId:number,updateField:string,updateContent:string}>(
+  export const updatePartyAPI = createAsyncThunk<Party[] | null, Party>(
     'update-party',
-    async ({partyId,updateField,updateContent}) => {
+    async (party) => {
       try {
-        if (!partyId) throw new Error("no Party Id deletePartyAPI()")
-        const response = await axios.put(`/api/parties/${partyId}`, {updateField,updateContent});
+        debugger
+        const response = await axios.put(`/api/parties/${party.party_id}`, party);
         const { ok, results } = response.data;
         if (!ok) {
-          throw new Error("Invalid credentials getUserApi()");
+          throw new Error("Error updating party");
         }
         return results;
       } catch (error) {
@@ -123,3 +128,4 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+  

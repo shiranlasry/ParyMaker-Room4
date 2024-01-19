@@ -12,8 +12,8 @@ router
     .post('/save-img-to-db',saveImgtoDB )
     .get('/get-party-by-id/:party_id', getPartyById)
     .get('/parties-by-user-id/:user_id', getPartiesByUserId)
-    .delete("/:PartyId", deleteParty)
-    .put("/:PartyId", updateParty)
+    .delete("/delete", deleteParty)
+    .put("/:party_id", updateParty)
     
    
 
