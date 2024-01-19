@@ -242,5 +242,56 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
   }
 }
 
+export async function deleteParty(req, res) {
+  try {
+      const {PartyId} = req.params;
+      if (!PartyId) throw new Error("no Id")
+
+      const query= `DELETE FROM party_maker WHERE (party_id = ${PartyId});`;
+
+      connection.query(query, (err, results) => {
+          try {
+              if (err) throw err;
+              //@ts-ignore
+              if (results.affectedRows) {
+                  res.send({ok: true, results})
+              } else {
+                  res.send({ok: true, results: "No rows were deleted"})
+              }
+          } catch (error) {
+              console.log(error)
+              res.status(500).send({ ok: false, error }) 
+          }
+      })
+  } catch (error) {
+      console.log(error)
+      res.status(500).send({ ok: false, error }) 
+  }
+}
+
+
+
+export async function updateParty(req: express.Request, res: express.Response) {
+  try {
+      const { updateField, updateContent } = req.body
+      const { partyId } = req.params
+      if (!updateContent || !updateField) throw new Error("no data in FUNCTION createNewParty in FILE partyConts.ts")
+
+      const query = `UPDATE party_maker SET ${updateField} = "${updateContent}" WHERE (party_id = '${partyId}');`;
+
+      console.log(query)
+      connection.query(query, (err, results) => {
+          try {
+              if (err) throw err;
+              res.send({ ok: true, results })
+          } catch (error) {
+              res.status(500).send({ ok: false, error })
+          }
+      })
+  } catch (error) {
+      res.status(500).send({ ok: false, error })
+  }
+}
+
 
 
