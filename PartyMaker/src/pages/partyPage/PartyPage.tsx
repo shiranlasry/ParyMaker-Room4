@@ -20,19 +20,6 @@ const PartyPage = () => {
   if (!party_id) throw new Error("No partyId provided");
   const partyIdNumber = parseInt(party_id, 10);
 
-  const checkIfUserJoinedParty =async () => {
-   try {
-    
-    if (!user?.user_id ||  !party?.party_id) throw new Error('No user id or party id checkIfUserJoinedParty()');
-    const args = { party_id: party.party_id, user_id: user.user_id };
-    dispatch(isUserjoinedPartyAPI(args));
-   
-   } catch (error) {
-    console.error(error);
-   }
-
-  };
-
   useEffect(() => {
     dispatch(getPartyById(partyIdNumber));
     if(user)
@@ -41,10 +28,22 @@ const PartyPage = () => {
 
     console.log(party);
   }, [partyIdNumber,user]); // Run the effect when partyIdNumber changes
+  
+  const checkIfUserJoinedParty =async () => {
+    try {
+     
+     if (!user?.user_id ||  !party?.party_id) throw new Error('No user id or party id checkIfUserJoinedParty()');
+     const args = { party_id: party.party_id, user_id: user.user_id };
+     dispatch(isUserjoinedPartyAPI(args));
+    
+    } catch (error) {
+     console.error(error);
+    }
+ 
+   };
 
   const handleAddPartyParticipants = () => {
     try {
-      debugger
       if(!user) alert('No Login user user')
       if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
       const args = { party_id: party.party_id, user_id: user.user_id };
@@ -59,7 +58,9 @@ const PartyPage = () => {
     }
    
   }
-  const handleDeletePartyParticipants = () => {};
+  const handleDeletePartyParticipants = () => {
+
+  };
   return (
     <div className="partyWraper">
       <NavBar />

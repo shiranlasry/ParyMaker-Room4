@@ -448,6 +448,35 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
     res.status(500).send({ ok: false, error });
   }
 }
+export async function deletePartyParticipants(req: express.Request, res: express.Response) {
+  try {
+
+    console.log( `deletePartyParticipants() ${req.body}`);
+    const { party_id, user_id } = req.body;
+    if (!party_id || !user_id) throw new Error("No party_id or user_id provided for deletePartyParticipants()");
+    // delete if user exists in this party
+    const deleteQuery = `
+      DELETE FROM party_maker.party_participants WHERE party_id = ? AND user_id = ?;
+    `;
+    connection.query(deleteQuery, [party_id, user_id], (err, results: any[], fields) => {
+      try {
+        if (err) throw err;
+        console.log(`deletePartyParticipants deleteQuery results: ${results}`); 
+        res.send({ ok: true, results });
+
+        
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+
+}
 
 
 

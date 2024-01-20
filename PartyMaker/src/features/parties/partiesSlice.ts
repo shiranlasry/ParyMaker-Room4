@@ -12,6 +12,7 @@ import {
   updatePartyAPI,
   isUserjoinedPartyAPI,
   addPartyPartcipantsAPI,
+  deletePartyPartcipantsAPI,
 } from "./partiesAPI";
 
 enum Status {
@@ -128,6 +129,16 @@ export const partiesSlice = createSlice({
       .addCase(addPartyPartcipantsAPI.fulfilled, (state, action) => {
         state.status = Status.IDLE;
         state.isUserjoinedParty = action.payload;
+      })
+      .addCase(deletePartyPartcipantsAPI.rejected, (state) => {
+        state.status = Status.FAILED;
+      })
+      .addCase(deletePartyPartcipantsAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(deletePartyPartcipantsAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.isUserjoinedParty = false;
       });
       
       

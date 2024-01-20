@@ -162,5 +162,21 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+  export const deletePartyPartcipantsAPI = createAsyncThunk<boolean, AddPartyPartcipants>(
+    'delete-party-participants',
+    async (args) => {
+      try {
+        const response = await axios.delete(`/api/parties/delete-party-participants`, { data: args });
+        const { ok } = response.data;
+        if (!ok) {
+          throw new Error("Invalid credentials getUserApi()");
+        }
+        return ok;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
   
   

@@ -1,7 +1,7 @@
 //parties router server side
 
 import express from 'express';
-import { getAllParties,addPartyParticipants ,getAllCategories,createNewParty,saveImgtoDB, getPartyById, deleteParty,updateParty,IsPartyParticipants} from './partyConts';
+import { getAllParties,addPartyParticipants,deletePartyParticipants ,getAllCategories,createNewParty,saveImgtoDB, getPartyById, deleteParty,updateParty,IsPartyParticipants} from './partyConts';
 const router = express.Router();
 
 
@@ -16,6 +16,7 @@ router
     .put("/:party_id", updateParty)
     .post("/add-party-participants",addPartyParticipants)
     .post("/is-user-joined-party",IsPartyParticipants)
+    .delete("/delete-party-participants",deletePartyParticipants)
     
    
 
