@@ -24,7 +24,7 @@ const PartyPage = () => {
   return (
     <div className="partyWraper">
       <NavBar />
-      <div className="main">
+      <div className="partyPmain">
         {party ? (
           <div className="partyContent">
             <h1>{party.party_name}🎉🎈</h1>
