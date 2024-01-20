@@ -39,7 +39,12 @@ const initialState: PartiesState = {
 export const partiesSlice = createSlice({
   name: "Parties",
   initialState,
-  reducers: {},
+  reducers: {
+    resetIsUserjoinedParty: (state) => {
+      debugger;
+      state.isUserjoinedParty = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllParties.pending, (state) => {
@@ -145,7 +150,7 @@ export const partiesSlice = createSlice({
 
   },
 });
-
+export const  {resetIsUserjoinedParty } = partiesSlice.actions;
 export const partiesSelector = (state: RootState) => state.parties.value;
 export const partiesImgIdSelector = (state: RootState) => state.parties.img_id;
 export const incomingPartySelector = (state: RootState) =>

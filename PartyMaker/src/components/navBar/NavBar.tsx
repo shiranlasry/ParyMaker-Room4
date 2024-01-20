@@ -10,12 +10,13 @@ import { deleteTokenApi, getUserFromTokenApi } from "../../features/loggedInUser
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getAllParties } from "../../features/parties/partiesAPI";
-import { partiesSelector } from "../../features/parties/partiesSlice";
+import { isUserjoinedPartySelector, partiesSelector, resetIsUserjoinedParty } from "../../features/parties/partiesSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
   const parties = useAppSelector(partiesSelector);
+  const isParyPaties = useAppSelector(isUserjoinedPartySelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const NavBar = () => {
  }
   const handelLogout = () => {
     dispatch(deleteTokenApi());
+    dispatch(resetIsUserjoinedParty())
     navigate("/");
   };
 
