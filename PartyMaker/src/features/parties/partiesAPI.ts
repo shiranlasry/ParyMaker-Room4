@@ -6,9 +6,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getPartyById = createAsyncThunk<Party | null, number>(
   'get-party-by-id',
-  async (partyId) => {
+  async (party_id) => {
     try {
-      const response = await axios.get(`/api/parties/get-party-by-id/${partyId}`);
+      const response = await axios.get(`/api/parties/get-party-by-id/${party_id}`);
        
       const { ok, result } = response.data;
       if (!ok) {
@@ -76,9 +76,9 @@ export const createParty = createAsyncThunk<Party, Party>(
     'parties-by-user-id',
     async (userId) => {
       try {
-        debugger
+        
         const response = await axios.get(`/api/parties/parties-by-user-id/${userId}`);
-        debugger
+        
         const { ok, results } = response.data;
         if (!ok) {
           throw new Error("Invalid credentials getUserApi()");
@@ -156,6 +156,7 @@ export const createParty = createAsyncThunk<Party, Party>(
         
         const response = await axios.post(`/api/parties/is-user-joined-party`, args);
         const { ok ,results} = response.data;
+        debugger
         console.log(`isUserjoinedPartyAPI ${results} ${ok}`)
         return ok;
       } catch (error) {
@@ -174,6 +175,22 @@ export const createParty = createAsyncThunk<Party, Party>(
           throw new Error("Invalid credentials getUserApi()");
         }
         return ok;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
+  export const partiesByUserIdJoined = createAsyncThunk<Party[] | null, number|null>(
+    'parties-by-user-id-joined',
+    async (user_id) => {
+      try {
+        const response = await axios.get(`/api/parties/parties-by-user-id-joined/${user_id}`);
+        const { ok, results } = response.data;
+        if (!ok) {
+          throw new Error("Invalid credentials getUserApi()");
+        }
+        return results;
       } catch (error) {
         console.error(error);
         return null;

@@ -10,7 +10,7 @@ import { deleteTokenApi, getUserFromTokenApi } from "../../features/loggedInUser
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getAllParties } from "../../features/parties/partiesAPI";
-import { isUserjoinedPartySelector, partiesSelector, resetIsUserjoinedParty } from "../../features/parties/partiesSlice";
+import { isUserjoinedPartySelector, partiesSelector, resetIsUserjoinedParty ,resetIncomingParty} from "../../features/parties/partiesSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -30,6 +30,12 @@ const NavBar = () => {
   const handelLogout = () => {
     dispatch(deleteTokenApi());
     dispatch(resetIsUserjoinedParty())
+    dispatch(resetIncomingParty())
+    navigate("/");
+  };
+  const hendalGoHome = () => {
+    dispatch(resetIsUserjoinedParty());
+    dispatch(resetIncomingParty());
     navigate("/");
   };
 
@@ -48,7 +54,7 @@ const NavBar = () => {
             <button className="greetBtn" onClick={() => navigate("/userPage")}>
               <FontAwesomeIcon icon={faUser} /> <span className="greet"> Hi {user.username} </span>
             </button>
-            <button onClick={() => navigate("/")}>Home</button>
+            <button onClick={hendalGoHome}>Home</button>
             <button onClick={handelLogout}>Logout</button>
             {user.role === "admin" && <button onClick={hendalAdminPage}>Admin</button>}
           </>

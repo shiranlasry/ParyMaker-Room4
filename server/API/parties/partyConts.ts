@@ -38,7 +38,6 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
     res.status(500).send({ ok: false, error });
   }
 };
-
 export const getAllParties = async (req: express.Request, res: express.Response) => {
   try {
     const query = `
@@ -370,7 +369,6 @@ export async function updateParty(req: express.Request, res: express.Response) {
     res.status(500).send({ ok: false, error });
   }
 }
-
 export async function addPartyParticipants(req: express.Request, res: express.Response) {
   try {
     console.log( `addPartyParticipants() ${req.body}`);
@@ -418,7 +416,6 @@ export async function addPartyParticipants(req: express.Request, res: express.Re
 }
 export async function IsPartyParticipants(req: express.Request, res: express.Response) {
   try {
-    console.log( `IsPartyParticipants() ${req.body}`);
     const { party_id, user_id } = req.body;
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for IsPartyParticipants()");
     // check if user exists in this party
@@ -429,10 +426,9 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
       try {
         if (err) throw err;
 
-        console.log(`IsPartyParticipants selectQuery results: ${results}`);
+        console.log(`IsPartyParticipants selectQuery results: ${results} `);
         if (results.length > 0) {
           res.send({ ok: true, results });
-          return;
         }
         else{
           res.send({ ok: false, results });
@@ -477,6 +473,37 @@ export async function deletePartyParticipants(req: express.Request, res: express
   }
 
 }
+export async function partiesByUserIdJoined(req: express.Request, res: express.Response) {
+  try {
+    const { user_id } = req.params;
+    const query = `
+      SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+      FROM party_maker.parties p
+      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+      JOIN party_maker.party_participants pp ON p.party_id = pp.party_id
+      WHERE pp.user_id = ?;
+    `;
+
+    connection.query(query, [user_id], (err, results: any[], fields) => {
+      try {
+        if (err) throw err;
+        const partiesWithImageData = results.map((party) => ({
+          ...party,
+          party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+        }));
+        res.send({ ok: true, results: partiesWithImageData });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+}
+  
 
 
 

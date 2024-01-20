@@ -13,12 +13,9 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
 
   const handleJoinParty = () => {
     // Navigate to the party page with the party ID as a parameter
+    
     navigate(`/partyPage/${party.party_id}`);
   }
-
-  useEffect(() => {
-    console.log(party);
-  }, [party.party_id]);
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -44,7 +41,7 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
           <div className="party-description">
             <h4>{party.party_description}</h4>
             <h4>{party.party_price}₪ </h4>
-             <button className='joinPartyBtn' onClick={handleJoinParty}>Join Party</button>
+             <button className='joinPartyBtn' onClick={handleJoinParty}>More Details</button>
           </div>
         </div>
       ) : (

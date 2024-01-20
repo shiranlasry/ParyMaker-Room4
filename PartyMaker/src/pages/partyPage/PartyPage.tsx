@@ -5,41 +5,54 @@ import NavBar from "../../components/navBar/NavBar";
 import { Party } from "../../types-env";
 import { incomingPartySelector, isUserjoinedPartySelector } from "../../features/parties/partiesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI } from "../../features/parties/partiesAPI";
+import { deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI, partiesByUserIdJoined } from "../../features/parties/partiesAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
+import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 
 const PartyPage = () => {
+  const { party_id } = useParams<{ party_id: string }>();
   const party: Party | null = useAppSelector(incomingPartySelector);
   const isUserjoined = useAppSelector(isUserjoinedPartySelector);
+  
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
 
-  const { party_id } = useParams<{ party_id: string }>();
-  // Convert partyId to a number if needed
-  if (!party_id) throw new Error("No partyId provided");
-  const partyIdNumber = parseInt(party_id, 10);
+  
+  const getUserFromToken = async () => {
+    try {
+      const response = await dispatch(getUserFromTokenApi());
+      if (response) {
+        console.log("getUserFromTokenApi response", response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    
+    if (!party_id) return; // Make sure party_id is available
+    const partyIdNumber = parseInt(party_id);
+    dispatch(getPartyById(partyIdNumber));
+  }, [party_id]); // Add party_id as a dependency
 
   useEffect(() => {
-    dispatch(getPartyById(partyIdNumber));
-    if(user)
-    checkIfUserJoinedParty();
-   
+    if (!user) getUserFromToken();
+    if (user && user.user_id && party && party.party_id ) {
+      checkIfUserJoinedParty();
+      dispatch(partiesByUserIdJoined(user.user_id));
+    }
+  }, [user,party]);
 
-    console.log(party);
-  }, [partyIdNumber,user]); // Run the effect when partyIdNumber changes
-  
   const checkIfUserJoinedParty =async () => {
     try {
-     
+      debugger
      if (!user?.user_id ||  !party?.party_id) throw new Error('No user id or party id checkIfUserJoinedParty()');
      const args = { party_id: party.party_id, user_id: user.user_id };
      dispatch(isUserjoinedPartyAPI(args));
-    
     } catch (error) {
      console.error(error);
     }
- 
    };
 
   const handleAddPartyParticipants = () => {
@@ -48,13 +61,8 @@ const PartyPage = () => {
       if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
       const args = { party_id: party.party_id, user_id: user.user_id };
       dispatch(addPartyPartcipantsAPI(args)); 
-      
-       
-      
     } catch (error) {
       console.error(error);
-
-      
     }
    
   }
