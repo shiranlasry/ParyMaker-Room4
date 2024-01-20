@@ -9,7 +9,7 @@ export const Footer = () => {
           <div className="footer-header">
             <img
               src="https://th.bing.com/th/id/R.edf7ce0e1e948de499d2745a367b321c?rik=yE1qdaGt746Fxg&riu=http%3a%2f%2fwww.pngall.com%2fwp-content%2fuploads%2f5%2fParty-PNG-File-Download-Free.png&ehk=2b9KMwAvsETQ%2fgfmvM8uwb9lj79Cv0mnA%2bq5BsR9BKk%3d&risl=&pid=ImgRaw&r=0"
-              className="manik"
+              className="icon"
               alt=""
             />
           </div>
@@ -48,28 +48,19 @@ export const Footer = () => {
           </div>
 
           <div className="link-des">
-            <a href="#" className="footer-links">
+            <a href="/" className="footer-links">
               Home
             </a>
-            <a href="#" className="footer-links">
+            <a href="/about" className="footer-links">
               About
             </a>
-            <a href="#" className="footer-links">
-              Services
-            </a>
-            <a href="#" className="footer-links">
-              Gallery
-            </a>
-            <a href="#" className="footer-links">
+            <a href="/contact" className="footer-links">
               Contact
             </a>
           </div>
         </div>
 
         <div className="newsletter row">
-          <div className="footer-header">
-            <h3>Newsletter</h3>
-          </div>
           <div className="newsletter-des">
             <div className="subscribe">
               <i className="sub-icon ri-mail-check-fill"></i>
@@ -77,16 +68,16 @@ export const Footer = () => {
               <i className="sub-icon ri-arrow-right-line"></i>
             </div>
             <div className="icons">
-              <a href="#">
+              <a href="https://www.facebook.com/">
                 <i className="social-icon ri-facebook-fill"></i>
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/">
                 <i className="social-icon ri-instagram-line"></i>
               </a>
-              <a href="#">
+              <a href="https://www.linkedin.com/">
                 <i className="social-icon ri-linkedin-fill"></i>
               </a>
-              <a href="#">
+              <a href="https://github.com/">
                 <i className="social-icon ri-github-line"></i>
               </a>
             </div>

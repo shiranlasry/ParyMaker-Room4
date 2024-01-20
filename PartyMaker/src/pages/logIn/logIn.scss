@@ -83,13 +83,6 @@ body {
     border-radius: 4px;
     font-family: "Courier New", monospace;
   }
-
-  @media (max-width: 960px) {
-    .footer {
-      height: 300px;
-     margin-bottom: 0;
-    }
-  }
 }
 
 .error {

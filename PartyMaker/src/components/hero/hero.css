@@ -4,7 +4,7 @@
     background-color: black;
     margin-top: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    animation: fadeIn 1s ease-in-out forwards; /* Example animation - fadeIn */
+    animation: fadeIn 1s ease-in-out forwards; 
 }
 
 @keyframes fadeIn {
@@ -70,30 +70,36 @@
 }
 
 
-@media screen and (max-width: 768px) {
-    .hero-container {
-        padding: 30px; 
+
+@media (max-width: 660px) {
+    .container-fluid {
+      height: auto; 
+    }
+    .rows:not(.link) {
+        display: block;
+      }
+    
+  
+    .hero-container img {
+      width: 100%; 
+      height: 10rem; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      animation: scaleImage 1s ease-in-out forwards;
+      margin: 1rem;
     }
   
     .hero-container h1 {
-        font-size: 1.5rem; 
-        margin-top: 1.5rem;
-      
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
     }
-
-    
   
     .hero-container p {
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-    }
-  
-    .hero-container img {
-        width: 100%; 
-        height: auto;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
     }
   
     .rounded-top-right {
-        border-top-right-radius: 20px;
+      border-top-right-radius: 20px;
     }
-}
+  }
+  

@@ -11,6 +11,8 @@ import PartyPage from './pages/partyPage/PartyPage'
 import AdminMain from './pages/admin-main/AdminMain'
 import AdminParties from './components/admin-paries/AdminParties'
 import AdminUsers from './components/admin-users/AdminUsers'  
+import About from './pages/about/About';
+import Contact from './pages/contact/Contact';
 
 
 function App() {
@@ -27,6 +29,9 @@ function App() {
     { path: "/admin/:user_id", element: <AdminMain />},
     { path: "/admin/parties", element: <AdminParties />},
     { path: "/admin/users", element: <AdminUsers />},
+    { path: "/about", element: <About />},
+    { path: "/contact", element: <Contact />},
+    
   ])
 
   return (
