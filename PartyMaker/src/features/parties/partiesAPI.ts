@@ -156,7 +156,7 @@ export const createParty = createAsyncThunk<Party, Party>(
         
         const response = await axios.post(`/api/parties/is-user-joined-party`, args);
         const { ok ,results} = response.data;
-        debugger
+        
         console.log(`isUserjoinedPartyAPI ${results} ${ok}`)
         return ok;
       } catch (error) {

@@ -11,17 +11,14 @@ type PartyCardProps = {
 const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleJoinParty = () => {
-    // Navigate to the party page with the party ID as a parameter
-    
+  const handleMoreDetails = () => {
+   
     navigate(`/partyPage/${party.party_id}`);
   }
-
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3');
   };
-
   return (
     <div className="partyCard">
       {party ? (
@@ -41,7 +38,7 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
           <div className="party-description">
             <h4>{party.party_description}</h4>
             <h4>{party.party_price}₪ </h4>
-             <button className='joinPartyBtn' onClick={handleJoinParty}>More Details</button>
+             <button className='joinPartyBtn' onClick={handleMoreDetails}>More Details</button>
           </div>
         </div>
       ) : (

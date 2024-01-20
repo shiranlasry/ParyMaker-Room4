@@ -13,12 +13,11 @@ import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 const PartyPage = () => {
   const { party_id } = useParams<{ party_id: string }>();
   const party: Party | null = useAppSelector(incomingPartySelector);
-  const isUserjoined = useAppSelector(isUserjoinedPartySelector);
-  
   const user = useAppSelector(userSelector);
-  const dispatch = useAppDispatch();
-
+  const isUserjoined = useAppSelector(isUserjoinedPartySelector);
+  const [showEditDel, setShowEditDel] = useState(false);  
   
+  const dispatch = useAppDispatch();
   const getUserFromToken = async () => {
     try {
       const response = await dispatch(getUserFromTokenApi());
@@ -41,12 +40,14 @@ const PartyPage = () => {
     if (user && user.user_id && party && party.party_id ) {
       checkIfUserJoinedParty();
       dispatch(partiesByUserIdJoined(user.user_id));
+      if (user.user_id === party.party_creator_id || user.role === 'admin' )
+        setShowEditDel(true); 
     }
   }, [user,party]);
 
   const checkIfUserJoinedParty =async () => {
     try {
-      debugger
+      
      if (!user?.user_id ||  !party?.party_id) throw new Error('No user id or party id checkIfUserJoinedParty()');
      const args = { party_id: party.party_id, user_id: user.user_id };
      dispatch(isUserjoinedPartyAPI(args));
@@ -114,7 +115,13 @@ const PartyPage = () => {
               <span>About the Party:</span> {party.party_description}
             </p>
             {isUserjoined? <button onClick={handleDeletePartyParticipants}>Leave Party</button> : <button onClick={handleAddPartyParticipants}>Join Party</button>
-}
+            } 
+            {showEditDel && (
+              <div className="editDel">
+                <button>Edit</button>
+                <button>Delete</button>
+              </div>
+            ) }
           </div>
         ) : (
           <p>Loading...</p>
