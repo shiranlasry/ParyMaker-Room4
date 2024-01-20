@@ -212,35 +212,35 @@ export const getPartyById = async (req: express.Request, res: express.Response) 
     res.status(500).send({ ok: false, error });
   }
 };
-// export const getPartiesByUserId = async (req: express.Request, res: express.Response) => {
-//   try {
-//     const { user_id } = req.params;
-//     const query = `
-//       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-//       FROM party_maker.parties p
-//       JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-//       LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
-//       WHERE p.party_creator_id = ?;
-//     `;
+export const getPartiesByUserId = async (req: express.Request, res: express.Response) => {
+  try {
+    const { user_id } = req.params;
+    const query = `
+      SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+      FROM party_maker.parties p
+      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+      WHERE p.party_creator_id = ?;
+    `;
 
-//     connection.query(query, [user_id], (err, results: any[], fields) => {
-//       try {
-//         if (err) throw err;
-//         const partiesWithImageData = results.map((party) => ({
-//           ...party,
-//           party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
-//         }));
-//         res.send({ ok: true, results: partiesWithImageData });
-//       } catch (error) {
-//         console.error(error);
-//         res.status(500).send({ ok: false, error });
-//       }
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send({ ok: false, error });
-//   }
-// }
+    connection.query(query, [user_id], (err, results: any[], fields) => {
+      try {
+        if (err) throw err;
+        const partiesWithImageData = results.map((party) => ({
+          ...party,
+          party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+        }));
+        res.send({ ok: true, results: partiesWithImageData });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ ok: false, error });
+  }
+}
 
 export async function deleteParty(req, res) {
   try {

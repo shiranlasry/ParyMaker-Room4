@@ -25,6 +25,7 @@ const NavBar = () => {
   }, []);
  const hendalAdminPage = () => {
     navigate(`/admin/${user?.user_id}`);
+    
  }
   const handelLogout = () => {
     dispatch(deleteTokenApi());

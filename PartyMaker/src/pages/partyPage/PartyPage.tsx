@@ -5,7 +5,7 @@ import NavBar from "../../components/navBar/NavBar";
 import { Party } from "../../types-env";
 import { incomingPartySelector, isUserjoinedPartySelector } from "../../features/parties/partiesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { getPartyById, isUserjoinedPartyAPI } from "../../features/parties/partiesAPI";
+import { deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI } from "../../features/parties/partiesAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
 
@@ -59,6 +59,15 @@ const PartyPage = () => {
    
   }
   const handleDeletePartyParticipants = () => {
+    try {
+      if(!user) alert('No Login user user')
+      if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
+      const args = { party_id: party.party_id, user_id: user.user_id };
+      dispatch(deletePartyPartcipantsAPI(args));
+      alert('You left the party')
+    } catch (error) {
+      console.error(error);
+    }
 
   };
   return (

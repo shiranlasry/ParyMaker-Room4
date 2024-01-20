@@ -41,7 +41,7 @@ export const partiesSlice = createSlice({
   initialState,
   reducers: {
     resetIsUserjoinedParty: (state) => {
-      debugger;
+     
       state.isUserjoinedParty = false;
     },
   },
