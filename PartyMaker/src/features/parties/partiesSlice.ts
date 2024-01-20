@@ -10,6 +10,8 @@ import {
   getPartyById,
   deletePartyAPI,
   updatePartyAPI,
+  isUserjoinedPartyAPI,
+  addPartyPartcipantsAPI,
 } from "./partiesAPI";
 
 enum Status {
@@ -20,6 +22,7 @@ enum Status {
 interface PartiesState {
   value: Party[] | null;
   valueByUserId: Party[] | null;
+  isUserjoinedParty: boolean;
   img_id: number | null;
   incomingParty: Party | null;
   status: Status;
@@ -27,6 +30,7 @@ interface PartiesState {
 const initialState: PartiesState = {
   value: null,
   valueByUserId: null,
+  isUserjoinedParty: false,
   img_id: null,
   incomingParty: null,
   status: Status.IDLE,
@@ -105,9 +109,28 @@ export const partiesSlice = createSlice({
         state.status = Status.IDLE;
         state.value = action.payload;
       })
-      .addCase(updatePartyAPI.rejected, (state) => {
+      .addCase(isUserjoinedPartyAPI.rejected, (state) => {
         state.status = Status.FAILED;
+      })
+      .addCase(isUserjoinedPartyAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(isUserjoinedPartyAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.isUserjoinedParty = action.payload;
+      })
+      .addCase(addPartyPartcipantsAPI.rejected, (state) => {
+        state.status = Status.FAILED;
+      })
+      .addCase(addPartyPartcipantsAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(addPartyPartcipantsAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.isUserjoinedParty = action.payload;
       });
+      
+      
 
   },
 });
@@ -120,5 +143,7 @@ export const partiesStatusSelector = (state: RootState) => state.parties.status;
 export const partiesStateSelector = (state: RootState) => state.parties;
 export const partiesByUserIdSelector = (state: RootState) =>
   state.parties.valueByUserId;
+export const isUserjoinedPartySelector = (state: RootState) => state.parties.isUserjoinedParty;
+  
 
 export default partiesSlice.reducer;

@@ -96,7 +96,6 @@ export const createParty = createAsyncThunk<Party, Party>(
     'delete-party',
     async (args) => {
       try {
-        debugger;
         const response = await axios.delete(`/api/parties/delete`, { data: args });
         const { ok, results } = response.data;
         if (!ok) {
@@ -109,13 +108,10 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
-  
-
   export const updatePartyAPI = createAsyncThunk<Party[] | null, Party>(
     'update-party',
     async (party) => {
       try {
-        debugger
         const response = await axios.put(`/api/parties/${party.party_id}`, party);
         const { ok, results } = response.data;
         if (!ok) {
@@ -128,4 +124,43 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
+  interface AddPartyPartcipants {
+    party_id: number;
+    user_id: number;
+  }
+  export const addPartyPartcipantsAPI = createAsyncThunk<boolean, AddPartyPartcipants>(
+    'add-party-participants',
+    async (args) => {
+      try {
+        const response = await axios.post(`/api/parties/add-party-participants`, args);
+        const { ok ,error} = response.data;
+        
+        if (!ok) {
+          alert(error);
+          throw new Error(error);
+        }
+        alert("Party Participants Added");
+        return ok;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
+  export const isUserjoinedPartyAPI = createAsyncThunk<boolean, AddPartyPartcipants>(
+    'is-user-joined-party',
+    async (args) => {
+      try {
+        debugger
+        const response = await axios.post(`/api/parties/is-user-joined-party`, args);
+        const { ok ,results} = response.data;
+        console.log(`isUserjoinedPartyAPI ${results} ${ok}`)
+        return ok;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
+  
   
