@@ -1,7 +1,6 @@
 $navy: #000080;
 
 body {
-    
   .main {
     margin: auto;
     display: flex;
@@ -11,43 +10,41 @@ body {
     color: white;
     margin-top: 80px;
     justify-content: center;
-    box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1);
-      background-color: rgba(4, 4, 63, 0.22);
-      height: 670px;
-      border-radius: 10px;
-      width: 50vw;
-      min-width: 600px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color: rgba(4, 4, 63, 0.167);
+    min-height: 700px;
+    border-radius: 10px;
+    width: 40vw;
+    min-width: 600px;
 
     .partyContent {
       margin: auto;
       width: 550px;
-      min-height: 500px;
-     
-      padding: 15px;
+      padding: 10px;
       color: $navy;
-      
+
+      @media screen and (max-width: 920px) {
+        font-size: 18px;
+      }
 
       p {
         margin: 0.8rem;
-        
       }
       span {
         font-weight: bold;
-        
       }
-      
-        h1 {
-            margin-bottom: 2rem;
-        }
+
+      h1 {
+        margin-bottom: 1.5rem;
+      }
 
       img {
         max-width: 300px;
-        max-height: 400px ;
-        margin: .5rem;
+        max-height: 400px;
+        margin: 0.5rem;
         box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-    }
       }
     }
   }
-
+}
