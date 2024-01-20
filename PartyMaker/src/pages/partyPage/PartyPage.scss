@@ -1,7 +1,53 @@
-.main{
+$navy: #000080;
+
+body {
+    
+  .main {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     font-size: 25px;
     color: white;
     margin-top: 80px;
-   
-}
+    justify-content: center;
+    box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1);
+      background-color: rgba(4, 4, 63, 0.22);
+      height: 670px;
+      border-radius: 10px;
+      width: 50vw;
+      min-width: 600px;
+
+    .partyContent {
+      margin: auto;
+      width: 550px;
+      min-height: 500px;
+     
+      padding: 15px;
+      color: $navy;
+      
+
+      p {
+        margin: 0.8rem;
+        
+      }
+      span {
+        font-weight: bold;
+        
+      }
+      
+        h1 {
+            margin-bottom: 2rem;
+        }
+
+      img {
+        max-width: 300px;
+        max-height: 400px ;
+        margin: .5rem;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+      }
+    }
+  }
+
