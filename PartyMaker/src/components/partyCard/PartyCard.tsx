@@ -2,12 +2,20 @@
 import React, { useEffect } from 'react';
 import { Party } from '../../types-env';
 import './partyCard.scss';
+import { useNavigate } from 'react-router-dom';
 
 type PartyCardProps = {
   party: Party;
 };
 
 const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const handleJoinParty = () => {
+    // Navigate to the party page with the party ID as a parameter
+    navigate(`/partyPage/${party.party_id}`);
+  }
+
   useEffect(() => {
     console.log(party);
   }, [party.party_id]);
@@ -36,7 +44,7 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
           <div className="party-description">
             <h4>{party.party_description}</h4>
             <h4>{party.party_price}₪ </h4>
-            <button className='joinPartyBtn'>Join Party</button>
+             <button className='joinPartyBtn' onClick={handleJoinParty}>Join Party</button>
           </div>
         </div>
       ) : (

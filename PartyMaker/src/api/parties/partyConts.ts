@@ -6,6 +6,7 @@ export const getParties = (req, res) => {
     res.send({ parties });
   } catch (error) {
     console.error(error.message);
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -31,6 +32,7 @@ export const addParty = (req, res) => {
     res.send({ parties });
   } catch (error) {
     console.error(error.message);
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -41,6 +43,7 @@ export const deleteParty = (req, res) => {
     res.send({ parties });
   } catch (error) {
     console.error(error.message);
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -60,7 +63,7 @@ export const updateParty = (req, res) => {
       createdAt,
       id,
     } = req.body;
-    console.log(req.body);
+
     if (
       !partyName ||
       !id ||
@@ -74,11 +77,16 @@ export const updateParty = (req, res) => {
       !partyCreator ||
       !partyParticipants ||
       !createdAt
-    )
+    ) {
       throw new Error("Please complete all fields");
+    }
+
     const party = parties.find((party) => party.id === id);
 
-    if (!party) throw new Error("party not found");
+    if (!party) {
+      throw new Error("Party not found");
+    }
+
     party.partyName = partyName;
     party.partyDate = partyDate;
     party.partyTime = partyTime;
@@ -95,17 +103,35 @@ export const updateParty = (req, res) => {
     res.send({ party });
   } catch (error) {
     console.error(error);
-    res.send({ error });
+    res.status(500).send({ error: error.message });
   }
-}
+};
+
+export const getPartyById = (req, res) => {
+  try {
+    const partyId = parseInt(req.params.partyId, 10);
+    const party = parties.find((party) => party.id === partyId);
+
+    if (!party) {
+      return res.status(404).json({ message: "Party not found" });
+    }
+
+    res.status(200).json(party);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ error: error.message });
+  }
+};
 
 export const getPartiesByUserId = (req, res) => {
-    try {
-        const userId = req.params.userId; // Assuming you can get user ID from the request parameters
-        const userParties = parties.filter((party) => party.partyCreator.user_id === userId);
-        res.send({ parties: userParties });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send({ error: error.message });
-    }
+  try {
+    const userId = req.params.userId;
+    const userParties = parties.filter(
+      (party) => party.partyCreator.user_id === userId
+    );
+    res.send({ parties: userParties });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ error: error.message });
+  }
 };
