@@ -9,7 +9,7 @@ import { deletePartyAPI, deletePartyPartcipantsAPI, getPartyById, isUserjoinedPa
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
 import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import EditParty from "../../components/edit-party/EditParty";
 import { usersByPartyIdSelector } from "../../features/users/usersSlice";
 import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
@@ -67,7 +67,7 @@ const PartyPage = () => {
 
   const handleAddPartyParticipants = () => {
     try {
-      if(!user) alert('No Login user user')
+      if(!user) toast.error('No Login user user')
       if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
       const args = { party_id: party.party_id, user_id: user.user_id };
       dispatch(addPartyPartcipantsAPI(args)); 
@@ -78,11 +78,11 @@ const PartyPage = () => {
   }
   const handleDeletePartyParticipants = () => {
     try {
-      if(!user) alert('No Login user user')
+      if(!user) toast.error('No Login user user')
       if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
       const args = { party_id: party.party_id, user_id: user.user_id };
       dispatch(deletePartyPartcipantsAPI(args));
-      alert('You left the party')
+      toast.success('You left the party')
     } catch (error) {
       console.error(error);
     }
@@ -134,6 +134,7 @@ const PartyPage = () => {
   return (
     <div className="partyWraper">
       <NavBar />
+      <Toaster position="top-right"/>
     {showEditForm? 
     <EditParty
     party={party}

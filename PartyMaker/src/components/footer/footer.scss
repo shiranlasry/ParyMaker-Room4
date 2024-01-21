@@ -12,7 +12,6 @@ footer {
   position: relative;
   width: 100%;
   height: 100%;
-  // top: 350px;
   font-size: 0.8rem;
   font-family: "quicksand", sans-serif;
 
@@ -25,12 +24,12 @@ footer {
   width: 120px;
 }
 .main {
-  // margin: 50px;
   padding-top: 20px;
   padding-bottom: 50px;
   display: grid;
   gap: 50px;
   grid-template-columns: repeat(4, 1fr);
+
 }
 .row {
   margin-top: 50px;
@@ -53,6 +52,8 @@ footer {
 .office a:hover {
   color: #fa90d2;
   font-weight: bold;
+  outline: none;
+  border: none;
 }
 .num {
   font-size: 1rem;
@@ -63,6 +64,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+ 
 }
 .link-des a {
   color: #fff;
@@ -74,6 +76,8 @@ footer {
   color: #fa90d2;
   font-weight: bold;
   transition: linear 0.3s;
+  border: none;
+ 
 }
 
 .btn-know {
@@ -87,12 +91,14 @@ footer {
   color: #fa90d2;
   text-transform: uppercase;
   border-radius: 10px;
+ 
 }
 
 .btn-know:hover {
   color: white;
   background-color: #fa90d2;
   transition: linear 0.3s;
+  border: none;
 }
 .subcribe {
   display: flex;
@@ -164,5 +170,6 @@ hr {
 
   .link {
     grid-column: 1 / span 4;
+    
   }
 }
