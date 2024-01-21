@@ -5,6 +5,8 @@ import { Party } from "../../types-env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
+
+
 export const getPartyById = createAsyncThunk<Party | null, number>(
   'get-party-by-id',
   async (party_id) => {
@@ -107,7 +109,6 @@ export const createParty = createAsyncThunk<Party, Party>(
           throw new Error("Invalid credentials getUserApi()");
         }
       toast.success("Party Deleted");
-      alert("Party Deleted");
         return results;
       } catch (error) {
         console.error(error);
@@ -144,10 +145,10 @@ export const createParty = createAsyncThunk<Party, Party>(
         const { ok ,error} = response.data;
         
         if (!ok) {
-          alert(error);
+          toast.error(error);
           throw new Error(error);
         }
-        alert("Party Participants Added");
+        toast.success("Party Participants Added");
         return ok;
       } catch (error) {
         console.error(error);
