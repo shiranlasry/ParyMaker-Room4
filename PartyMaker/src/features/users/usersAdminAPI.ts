@@ -6,7 +6,7 @@ export const getAllUsersAPI = createAsyncThunk<User[] | null >('get-all-users', 
     try {
         const response = await axios.get("/api/users/");
         const { ok, results } = response.data;
-        debugger
+        
         if (!ok) {
             throw new Error("Invalid credentials getAllUsersAPI()");
         }

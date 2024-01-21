@@ -55,7 +55,7 @@ const ResetPassword: React.FC<ResetPasswordModalProps> = ({ user, onSave,onClose
   const handleSave = () => {
   
     if (passwordsMatch) {
-        debugger
+        
       onSave(user.user_id!,password, confirmPassword,user.role);
       onClose();
     } else {
