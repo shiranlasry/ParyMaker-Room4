@@ -2,15 +2,15 @@ $navy: #000080;
 
 .partyCard {
   border: 1px solid #ddd;
-  margin: 0.4rem;
-  min-width: 300px;
-  height: 480px;
+  margin: 0.7rem;
+  width: 280px;
+  height: 440px;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.735);
+  background-color: rgba(255, 255, 255, 0.555);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 22px;
   justify-content: center;
 
   .partyName {
@@ -21,7 +21,7 @@ $navy: #000080;
     width: 100%;
     background-color: #010136b3;
     border-radius: 4px;
-    margin-top: 15rem;
+    margin-top: 14rem;
 
     p {
       color: white;
@@ -33,10 +33,11 @@ $navy: #000080;
   .partyContent {
     position: relative;
     min-height: 300px;
+   
 
     .imageOverlay {
       position: absolute;
-      width: 260px;
+      width: 280px;
       top: 0;
       left: 0;
       right: 0;

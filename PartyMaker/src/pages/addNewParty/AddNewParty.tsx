@@ -148,7 +148,7 @@ const AddNewParty = () => {
 
         <label>Party Description:</label>
         <textarea
-        className='bring'
+        className='decribe'
           name="party_description"
           value={newParty.party_description}
           onChange={handleInputChange}
