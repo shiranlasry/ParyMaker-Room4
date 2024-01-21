@@ -2,7 +2,7 @@ import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/loggedInUser/userSlice"
 import partiesReducer from "../features/parties/partiesSlice"
 import partyCategoriesReducer from "../features/party_categories/party_categoriesSlice"
-import usersReducer from "../features/users/userAdminSlice"
+import usersReducer from "../features/users/usersSlice"
 export const store = configureStore({
   reducer: {
     user: userReducer,

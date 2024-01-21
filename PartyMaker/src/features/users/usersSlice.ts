@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { User } from "../../types-env"
 import { RootState } from "../../app/store"
-import { getAllUsersAPI } from "./usersAdminAPI"
+import { getAllUsersAPI ,getUsersByPartyIdAPI} from "./usersAPI"
 
 enum Status {
     IDLE = "idle",
@@ -10,12 +10,14 @@ enum Status {
 }
 interface UsersState {
     value: User []| null ,
+    usersByPartyId: User[] | null,
     status: Status
    
 }
 
 const initialState: UsersState = {
     value: null,
+    usersByPartyId: null,
     status: Status.IDLE
 }
 export const usersSlice = createSlice({
@@ -39,6 +41,16 @@ export const usersSlice = createSlice({
         .addCase(getAllUsersAPI.rejected, (state) => {
             state.status = Status.FAILED
         })
+        .addCase(getUsersByPartyIdAPI.pending, (state) => {
+            state.status = Status.LOADING
+        })
+        .addCase(getUsersByPartyIdAPI.fulfilled, (state, action) => {
+            state.status = Status.IDLE;
+            state.usersByPartyId = action.payload
+        })
+        .addCase(getUsersByPartyIdAPI.rejected, (state) => {
+            state.status = Status.FAILED
+        })
         
     }
 })
@@ -46,6 +58,7 @@ export const usersSlice = createSlice({
 
 export const { setUsers } = usersSlice.actions; // Export the actions
 export const usersSelector = (state: RootState) => state.users.value; // Export the selector
+export const usersByPartyIdSelector = (state: RootState) => state.users.usersByPartyId; // Export the selector
 
 
 export default usersSlice.reducer

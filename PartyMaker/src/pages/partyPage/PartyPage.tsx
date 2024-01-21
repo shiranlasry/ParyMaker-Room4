@@ -11,12 +11,16 @@ import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
 import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
 import toast from "react-hot-toast";
 import EditParty from "../../components/edit-party/EditParty";
+import { usersByPartyIdSelector } from "../../features/users/usersSlice";
+import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
+import UserCard from "../../components/user-card/UserCard";
 
 const PartyPage = () => {
   const { party_id } = useParams<{ party_id: string }>();
   const [showEditForm, setShowEditForm] = useState(false); 
   const party: Party | null = useAppSelector(incomingPartySelector);
   const user = useAppSelector(userSelector);
+  const usersjoinedParty = useAppSelector(usersByPartyIdSelector);
   const isUserjoined = useAppSelector(isUserjoinedPartySelector);
   const [showEditDel, setShowEditDel] = useState(false);  
   const navigate = useNavigate();
@@ -37,6 +41,7 @@ const PartyPage = () => {
     if (!party_id) return; // Make sure party_id is available
     const partyIdNumber = parseInt(party_id);
     dispatch(getPartyById(partyIdNumber));
+    dispatch(getUsersByPartyIdAPI(partyIdNumber));
   }, [party_id]); // Add party_id as a dependency
 
   useEffect(() => {
@@ -179,6 +184,16 @@ const PartyPage = () => {
   ) : (
     <p>Loading...</p>
   )}
+     <h3>Users joined this party</h3>
+  <div className="partyUsers">
+ 
+    {usersjoinedParty && usersjoinedParty.map((user) => (
+      <div className="usersjoinedParty" key={user.user_id}>
+       <UserCard user={user} />
+      </div>
+    ))}
+  </div>
+  
 </div>}
     </div>
   );

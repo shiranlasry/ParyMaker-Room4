@@ -17,3 +17,18 @@ export const getAllUsersAPI = createAsyncThunk<User[] | null >('get-all-users', 
         return null;
     }
 })
+export const getUsersByPartyIdAPI = createAsyncThunk<User[] | null,number >('get-users-by-party-id', async (party_id) => {
+    try {
+        const response = await axios.get(`/api/users/get-users-by-party-id/${party_id}`);
+        const { ok, results } = response.data;
+        
+        if (!ok) {
+            throw new Error("Invalid credentials getUsersByPartyIdAPI()");
+        }
+        return results;
+
+    } catch (error) {
+        console.error(error) // this is temporary
+        return null;
+    }
+})

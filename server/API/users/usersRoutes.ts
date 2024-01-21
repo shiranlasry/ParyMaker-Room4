@@ -3,7 +3,11 @@
 
 
 import express from "express";
-import { getAllUsers ,updatePassword,updateUser, loginUser, registerUser,getUserFromToken,deleteToken,deleteUser} from "./usersCtrl";
+import { getAllUsers,
+     updatePassword,
+     updateUser,
+     loginUser,
+      registerUser,getUserFromToken,deleteToken,deleteUser,getUsersByPartyID} from "./usersCtrl";
 
 
 const router = express.Router()
@@ -17,6 +21,7 @@ router
 .put("/edit-user", updateUser)
 .put('/update-password', updatePassword)
 .delete("/:userId", deleteUser)
+.get("/get-users-by-party-id/:party_id", getUsersByPartyID)
 
 ;
 

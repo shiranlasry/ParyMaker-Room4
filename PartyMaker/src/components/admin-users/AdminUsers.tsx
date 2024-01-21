@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../navBar/NavBar';
 import './AdminUsers.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
-import { getAllUsersAPI } from '../../features/users/usersAdminAPI';
+import { getAllUsersAPI } from '../../features/users/usersAPI';
 import { User } from '../../types-env';
-import { usersSelector } from '../../features/users/userAdminSlice';
+import { usersSelector } from '../../features/users/usersSlice';
 
 const AdminUsers = () => {
   const users = useAppSelector(usersSelector);

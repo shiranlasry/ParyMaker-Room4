@@ -136,7 +136,6 @@ export const getUserById = async (req: express.Request, res: express.Response) =
     res.status(500).send({ ok: false, error })
   }
 }
-
 export const loginUser = async (req: express.Request, res: express.Response) => {
   try {
     
@@ -186,7 +185,6 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
     res.status(500).send({ ok: false, error });
   }
 };
-
 export const registerUser = async (req: express.Request, res: express.Response) => {
   try {
     const { email, password, username, first_name, last_name, phone_number, address, role } = req.body;
@@ -241,7 +239,6 @@ export const registerUser = async (req: express.Request, res: express.Response) 
     res.status(500).send({ ok: false, error });
   }
 };
-
 export const getUserFromToken = async (req: express.Request, res: express.Response) => {
   try {
     const token = req.cookies.token;
@@ -279,8 +276,6 @@ export const getUserFromToken = async (req: express.Request, res: express.Respon
     res.status(500).send({ ok: false, error });
   }
 };
-
-
 export const deleteToken = async (req: express.Request, res: express.Response) => {
   try {
     res.clearCookie('token');
@@ -347,7 +342,6 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
     res.status(500).send({ ok: false, error });
   }
 };
-
 export async function deleteUser(req, res) {
   try {
       const {UserId} = req.params;
@@ -369,6 +363,34 @@ export async function deleteUser(req, res) {
               res.status(500).send({ ok: false, error }) 
           }
       })
+  } catch (error) {
+      console.log(error)
+      res.status(500).send({ ok: false, error }) 
+  }
+}
+export async function getUsersByPartyID(req, res) {
+  try {
+      const {party_id} = req.params;
+      if (!party_id) throw new Error("no party_id")
+      // get users id from party participens and select join this party
+
+      const query= `SELECT * FROM party_maker.users WHERE user_id IN 
+      (SELECT user_id FROM party_maker.party_participants WHERE party_id = ${party_id});`;
+      connection.query(query, (err, results) => {
+          try {
+              if (err) throw err;
+              console.log("getUsersByPartyID() results",results)
+              if (results) {
+                  res.send({ok: true, results})
+              } else {
+                  res.send({ok: true, results: "No users join this party"})
+              }
+          } catch (error) {
+              console.log(error)
+              res.status(500).send({ ok: false, error }) 
+          }
+      })
+
   } catch (error) {
       console.log(error)
       res.status(500).send({ ok: false, error }) 
