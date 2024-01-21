@@ -14,6 +14,8 @@ import EditParty from "../../components/edit-party/EditParty";
 import { usersByPartyIdSelector } from "../../features/users/usersSlice";
 import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
 import UserCard from "../../components/user-card/UserCard";
+import GeneralBtn from "../../components/generalBtn/GeneralBtn";
+
 
 const PartyPage = () => {
   const { party_id } = useParams<{ party_id: string }>();
@@ -173,12 +175,15 @@ const PartyPage = () => {
       <p>
         <span>About the Party:</span> {party.party_description}
       </p>
-      {isUserjoined? <button onClick={handleDeletePartyParticipants}>Leave Party</button> : <button onClick={handleAddPartyParticipants}>Join Party</button>
-      } 
+      {isUserjoined ? (
+  <GeneralBtn buttonText="Leave Party" onClick={handleDeletePartyParticipants} />
+) : (
+  <GeneralBtn buttonText="Join Party" onClick={handleAddPartyParticipants} />
+)}
       {showEditDel && (
         <div className="editDel">
-           <button onClick={handleShowUpdateForm}>UPDATE PARTY</button>
-          <button onClick={() => handleDeleteParty(party.party_id)}>Delete</button>
+           <GeneralBtn buttonText="Update Party" onClick={handleShowUpdateForm}/>
+          <GeneralBtn buttonText="Delete Party" onClick={() => handleDeleteParty(party.party_id)}/>
         </div>
       ) }
     </div>
