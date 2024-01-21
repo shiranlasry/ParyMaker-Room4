@@ -1,3 +1,4 @@
+import "../../pages/home/home.scss";
 import "./register.scss";
 import NavBar from "../../components/navBar/NavBar";
 import { User } from "../../types-env";
