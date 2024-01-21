@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useNavigate } from "react-router";
 import { Footer } from "../../components/footer/Footer";
+import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 
 const Register = () => {
   const initialUserState: User = {
@@ -118,9 +119,9 @@ const Register = () => {
           required
         />
 
-        <button type="submit" className="regBtn">
-          Register
-        </button>
+<GeneralBtn buttonText="Register" type="submit"/>
+          
+        
       </form>
 
       {/* <Footer /> */}

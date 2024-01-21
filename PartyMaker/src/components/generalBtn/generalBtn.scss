@@ -1,0 +1,17 @@
+$navy: #000080;
+
+.generalBtn {
+  color: white;
+  font-weight: bold;
+  background-color: $navy;
+  padding: 10px;
+  border-radius: 7px;
+  margin: .4rem;
+  font-size: 17px;
+
+  &:hover {
+    font-size: 18px;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+}

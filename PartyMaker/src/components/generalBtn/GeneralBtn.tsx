@@ -1,8 +1,19 @@
+// GeneralBtn.tsx
+import React from 'react';
+import './GeneralBtn.scss';
 
-const GeneralBtn = () => {
-  return (
-    <button className="generalBtn">GeneralBtn</button>
-  )
+interface GeneralBtnProps {
+  buttonText: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-export default GeneralBtn
+const GeneralBtn: React.FC<GeneralBtnProps> = ({ buttonText, onClick, type = 'button' }) => {
+  return (
+    <button className="generalBtn" type={type} onClick={onClick}>
+      {buttonText}
+    </button>
+  );
+};
+
+export default GeneralBtn;

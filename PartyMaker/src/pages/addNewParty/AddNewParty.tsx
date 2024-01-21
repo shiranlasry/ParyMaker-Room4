@@ -12,6 +12,7 @@ import NavBar from '../../components/navBar/NavBar';
 import { Footer } from '../../components/footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
+import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 
 
 const AddNewParty = () => {
@@ -162,7 +163,7 @@ const AddNewParty = () => {
           onChange={handleInputChange}
         />
         <label>Add Image Party:</label>
-        <input type="file"
+        <input className="file" type="file"
          name="file"
          onChange={handleFileChange}
         />
@@ -174,7 +175,7 @@ const AddNewParty = () => {
           onChange={handleInputChange}
         ></textarea>
 
-        <button className="createPartyBtn" type="submit">Create Party</button>
+        <GeneralBtn buttonText="Create Party" type="submit"/>
       </form>
 
 
