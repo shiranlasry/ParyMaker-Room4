@@ -75,6 +75,30 @@ export const updatePassword = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: express.Request, res: express.Response) => {
   try {
+    // check if the user is an admin
+    const token = req.cookies.token;
+    const secret = process.env.SECRET_KEY;
+    if (!secret) throw new Error("no secret");
+    if (!token) {
+      res.status(401).send({ ok: false, error: 'No token getAllUsers()' });
+      return;
+    }
+    const decoded = jwt.verify(token, secret) as { user_id: number };
+    const { user_id } = decoded;
+    const queryToken = `SELECT * FROM party_maker.users WHERE user_id = ?;`; 
+    connection.query(queryToken, [user_id], (err, results: RowDataPacket[], fields) => {
+      try {
+        if (err) throw err;
+        const user = results[0] as User;
+        if (user.role !== 'admin') {
+          res.status(403).send({ ok: false, error: 'Forbidden: User can only update their own information getAllUsers()' });
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
     const query = "SELECT * FROM  party_maker.users;"
     connection.query(query, (err, results, fields) => {
       try {
@@ -85,6 +109,9 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
         res.status(500).send({ ok: false, error })
       }
     })
+
+
+   
   } catch (error) {
     console.error(error)
     res.status(500).send({ ok: false, error })
@@ -347,6 +374,7 @@ export async function deleteUser(req, res) {
       res.status(500).send({ ok: false, error }) 
   }
 }
+
 
 
 

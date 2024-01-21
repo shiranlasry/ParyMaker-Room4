@@ -27,7 +27,7 @@ export const getAllParties = createAsyncThunk<Party[] | null >('get-all-parties'
         const response = await axios.get("/api/parties/get-all-parties");
         const { ok, results } = response.data;
         if (!ok) {
-            throw new Error("Invalid credentials getUserApi()");
+            throw new Error("Invalid credentials getAllParties()");
         }
         return results;
 
@@ -119,7 +119,7 @@ export const createParty = createAsyncThunk<Party, Party>(
     'update-party',
     async (party) => {
       try {
-        debugger;
+      
         const response = await axios.put(`/api/parties/${party.party_id}`, party);
         const { ok, results } = response.data;
         if (!ok) {

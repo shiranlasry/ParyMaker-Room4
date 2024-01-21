@@ -7,23 +7,23 @@ import {  User } from "../../types-env"
 
 
 
-enum Status {
-    IDLE = "idle",
-    LOADING = "loading",
-    FAILED = "failed"
-}
-interface UserState {
-    value: User | null ,
-    status: Status
-    // isLoading: boolean,
-    // error: string,
-    // login: boolean
-}
+    enum Status {
+        IDLE = "idle",
+        LOADING = "loading",
+        FAILED = "failed"
+    }
+    interface UserState {
+        value: User | null ,
+        status: Status
+        // isLoading: boolean,
+        // error: string,
+        // login: boolean
+    }
 
-const initialState: UserState = {
-    value: null,
-    status: Status.IDLE
-}
+    const initialState: UserState = {
+        value: null,
+        status: Status.IDLE
+    }
 
 export const userSlice = createSlice({
     name: "LoggedInUser",
