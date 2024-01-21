@@ -244,15 +244,15 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
 export async function deleteParty(req, res) {
   try {
     
-    const { partyId, role } = req.body;
-    if (!partyId || !role) throw new Error("No PartyId or role provided for deleteParty()");
-
+    const { party_id, role } = req.body;
+    if (!party_id || !role) throw new Error("No PartyId or role provided for deleteParty()");
+    console.log(`deleteParty() party_id: ${party_id}, role: ${role}`);
     if (role !== 'admin') {
       // get user id from token
       const selectByIdQuery = `
         SELECT party_creator_id FROM party_maker.parties WHERE party_id = ?;
       `;
-      connection.query(selectByIdQuery, [partyId], (err, results: any[], fields) => {
+      connection.query(selectByIdQuery, [party_id], (err, results: any[], fields) => {
         try {
           if (err) throw err;
           const token = req.cookies.token;
@@ -285,36 +285,53 @@ export async function deleteParty(req, res) {
     }
 
     function performDeletion() {
-      const query = `DELETE FROM party_maker.parties WHERE party_id = ?;`;
-      connection.query(query, [partyId], (err, results) => {
-        try {
-          if (err) throw err;
+    // delete from party_participants
+    const deleteQuery = `
+      DELETE FROM party_maker.party_participants WHERE party_id = ?;
+    `;
+    connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
+      try {
+        if (err) throw err;
+        console.log(`deleteParty deleteQuery results: ${results}`);
+        // delete from parties
+        const deleteQuery = `
+          DELETE FROM party_maker.parties WHERE party_id = ?;
+        `;
+        connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
+          try {
+            if (err) throw err;
+            console.log(`deleteParty deleteQuery results: ${results}`);
+            const selectAllquery = `
+              SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+              FROM party_maker.parties p
+              JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+              LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+            `;
+            connection.query(selectAllquery, (err, results: any[], fields) => {
+              try {
+                if (err) throw err;
 
-          const selectAllquery = `
-            SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-            FROM party_maker.parties p
-            JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-            LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
-          `;
-          connection.query(selectAllquery, (err, results: any[], fields) => {
-            try {
-              if (err) throw err;
-
-              const partiesWithImageData = results.map((party) => ({
-                ...party,
-                party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
-              }));
-              
-              res.send({ ok: true, results: partiesWithImageData });
-            } catch (error) {
-              console.error(error);
-              res.status(500).send({ ok: false, error });
-            }
-          });
-        } catch (error) {
-          res.status(500).send({ ok: false, error });
-        }
-      });
+                const partiesWithImageData = results.map((party) => ({
+                  ...party,
+                  party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+                }));
+                res.send({ ok: true, results: partiesWithImageData });
+              } catch (error) {
+                console.error(error);
+                res.status(500).send({ ok: false, error });
+              }
+            });
+            
+          } catch (error) {
+            console.error(error);
+            res.status(500).send({ ok: false, error });
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
     }
   } catch (error) {
     console.log(error);

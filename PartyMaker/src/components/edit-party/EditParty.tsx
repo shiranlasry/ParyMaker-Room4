@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Party } from '../../types-env';
 
 interface EditPartyProps {
-    party: Party;
+    party: Party | null;
     onSave: (editedParty: Party) => void;
     onClose: () => void; 
     }

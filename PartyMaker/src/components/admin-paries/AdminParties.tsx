@@ -8,7 +8,7 @@ import { userSelector } from '../../features/loggedInUser/userSlice';
 import PartyCard from '../partyCard/PartyCard';
 import toast from 'react-hot-toast';
 import { Party } from '../../types-env';
-import EditParty from '../editProfile/EditParty';
+import EditParty from '../edit-party/EditParty';
 
 
 const AdminParties = () => {
@@ -45,11 +45,11 @@ const AdminParties = () => {
     setShowEditParty(false);
   };
 
-  const handleDeleteParty = async (partyId: number | null) => {
+  const handleDeleteParty = async (party_id: number | null) => {
     try {
-      if (!partyId) throw new Error('No party id');
+      if (!party_id) throw new Error('No party id');
       if (!user?.user_id) throw new Error('No user id');
-      const args = { partyId, role: user.role }; 
+      const args = { party_id, role: user.role }; 
       dispatch(deletePartyAPI(args));
     } catch (error) {
       console.error('Error deleting party:', error);
@@ -94,5 +94,3 @@ const AdminParties = () => {
 };
 
 export default AdminParties;
-
-

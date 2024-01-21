@@ -20,8 +20,8 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!user) dispatch(getUserFromTokenApi());
-    if (!parties) dispatch(getAllParties());
+    dispatch(getUserFromTokenApi());
+     dispatch(getAllParties());
   }, []);
  const hendalAdminPage = () => {
     navigate(`/admin/${user?.user_id}`);

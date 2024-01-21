@@ -28,12 +28,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClo
       <form className="editProfileForm">
       <h2 className="editProTitle">Edit Profile</h2>
         <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={editedUser.email}
-          onChange={handleInputChange}
-        />
+        <p>{user.email}</p>
+      
         <label>User Name:</label>
         <input
           type="text"

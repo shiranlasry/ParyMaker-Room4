@@ -3,6 +3,7 @@
 import axios from "axios";
 import { Party } from "../../types-env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const getPartyById = createAsyncThunk<Party | null, number>(
   'get-party-by-id',
@@ -91,18 +92,22 @@ export const createParty = createAsyncThunk<Party, Party>(
     }
   );
   interface deletePartyArg {
-    partyId: number;
+    party_id: number;
     role: string;
   }
   export const deletePartyAPI = createAsyncThunk<Party[] | null, deletePartyArg>(
     'delete-party',
     async (args) => {
       try {
+       
         const response = await axios.delete(`/api/parties/delete`, { data: args });
         const { ok, results } = response.data;
+        
         if (!ok) {
           throw new Error("Invalid credentials getUserApi()");
         }
+      toast.success("Party Deleted");
+      alert("Party Deleted");
         return results;
       } catch (error) {
         console.error(error);
@@ -114,6 +119,7 @@ export const createParty = createAsyncThunk<Party, Party>(
     'update-party',
     async (party) => {
       try {
+        debugger;
         const response = await axios.put(`/api/parties/${party.party_id}`, party);
         const { ok, results } = response.data;
         if (!ok) {
