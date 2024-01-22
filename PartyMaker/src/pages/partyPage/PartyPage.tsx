@@ -5,7 +5,7 @@ import NavBar from "../../components/navBar/NavBar";
 import { Party } from "../../types-env";
 import { incomingPartySelector, isUserjoinedPartySelector } from "../../features/parties/partiesSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { deletePartyAPI, deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI, partiesByUserIdJoined, updatePartyAPI } from "../../features/parties/partiesAPI";
+import { deletePartyAPI, deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI, updatePartyAPI } from "../../features/parties/partiesAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
 import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
 import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
@@ -50,7 +50,7 @@ const PartyPage = () => {
     if (!user) getUserFromToken();
     if (user && user.user_id && party && party.party_id ) {
       checkIfUserJoinedParty();
-      dispatch(partiesByUserIdJoined(user.user_id));
+      
       if (user.user_id === party.party_creator_id || user.role === 'admin' )
         setShowEditDel(true); 
     }
@@ -67,17 +67,30 @@ const PartyPage = () => {
     }
    };
 
-  const handleAddPartyParticipants = () => {
+   const handleAddPartyParticipants = async () => {
     try {
-      if(!user) toast.error('No Login user user')
-      if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
+      if (!user) {
+        toast.error('No logged-in user');
+        return;
+      }
+  
+      if (!party?.party_id || !user?.user_id) {
+        throw new Error('No party id or user id in handleAddPartyParticipants');
+      }
+  
       const args = { party_id: party.party_id, user_id: user.user_id };
-      dispatch(addPartyPartcipantsAPI(args)); 
+  
+      // Dispatch addPartyPartcipantsAPI and wait for it to complete
+      await dispatch(addPartyPartcipantsAPI(args));
+  
+      // After the participants are added or removed, update the user list
+      const partyIdNumber = parseInt(party_id!);
+      dispatch(getUsersByPartyIdAPI(partyIdNumber));
     } catch (error) {
       console.error(error);
     }
-   
-  }
+  };
+  
   const handleDeletePartyParticipants = () => {
     try {
       if(!user) toast.error('No Login user user')

@@ -1,64 +1,61 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { User } from "../../types-env"
-import { RootState } from "../../app/store"
-import { getAllUsersAPI ,getUsersByPartyIdAPI} from "./usersAPI"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../../types-env";
+import { RootState } from "../../app/store";
+import { getAllUsersAPI, getUsersByPartyIdAPI } from "./usersAPI";
 
 enum Status {
-    IDLE = "idle",
-    LOADING = "loading",
-    FAILED = "failed"
+  IDLE = "idle",
+  LOADING = "loading",
+  FAILED = "failed",
 }
+
 interface UsersState {
-    value: User []| null ,
-    usersByPartyId: User[] | null,
-    status: Status
-   
+  value: User[] | null;
+  usersByPartyId: User[] | null;
+  status: Status;
 }
 
 const initialState: UsersState = {
-    value: null,
-    usersByPartyId: null,
-    status: Status.IDLE
-}
+  value: null,
+  usersByPartyId: null,
+  status: Status.IDLE,
+};
+
 export const usersSlice = createSlice({
-    name: "users",
-    initialState,
-    reducers: {
-        setUsers: (state, action) => {
-            state.value = action.payload
-        },
-   
+  name: "users",
+  initialState,
+  reducers: {
+    setUsers: (state, action: PayloadAction<User[] | null>) => {
+      state.value = action.payload;
     },
-    extraReducers: (builder) => {
-        builder
-        .addCase(getAllUsersAPI.pending, (state) => {
-            state.status = Status.LOADING
-        })
-        .addCase(getAllUsersAPI.fulfilled, (state, action) => {
-            state.status = Status.IDLE;
-            state.value = action.payload
-        })
-        .addCase(getAllUsersAPI.rejected, (state) => {
-            state.status = Status.FAILED
-        })
-        .addCase(getUsersByPartyIdAPI.pending, (state) => {
-            state.status = Status.LOADING
-        })
-        .addCase(getUsersByPartyIdAPI.fulfilled, (state, action) => {
-            state.status = Status.IDLE;
-            state.usersByPartyId = action.payload
-        })
-        .addCase(getUsersByPartyIdAPI.rejected, (state) => {
-            state.status = Status.FAILED
-        })
-        
-    }
-})
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllUsersAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(getAllUsersAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.value = action.payload;
+      })
+      .addCase(getAllUsersAPI.rejected, (state) => {
+        state.status = Status.FAILED;
+      })
+      .addCase(getUsersByPartyIdAPI.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(getUsersByPartyIdAPI.fulfilled, (state, action) => {
+        state.status = Status.IDLE;
+        state.usersByPartyId = action.payload;
+      })
+      .addCase(getUsersByPartyIdAPI.rejected, (state) => {
+        state.status = Status.FAILED;
+      });
+  },
+});
 
+export const { setUsers } = usersSlice.actions;
+export const usersSelector = (state: RootState) => state.users.value;
+export const usersByPartyIdSelector = (state: RootState) => state.users.usersByPartyId;
 
-export const { setUsers } = usersSlice.actions; // Export the actions
-export const usersSelector = (state: RootState) => state.users.value; // Export the selector
-export const usersByPartyIdSelector = (state: RootState) => state.users.usersByPartyId; // Export the selector
-
-
-export default usersSlice.reducer
+export default usersSlice.reducer;

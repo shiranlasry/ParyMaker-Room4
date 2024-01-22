@@ -20,7 +20,7 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUserFromTokenApi());
+    if(!user) dispatch(getUserFromTokenApi());
      dispatch(getAllParties());
   }, []);
  const hendalAdminPage = () => {
