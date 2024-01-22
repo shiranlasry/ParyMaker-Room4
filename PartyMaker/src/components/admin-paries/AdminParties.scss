@@ -1,6 +1,30 @@
-.mainAdminParties{
-    margin-top: 80px;
+body {
+  display: flex;
+  flex-direction: row;
+  background-image: url(/src/imgs/confetti.png);
+  background-color: #0000801e;
+  background-repeat: repeat-y;
+
+  .adminSearch {
+    height: 30px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: large;
+    font-weight: bold;
+  }
+
+
+.mainAdminParties {
+  display: flex;
+  flex-direction: column; /* Change to column to center vertically */
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+
+  .adminCard {
+    display: flex;
+  }
 }
-.party-card-admin{
-  width: 300px;
 }
+
