@@ -65,6 +65,7 @@ const AdminParties = () => {
       <h1>Admin Parties</h1>
 
       <input
+        className="adminSearch"
         type="text"
         placeholder="Search by name or date..."
         value={searchTerm}
@@ -74,9 +75,17 @@ const AdminParties = () => {
       {filteredParties &&
         filteredParties.map((party) => (
           <div className="party-card-admin">
-            <PartyCard key={party.party_id} party={party} />
-            <GeneralBtn buttonText="Delete Party" onClick={() => handleDeleteParty(party.party_id)}/>
-            <GeneralBtn buttonText="Update Party" onClick={handleShowUpdateForm}/>
+            <div className="adminCard">
+              <PartyCard key={party.party_id} party={party} />
+            </div>
+            <GeneralBtn
+              buttonText="Delete Party"
+              onClick={() => handleDeleteParty(party.party_id)}
+            />
+            <GeneralBtn
+              buttonText="Update Party"
+              onClick={handleShowUpdateForm}
+            />
             {showEditParty && (
               <EditParty
                 party={party}
