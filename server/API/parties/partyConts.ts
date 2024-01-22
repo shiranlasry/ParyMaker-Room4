@@ -371,18 +371,9 @@ export async function deleteParty(req, res) {
 
 export async function updateParty(req: express.Request, res: express.Response) {
   try {
-    const {
-      party_id,
-      party_name,
-      party_date,
-      party_location,
-      party_category_id,
-      party_description,
-      party_price,
-      party_image_id,
-      party_creator_id,
-      things_to_bring,
-      created_time,
+    const { party_id, party_name, party_date,  party_location,
+      party_category_id,  party_description,  party_price,party_image_id,
+      party_creator_id,  things_to_bring,created_time,
     } = req.body;
 
     if ( !party_id ||  !party_name ||   !party_date ||
@@ -390,8 +381,34 @@ export async function updateParty(req: express.Request, res: express.Response) {
       !party_creator_id ||!things_to_bring || !created_time
     )
       throw new Error('Missing required fields');
-      console.log(`updateParty() party_id: ${party_id}, party_name: ${party_name}, party_date: ${party_date}, party_location: ${party_location}, party_category_id: ${party_category_id}, party_description: ${party_description}, party_price: ${party_price}, party_image_id: ${party_image_id}, party_creator_id: ${party_creator_id}, things_to_bring: ${things_to_bring}, created_time: ${created_time}`);
+      // check if user token is the same as party creator or admin
+      const token = req.cookies.token;
+    const secret = process.env.SECRET_KEY;
+    if (!secret) throw new Error("no secret");
+     
+      if (!token) {
+        res.status(401).send({ ok: false, error: 'No token updateUser()' });
+        return;
+      }
+      const decoded = jwt.verify(token, secret) as { user_id: number };
+      const user_id = decoded.user_id;
+      const userSelectQuery = ` SELECT * FROM party_maker.users WHERE user_id = ?;`;
+      connection.query(userSelectQuery, [user_id], (err, results: any[], fields) => {
+        try {
+          if (err) throw err;
+          const userRole = results[0].role;
+          console.log(`userRole: ${userRole}, user_id: ${user_id}, party_creator_id: ${party_creator_id}`);
+          if (userRole !== 'admin' && user_id !== party_creator_id ){
+            res.status(401).send({ ok: false, error: 'User can update only their own parties updateParty()' });
+            return;
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ ok: false, error });
+        }
+      });
 
+     
     const query = `
       UPDATE party_maker.parties
       SET party_name = ?, party_date = ?, party_location = ?, party_category_id = ?, party_description = ?, party_price = ?, party_image_id = ?, party_creator_id = ?, things_to_bring = ?, created_time = ?
