@@ -91,12 +91,14 @@ const PartyPage = () => {
     }
   };
   
-  const handleDeletePartyParticipants = () => {
+  const handleDeletePartyParticipants = async() => {
     try {
       if(!user) toast.error('No Login user user')
       if(!party?.party_id ||!user?.user_id ) throw new Error('No party id or user id handleAddPartyParticipants()' );
       const args = { party_id: party.party_id, user_id: user.user_id };
-      dispatch(deletePartyPartcipantsAPI(args));
+      await dispatch(deletePartyPartcipantsAPI(args));
+      const partyIdNumber = parseInt(party_id!);
+      dispatch(getUsersByPartyIdAPI(partyIdNumber));
       toast.success('You left the party')
     } catch (error) {
       console.error(error);
