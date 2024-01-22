@@ -29,7 +29,7 @@ export const updatePassword = async (req: Request, res: Response) => {
       res.status(400).send({ ok: false, error: 'Missing user_id or password' });
       return;
     }
-    console.log("updatePassword () user_id ",user_id)
+  
     if (role !== 'admin') {
       // Check if the user is an admin
     const token = req.cookies.token;
@@ -258,7 +258,7 @@ export const getUserFromToken = async (req: express.Request, res: express.Respon
     const decoded = jwt.verify(token, secret) as { user_id: number };
     const { user_id } = decoded;
 
-    console.log("User_id from getUserFromToken():", user_id);
+
 
     const query = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
     connection.query(query, [user_id], (err, results: RowDataPacket[], fields) => {
@@ -379,7 +379,7 @@ export async function getUsersByPartyID(req, res) {
       connection.query(query, (err, results) => {
           try {
               if (err) throw err;
-              console.log("getUsersByPartyID() results",results)
+            
               if (results) {
                   res.send({ok: true, results})
               } else {

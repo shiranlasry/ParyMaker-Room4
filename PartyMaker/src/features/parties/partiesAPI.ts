@@ -6,55 +6,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 
-
-export const getPartyById = createAsyncThunk<Party | null, number>(
-  'get-party-by-id',
-  async (party_id) => {
-    try {
-      const response = await axios.get(`/api/parties/get-party-by-id/${party_id}`);
-       
-      const { ok, result } = response.data;
-      if (!ok) {
-        throw new Error("Error getting party by ID");
-      }
-      return result;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
-);
-export const getAllParties = createAsyncThunk<Party[] | null >('get-all-parties', async () => {
-    try {
-        const response = await axios.get("/api/parties/get-all-parties");
-        const { ok, results } = response.data;
-        if (!ok) {
-            throw new Error("Invalid credentials getAllParties()");
-        }
-        return results;
-
-    } catch (error) {
-        console.error(error) // this is temporary
-        return null;
-    }
-})
-export const createParty = createAsyncThunk<Party, Party>(
-    'create-party',
-    async (partyData) => {
-      try {
-          
-        const response = await axios.post("/api/parties/create-party", partyData);
-        const { ok, incomingParty } = response.data;
-        if (!ok) {
-          throw new Error("Error creating party");
-        }
-        return incomingParty;
-      } catch (error) {
-        console.error(error);
-        throw error;
-      }
-    }
-  );
   export const saveImgtoDB = createAsyncThunk<{ ok: boolean; img_id: number }, FormData>(
     'save-img-to-db',
     async (file) => {
@@ -75,7 +26,78 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
-  export const partiesByUserId = createAsyncThunk<Party[] | null, number|null>(
+  interface UpdatePartyImgArgs {
+    formData: FormData;
+    party_image_id: number;
+  }
+  export const updatePartyImgAPI = createAsyncThunk<boolean, UpdatePartyImgArgs>(
+    'update-party-img',
+    async ({ formData, party_image_id }) => {
+      try {
+        const response = await axios.post(`/api/parties/update-party-img/${party_image_id}`, formData);
+        const { ok } = response.data;
+  
+        if (!ok) {
+          throw new Error("Error updating party image");
+        }
+  
+        return ok;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    }
+  );
+  export const getPartyById = createAsyncThunk<Party | null, number>(
+    'get-party-by-id',
+    async (party_id) => {
+      try {
+        const response = await axios.get(`/api/parties/get-party-by-id/${party_id}`);
+         
+        const { ok, result } = response.data;
+        if (!ok) {
+          throw new Error("Error getting party by ID");
+        }
+        return result;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }
+  );
+  export const getAllParties = createAsyncThunk<Party[] | null >('get-all-parties', async () => {
+      try {
+          const response = await axios.get("/api/parties/get-all-parties");
+          const { ok, results } = response.data;
+          if (!ok) {
+              throw new Error("Invalid credentials getAllParties()");
+          }
+          return results;
+  
+      } catch (error) {
+          console.error(error) // this is temporary
+          return null;
+      }
+  })
+  export const createParty = createAsyncThunk<Party, Party>(
+      'create-party',
+      async (partyData) => {
+        try {
+            
+          const response = await axios.post("/api/parties/create-party", partyData);
+          const { ok, incomingParty } = response.data;
+          if (!ok) {
+            throw new Error("Error creating party");
+          }
+          return incomingParty;
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      }
+    );
+
+export const partiesByUserId = createAsyncThunk<Party[] | null, number|null>(
     'parties-by-user-id',
     async (userId) => {
       try {
@@ -97,7 +119,7 @@ export const createParty = createAsyncThunk<Party, Party>(
     party_id: number;
     role: string;
   }
-  export const deletePartyAPI = createAsyncThunk<Party[] | null, deletePartyArg>(
+export const deletePartyAPI = createAsyncThunk<Party[] | null, deletePartyArg>(
     'delete-party',
     async (args) => {
       try {
@@ -116,17 +138,23 @@ export const createParty = createAsyncThunk<Party, Party>(
       }
     }
   );
-  export const updatePartyAPI = createAsyncThunk<Party[] | null, Party>(
+export const updatePartyAPI = createAsyncThunk<Party[] | null, Party>(
     'update-party',
     async (party) => {
-      try {
-      
-        const response = await axios.put(`/api/parties/${party.party_id}`, party);
+      try {  
+        debugger
+        if (party.party_date) {
+          const formattedPartyDate  = new Date(party.party_date).toISOString().split('T')[0];
+          const formattedCretedDate = new Date(party.created_time).toISOString().split('T')[0];
+          const updatedParty = { ...party, party_date: formattedPartyDate, created_time: formattedCretedDate };
+  debugger
+        const response = await axios.put(`/api/parties/${party.party_id}`, updatedParty);
         const { ok, results } = response.data;
         if (!ok) {
           throw new Error("Error updating party");
         }
         return results;
+      }
       } catch (error) {
         console.error(error);
         return null;

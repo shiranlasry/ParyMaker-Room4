@@ -31,6 +31,7 @@ export const partiesCategoriesSlice = createSlice({
             state.status = Status.LOADING
         })
         .addCase(getAllCategories.fulfilled, (state, action) => {
+            
             state.status = Status.IDLE;
             state.value = action.payload ; // Update the type of state.value
         })

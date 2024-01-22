@@ -1,3 +1,5 @@
+//admin parties page
+
 import React, { useState } from "react";
 import NavBar from "../navBar/NavBar";
 import "./AdminParties.scss";
@@ -18,6 +20,8 @@ const AdminParties = () => {
   const parties = useAppSelector(partiesSelector);
   const user = useAppSelector(userSelector);
   const [showEditParty, setShowEditParty] = useState(false);
+  const [selectedPartyId, setSelectedPartyId] = useState<number | null>(null);
+
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useAppDispatch();
 
@@ -41,8 +45,15 @@ const AdminParties = () => {
       console.error(error);
     }
   };
-  const handleShowUpdateForm = () => {
-    setShowEditParty(true);
+  const handleShowUpdateForm = (party_id: number | null) => {
+    try {
+      if (!party_id) throw new Error("No party id");
+      setShowEditParty(true);
+      setSelectedPartyId(party_id);
+    } catch (error) {
+      console.error("Error updating party:", error);
+    }
+
   };
   const handleCloseUpdateForm = () => {
     setShowEditParty(false);
@@ -84,9 +95,9 @@ const AdminParties = () => {
             />
             <GeneralBtn
               buttonText="Update Party"
-              onClick={handleShowUpdateForm}
+              onClick={() => handleShowUpdateForm(party.party_id)}
             />
-            {showEditParty && (
+            {showEditParty && selectedPartyId === party.party_id && (
               <EditParty
                 party={party}
                 onSave={handleSaveParty}
