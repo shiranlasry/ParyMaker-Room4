@@ -88,7 +88,7 @@ const AddNewParty = () => {
 
 
   return (
-    <div>
+    <div className='add-new-party-main'>
       <NavBar />
       <Toaster position="top-right" />
 
