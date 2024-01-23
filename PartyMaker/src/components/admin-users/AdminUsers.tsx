@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+//admin-users page  
 import NavBar from '../navBar/NavBar';
 import './AdminUsers.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
 import { getAllUsersAPI } from '../../features/users/usersAPI';
 import { User } from '../../types-env';
 import { usersSelector } from '../../features/users/usersSlice';
+import UserCard from '../user-card/UserCard';
+import { useEffect, useState } from 'react';
 
 const AdminUsers = () => {
   const users = useAppSelector(usersSelector);
@@ -23,7 +25,7 @@ const AdminUsers = () => {
   );
 
   return (
-    <>
+    <div className='mainAdminUsers'>
       <NavBar />
       <h1>Users</h1>
       <input
@@ -35,12 +37,10 @@ const AdminUsers = () => {
       {filteredUsers &&
         filteredUsers.map((user:User) => (
           <div className='user' key={user.user_id}>
-            <p>{user.username}</p>
-            <p>{user.email}</p>
-            <p>{user.role}</p>
+            <UserCard user={user} />
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

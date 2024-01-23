@@ -3,10 +3,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 150px;
-    height: 250px;
-    background-color: #0abe10;
-    border-radius: 20px;
+    width: 75%;
+    height: 75%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
@@ -14,16 +15,49 @@
         transform: scale(1.05);
     }
     &-img{
-        width: 25%;
-        height: 25%;
-        border-radius: 50px;
+        width: 30%;
+        height: 30%;
+        border-radius: 10px;
         object-fit: cover;
     }
-    &-name, &-phone_number{
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0.5rem 0;
+    &-name{
+        margin-top: 10px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #000;
     }
-   
-    
+    &-email{
+        margin-top: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #000;
+    }
+    &-phone{
+        margin-top: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #000;
+    }
+    &-address{
+        margin-top: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #000;
+    }
+    &-btn{
+        margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #000;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+        &:hover{
+            background-color: #fff;
+            color: #000;
+        }
+    }
 }
