@@ -396,6 +396,56 @@ export async function getUsersByPartyID(req, res) {
       res.status(500).send({ ok: false, error }) 
   }
 }
+export async function updateUserRole(req, res) {
+  try {
+    console.log(`updateUserRole req.body: ${JSON.stringify(req.body)}`)
+      const {user_id, role} = req.body;
+      if (!user_id || !role) throw new Error("no user_id or role")
+//get user role from token
+      const token = req.cookies.token;
+      const secret = process.env.SECRET_KEY;
+      if (!secret) throw new Error("no secret");
+      if (!token) {
+          res.status(401).send({ ok: false, error: 'No token updateUserRole()' });
+          return;
+        }
+      const decoded = jwt.verify(token, secret) as { user_id: number };
+      const { user_id: user_id_token } = decoded;
+      const queryToken = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+      connection.query(queryToken, [user_id_token], (err, results: RowDataPacket[], fields) => {
+          try {
+              if (err) throw err;
+              const user = results[0] as User;
+              if (user.role !== 'admin') {
+                  res.status(403).send({ ok: false, error: 'Forbidden: only admin can update role' });
+                  return;
+                }
+          } catch (error) {
+              console.log(error)
+              res.status(500).send({ ok: false, error }) 
+          }
+      });
+
+      const query= `UPDATE party_maker.users SET role = '${role}' WHERE user_id = ${user_id};`;
+      connection.query(query, (err, results) => {
+          try {
+              if (err) throw err;
+              if (results) {
+                  res.send({ok: true, results})
+              } else {
+                  res.send({ok: true, results: "No users join this party"})
+              }
+          } catch (error) {
+              console.log(error)
+              res.status(500).send({ ok: false, error }) 
+          }
+      })
+
+  } catch (error) {
+      console.log(error)
+      res.status(500).send({ ok: false, error }) 
+  }
+}
 
 
 

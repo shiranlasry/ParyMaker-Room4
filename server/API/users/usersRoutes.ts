@@ -7,6 +7,7 @@ import { getAllUsers,
      updatePassword,
      updateUser,
      loginUser,
+     updateUserRole,
       registerUser,getUserFromToken,deleteToken,deleteUser,getUsersByPartyID} from "./usersCtrl";
 
 
@@ -22,7 +23,7 @@ router
 .put('/update-password', updatePassword)
 .delete("/:userId", deleteUser)
 .get("/get-users-by-party-id/:party_id", getUsersByPartyID)
-
+.put("/update-user-role", updateUserRole)
 ;
 
 

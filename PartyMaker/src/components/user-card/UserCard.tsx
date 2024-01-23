@@ -8,6 +8,7 @@ import EditProfileModal from '../editProfile/EditProfile';
 import toast, { Toaster } from 'react-hot-toast';
 import { getAllUsersAPI } from '../../features/users/usersAPI';
 import ResetPassword from '../rest-password/ResetPassword';
+import UpdateUserRole from '../update-user-role/UpdateUserRole';
 type UserCardProps = {
   user: User;
 };
@@ -17,6 +18,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const [showEditRole, setShowEditRole] = useState(false);
   const logInUser = useAppSelector(userSelector);
   useEffect(() => {
     if (!user) dispatch(getUserFromTokenApi());
@@ -25,12 +27,18 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const onResetPassword = () => {
     setShowResetPassword(true)
     setShowEditForm(false);
+    setShowEditRole(false);
   };
   const onUpdateUser = () => {
     setShowEditForm(true);
     setShowResetPassword(false)
+    setShowEditRole(false);
   };
-  const onUpdateRole = () => { };
+  const onUpdateRole = () => {
+    setShowEditRole(true);
+    setShowEditForm(false);
+    setShowResetPassword(false)
+   };
   const handleSaveProfile = async (editedUser: User) => {
     try {
       const respons = await dispatch(editUserApi(editedUser));
@@ -67,14 +75,17 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     // set show edit form / password to false
     setShowEditForm(false);
     setShowResetPassword(false);
+    setShowEditRole(false);
   };
+
 
   return (
     <div className='userCard-main'>
        <Toaster position="top-right"/>
       <img className='userCard-main-img' src={randomImages[Math.floor(Math.random() * randomImages.length)]} alt="user" />
+      <p className='userCard-main-email'>{user.email}</p>
       <p className='userCard-main-username'>{user.username}</p>
-      <p className='userCard-main-phone_number'>{user.phone_number}</p>
+      <p className='userCard-main-phone_number'>{user.role}</p>
       {/* if user is admin or user is the same user that is logged in */}
       {logInUser && logInUser.role === 'admin' &&
         <>
@@ -93,6 +104,12 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
         showResetPassword &&
         <div className='resetPassword'>
           <ResetPassword user={user!} onClose={handleClose} onSave={handleSaveResetPassword} />
+        </div>
+      }
+      {
+        showEditRole &&
+        <div className='editRole'>
+         <UpdateUserRole user={user!} onClose={handleClose}  />
         </div>
       }
 

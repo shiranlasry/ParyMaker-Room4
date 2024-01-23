@@ -29,6 +29,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ user, onSave, onClo
       <h2 className="editProTitle">Edit Profile</h2>
         <label>Email:</label>
         <p>{user.email}</p>
+
+        <label>Role:</label>
+        <p>{user.role}</p>
       
         <label>User Name:</label>
         <input

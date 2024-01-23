@@ -37,3 +37,5 @@ export const getUsersByPartyIdAPI = createAsyncThunk<User[] | null, number>(
     }
   }
 );
+
+

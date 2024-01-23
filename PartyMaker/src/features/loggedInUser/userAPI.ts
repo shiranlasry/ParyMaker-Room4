@@ -98,5 +98,19 @@ export const updatePasswordApi = createAsyncThunk<User | null, { user_id:number,
         return null;
     }
 })
+export const updateUserRoleApi = createAsyncThunk<User | null, { user_id:number,role:string }>('update-user-role', async (arg) => {
+    try {
+        const response = await axios.put("/api/users/update-user-role", arg);
+        const { ok, user } = response.data;
+        if (!ok) {
+            throw new Error("Invalid credentials updateUserRoleApi()");
+        }
+        return user;
+
+    } catch (error) {
+        console.error(error) // this is temporary
+        return null;
+    }
+})
 
 
