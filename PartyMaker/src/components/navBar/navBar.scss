@@ -20,12 +20,6 @@ $font: white;
   z-index: 100;
   transition: transform 0.3s ease-out;
 
-  .navbar__logo{
-    color: white;
-  }
-
-  
-
   button {
     color: $font;
     font-size: 20px;
@@ -89,7 +83,6 @@ $font: white;
     .greet,
     .navbar__logo {
       display: none;
-      
     }
 
     .navbar__links {
@@ -99,8 +92,6 @@ $font: white;
       width: 100%;
       outline: none;
       height: 70px;
-
-  
 
       button {
         margin-left: 1rem;
@@ -113,11 +104,6 @@ $font: white;
       height: 100px;
     }
 
-    // .greet {
-    //   display: none;
-
-    // }
-
     button {
       font-size: 19px;
     }
@@ -126,4 +112,9 @@ $font: white;
       font-size: 17px;
     }
   }
+
+  
+}
+.navbar__logo{
+  color: white;
 }

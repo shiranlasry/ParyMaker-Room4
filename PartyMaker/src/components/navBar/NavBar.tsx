@@ -54,7 +54,7 @@ const NavBar = () => {
             <button className="greetBtn" onClick={() => navigate("/userPage")}>
               <FontAwesomeIcon icon={faUser} /> <span className="greet"> Hi {user.username} </span>
             </button>
-            <button onClick={() => navigate("/addNewParty")} className="createPartyHP">
+            <button onClick={() => navigate("/addNewParty")} className="addNewParty">
              +New</button>
             <button onClick={hendalGoHome}>Home</button>
             <button onClick={handelLogout}>Logout</button>
