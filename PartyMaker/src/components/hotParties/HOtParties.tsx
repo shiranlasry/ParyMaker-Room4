@@ -1,13 +1,13 @@
 
-  import './hOtParties.scss'
-  import { partiesSelector, partiesStatusSelector } from '../../features/parties/partiesSlice'
+  import './hotParties.scss'
+  import { partiesSelector } from '../../features/parties/partiesSlice'
   import { useAppSelector } from '../../app/hook'
 
   import PartyCard from '../partyCard/PartyCard'
   import { useEffect } from 'react'
 import { Party } from '../../types-env'
 
-  const HOtParties = () => {
+  const HotParties = () => {
 
   const parties = useAppSelector(partiesSelector) || []; // or provide a default value
   const groupedParties: Record<string, Party[]> = parties.reduce(
@@ -41,4 +41,4 @@ import { Party } from '../../types-env'
   );
 };
 
-export default HOtParties;
+export default HotParties;

@@ -24,6 +24,7 @@ const UserPage: React.FC = () => {
   const partiesByUserIdArr :Party[] |null = useAppSelector(partiesByUserIdSelector);
   const partiesByUserJoinedIdArr :Party[] |null = useAppSelector(partiesByUserIdJoinedSelector);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate(); 
   const getUserFromToken= async () => {
     try {
       
@@ -154,7 +155,13 @@ const UserPage: React.FC = () => {
                 <PartyCard key={party.party_id} party={party} />
               ))
             ) : (
-              <h3>No parties created yet.</h3>
+            <>
+             <h3>No parties created yet.</h3>
+             <button className="createPartyBtn" onClick={() => navigate("/addNewParty")}>
+        Create New Party
+      </button>
+            </>
+             
             )}
           </div>
         </div>

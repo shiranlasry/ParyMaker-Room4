@@ -7,6 +7,7 @@ import { User } from '../../types-env';
 import { usersSelector } from '../../features/users/usersSlice';
 import UserCard from '../user-card/UserCard';
 import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 const AdminUsers = () => {
   const users = useAppSelector(usersSelector);
@@ -26,20 +27,25 @@ const AdminUsers = () => {
 
   return (
     <div className='mainAdminUsers'>
+       <Toaster position="top-right"/>
       <NavBar />
-      <h1>Users</h1>
-      <input
-        type='text'
-        placeholder='Search by name, email, or role...'
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      {filteredUsers &&
-        filteredUsers.map((user:User) => (
-          <div className='user' key={user.user_id}>
-            <UserCard user={user} />
-          </div>
-        ))}
+      <div>
+        <h1>Users Admin management</h1>
+        <input
+          type='text'
+          placeholder='Search by name, email, or role...'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className='filteredUsers'>
+        {filteredUsers &&
+          filteredUsers.map((user: User) => (
+            <div className='user' key={user.user_id}>
+              <UserCard user={user} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

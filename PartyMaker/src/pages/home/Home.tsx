@@ -12,21 +12,25 @@ import { Toaster } from "react-hot-toast";
 const Home = () => {
   const user: User | null = useAppSelector(userSelector);
   const navigate = useNavigate();
+  const handelGoAllParties = () => {
+    navigate("/allParties");
+  };
   return (
     <>
     <div className="HPcontainer">
       <NavBar />
+      
       <Hero />
-      <Toaster position="top-right"/>
-      <h2 className="upcoming">Upcoming Events 📅</h2>
-      <HOtParties />
       {user && <button
         onClick={() => navigate("/addNewParty")}
         className="createPartyHP"
       >
-        Create Party 🎉
+        Create New Party 🎉
       </button>}
-      
+      <Toaster position="top-right"/>
+      <HOtParties />
+    
+      <button  className="createPartyHP" onClick={handelGoAllParties} >For All Parties 🎶🎉</button>
     </div>
     <div className="footer">
     <Footer />
