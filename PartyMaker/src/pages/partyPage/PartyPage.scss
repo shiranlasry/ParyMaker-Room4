@@ -2,6 +2,7 @@ $navy: #000080;
 
 body {
   .partyPmain {
+    padding: 20px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -10,7 +11,10 @@ body {
     color: white;
     margin-top: 80px;
     justify-content: center;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     background-color: rgba(4, 4, 63, 0.167);
     min-height: 700px;
     border-radius: 10px;
@@ -20,7 +24,7 @@ body {
     .partyContent {
       margin: auto;
       width: 550px;
-      padding: 10px;
+      padding: 20px;
       color: $navy;
 
       @media screen and (max-width: 920px) {
@@ -48,22 +52,17 @@ body {
     }
   }
 }
-.partyUsers{
-  display: flex;
-  flex-direction: row;
+.partyUsers {
   align-items: center;
-  margin: 0 auto;
-  //width: 100%;
-  gap: 10px;
+  justify-content: center;
   color: $navy;
   background-color: rgba(4, 4, 63, 0.167);
   border-radius: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 
   @media screen and (max-width: 920px) {
     font-size: 18px;
   }
-
-
 }
-
