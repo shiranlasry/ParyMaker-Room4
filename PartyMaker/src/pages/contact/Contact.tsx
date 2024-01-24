@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./Contact.scss";
+import "./contact.scss";
 
 const Contact: React.FC = () => {
   return (
