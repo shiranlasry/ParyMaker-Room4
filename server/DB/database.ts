@@ -5,7 +5,7 @@ const sqlPassword = process.env.SQLPASSWORD;
 
 //@ts-ignore
 const connection = mysql.createConnection({
-  host: "sql11678324",
+  host: "sql11.freemysqlhosting.net",
   port: "3306",
   user: "sql11678324",
   password: sqlPassword,
