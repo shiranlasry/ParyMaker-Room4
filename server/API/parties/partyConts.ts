@@ -2,7 +2,7 @@
 import express from 'express';
 import connection from "../../DB/database";
 import fs from 'fs';
-import {  ResultSetHeader } from 'mysql2';
+import { ResultSetHeader } from 'mysql2';
 import jwt from 'jsonwebtoken';
 import { getUserById } from '../users/usersCtrl';
 
@@ -21,8 +21,8 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
     INSERT INTO party_img (party_img_name, party_img_data)
     VALUES (?, ?);
   `;
-    
-  connection.query(query, [file_name, file_data], (err, results: ResultSetHeader, fields) => {
+
+    connection.query(query, [file_name, file_data], (err, results: ResultSetHeader, fields) => {
       try {
         if (err) throw err;
 
@@ -102,24 +102,24 @@ export const getAllParties = async (req: express.Request, res: express.Response)
   }
 };
 export const getAllCategories = async (req: express.Request, res: express.Response) => {
-    try {
-      const query = `
+  try {
+    const query = `
         SELECT *
         FROM party_categories;
       `;
-      connection.query(query, (err, results, fields) => {
-        try {
-          if (err) throw err;
-          res.send({ ok: true, results });
-        } catch (error) {
-          console.error(error);
-          res.status(500).send({ ok: false, error });
-        }
-      });
-    } catch (error) {
-      console.error(error);
+    connection.query(query, (err, results, fields) => {
+      try {
+        if (err) throw err;
+        res.send({ ok: true, results });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).send({ ok: false, error });
-    }
+  }
 };
 export const createNewParty = async (req: express.Request, res: express.Response) => {
   try {
@@ -136,7 +136,7 @@ export const createNewParty = async (req: express.Request, res: express.Response
       things_to_bring,
       created_time,
     } = req.body;
-console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_date}, party_location: ${party_location}, party_category_id: ${party_category_id}, party_description: ${party_description}, party_price: ${party_price}, party_image_id: ${party_image_id}, party_creator_id: ${party_creator_id}, things_to_bring: ${things_to_bring}, created_time: ${created_time}`);
+    console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_date}, party_location: ${party_location}, party_category_id: ${party_category_id}, party_description: ${party_description}, party_price: ${party_price}, party_image_id: ${party_image_id}, party_creator_id: ${party_creator_id}, things_to_bring: ${things_to_bring}, created_time: ${created_time}`);
     if (
       !party_name ||
       !party_date ||
@@ -160,7 +160,7 @@ console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_dat
 
     connection.query(
       query,
-      [ party_name,
+      [party_name,
         party_date,
         party_location,
         party_category_id,
@@ -185,13 +185,13 @@ console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_dat
             try {
               if (selectErr) throw selectErr;
               res.send({ ok: true, incomingParty: selectResults[0] });
-              
+
             } catch (error) {
               console.error(error);
               res.status(500).send({ ok: false, error });
-              
+
             }
-           
+
           });
 
         } catch (error) {
@@ -273,10 +273,10 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
 
 export async function deleteParty(req, res) {
   try {
-    
+
     const { party_id, role } = req.body;
     if (!party_id || !role) throw new Error("No PartyId or role provided for deleteParty()");
-  
+
     if (role !== 'admin') {
       // get user id from token
       const selectByIdQuery = `
@@ -315,53 +315,53 @@ export async function deleteParty(req, res) {
     }
 
     function performDeletion() {
-    // delete from party_participants
-    const deleteQuery = `
+      // delete from party_participants
+      const deleteQuery = `
       DELETE FROM party_participants WHERE party_id = ?;
     `;
-    connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
-      try {
-        if (err) throw err;
-       
-        // delete from parties
-        const deleteQuery = `
+      connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
+        try {
+          if (err) throw err;
+
+          // delete from parties
+          const deleteQuery = `
           DELETE FROM parties WHERE party_id = ?;
         `;
-        connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
-          try {
-            if (err) throw err;
-           
-            const selectAllquery = `
+          connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
+            try {
+              if (err) throw err;
+
+              const selectAllquery = `
               SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
               FROM parties p
               JOIN party_categories pc ON p.party_category_id = pc.category_id
               LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
             `;
-            connection.query(selectAllquery, (err, results: any[], fields) => {
-              try {
-                if (err) throw err;
+              connection.query(selectAllquery, (err, results: any[], fields) => {
+                try {
+                  if (err) throw err;
 
-                const partiesWithImageData = results.map((party) => ({
-                  ...party,
-                  party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
-                }));
-                res.send({ ok: true, results: partiesWithImageData });
-              } catch (error) {
-                console.error(error);
-                res.status(500).send({ ok: false, error });
-              }
-            });
-            
-          } catch (error) {
-            console.error(error);
-            res.status(500).send({ ok: false, error });
-          }
-        });
-      } catch (error) {
-        console.error(error);
-        res.status(500).send({ ok: false, error });
-      }
-    });
+                  const partiesWithImageData = results.map((party) => ({
+                    ...party,
+                    party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
+                  }));
+                  res.send({ ok: true, results: partiesWithImageData });
+                } catch (error) {
+                  console.error(error);
+                  res.status(500).send({ ok: false, error });
+                }
+              });
+
+            } catch (error) {
+              console.error(error);
+              res.status(500).send({ ok: false, error });
+            }
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ ok: false, error });
+        }
+      });
     }
   } catch (error) {
     console.error(error);
@@ -371,44 +371,44 @@ export async function deleteParty(req, res) {
 
 export async function updateParty(req: express.Request, res: express.Response) {
   try {
-    const { party_id, party_name, party_date,  party_location,
-      party_category_id,  party_description,  party_price,party_image_id,
-      party_creator_id,  things_to_bring,created_time,
+    const { party_id, party_name, party_date, party_location,
+      party_category_id, party_description, party_price, party_image_id,
+      party_creator_id, things_to_bring, created_time,
     } = req.body;
 
-    if ( !party_id ||  !party_name ||   !party_date ||
-      !party_location || !party_category_id || !party_description || !party_price ||!party_image_id ||
-      !party_creator_id ||!things_to_bring || !created_time
+    if (!party_id || !party_name || !party_date ||
+      !party_location || !party_category_id || !party_description || !party_price || !party_image_id ||
+      !party_creator_id || !things_to_bring || !created_time
     )
       throw new Error('Missing required fields');
-      // check if user token is the same as party creator or admin
-      const token = req.cookies.token;
+    // check if user token is the same as party creator or admin
+    const token = req.cookies.token;
     const secret = process.env.SECRET_KEY;
     if (!secret) throw new Error("no secret");
-     
-      if (!token) {
-        res.status(401).send({ ok: false, error: 'No token updateUser()' });
-        return;
-      }
-      const decoded = jwt.verify(token, secret) as { user_id: number };
-      const user_id = decoded.user_id;
-      const userSelectQuery = ` SELECT * FROM users WHERE user_id = ?;`;
-      connection.query(userSelectQuery, [user_id], (err, results: any[], fields) => {
-        try {
-          if (err) throw err;
-          const userRole = results[0].role;
-          console.log(`userRole: ${userRole}, user_id: ${user_id}, party_creator_id: ${party_creator_id}`);
-          if (userRole !== 'admin' && user_id !== party_creator_id ){
-            res.status(401).send({ ok: false, error: 'User can update only their own parties updateParty()' });
-            return;
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).send({ ok: false, error });
-        }
-      });
 
-     
+    if (!token) {
+      res.status(401).send({ ok: false, error: 'No token updateUser()' });
+      return;
+    }
+    const decoded = jwt.verify(token, secret) as { user_id: number };
+    const user_id = decoded.user_id;
+    const userSelectQuery = ` SELECT * FROM users WHERE user_id = ?;`;
+    connection.query(userSelectQuery, [user_id], (err, results: any[], fields) => {
+      try {
+        if (err) throw err;
+        const userRole = results[0].role;
+        console.log(`userRole: ${userRole}, user_id: ${user_id}, party_creator_id: ${party_creator_id}`);
+        if (userRole !== 'admin' && user_id !== party_creator_id) {
+          res.status(401).send({ ok: false, error: 'User can update only their own parties updateParty()' });
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ ok: false, error });
+      }
+    });
+
+
     const query = `
       UPDATE parties
       SET party_name = ?, party_date = ?, party_location = ?, party_category_id = ?, party_description = ?, party_price = ?, party_image_id = ?, party_creator_id = ?, things_to_bring = ?, created_time = ?
@@ -417,37 +417,37 @@ export async function updateParty(req: express.Request, res: express.Response) {
 
     connection.query(
       query,
-      [ party_name, party_date,party_location,
-        party_category_id,  party_description,  party_price,
-        party_image_id,party_creator_id, things_to_bring,
+      [party_name, party_date, party_location,
+        party_category_id, party_description, party_price,
+        party_image_id, party_creator_id, things_to_bring,
         created_time, party_id,
       ],
       async (err, results: any, fields) => {
         try {
           if (err) throw err;
-          const selectQuery =`
+          const selectQuery = `
           SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
           FROM parties p
           JOIN party_categories pc ON p.party_category_id = pc.category_id
           LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
         `;
-          connection.query(selectQuery,  (selectErr, selectResults:any, selectFields) => {
+          connection.query(selectQuery, (selectErr, selectResults: any, selectFields) => {
             try {
               if (selectErr) throw selectErr;
               const partiesWithImageData = selectResults.map((party) => ({
                 ...party,
                 party_img_data: party.party_img_data ? party.party_img_data.toString('base64') : null,
               }));
-      
+
               res.send({ ok: true, results: partiesWithImageData });
-              
-              
+
+
             } catch (error) {
               console.error(error);
               res.status(500).send({ ok: false, error });
-              
+
             }
-           
+
           });
 
         } catch (error) {
@@ -464,7 +464,7 @@ export async function updateParty(req: express.Request, res: express.Response) {
 
 export async function addPartyParticipants(req: express.Request, res: express.Response) {
   try {
-    
+
     const { party_id, user_id } = req.body;
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for addPartyParticipants()");
     // check if user exists in this party
@@ -478,29 +478,29 @@ export async function addPartyParticipants(req: express.Request, res: express.Re
           res.status(400).send({ ok: false, error: 'User already exists in this party' });
           return;
         }
-        else{
+        else {
           const queryINSERT = `
           INSERT INTO party_participants (party_id, user_id)
           VALUES (?, ?);
         `;
-    
-        connection.query(queryINSERT, [party_id, user_id], (err, resultsINSERT, fields) => {
-          try {
-            if (err) throw err;
-            res.send({ ok: true, resultsINSERT });
-    
-          } catch (error) {
-            console.error(error);
-            res.status(500).send({ ok: false, error });
-          }
-        });
+
+          connection.query(queryINSERT, [party_id, user_id], (err, resultsINSERT, fields) => {
+            try {
+              if (err) throw err;
+              res.send({ ok: true, resultsINSERT });
+
+            } catch (error) {
+              console.error(error);
+              res.status(500).send({ ok: false, error });
+            }
+          });
         }
       } catch (error) {
         console.error(error);
         res.status(500).send({ ok: false, error });
       }
     });
-  
+
   } catch (error) {
     console.error(error);
     res.status(500).send({ ok: false, error });
@@ -521,7 +521,7 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
         if (results.length > 0) {
           res.send({ ok: true, results });
         }
-        else{
+        else {
           res.send({ ok: false, results });
         }
       } catch (error) {
@@ -529,7 +529,7 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
         res.status(500).send({ ok: false, error });
       }
     });
-  
+
   } catch (error) {
     console.error(error);
     res.status(500).send({ ok: false, error });
@@ -538,7 +538,7 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
 export async function deletePartyParticipants(req: express.Request, res: express.Response) {
   try {
 
-   
+
     const { party_id, user_id } = req.body;
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for deletePartyParticipants()");
     // delete if user exists in this party
@@ -550,13 +550,13 @@ export async function deletePartyParticipants(req: express.Request, res: express
         if (err) throw err;
         res.send({ ok: true, results });
 
-        
+
       } catch (error) {
         console.error(error);
         res.status(500).send({ ok: false, error });
       }
     });
-    
+
   } catch (error) {
     console.error(error);
     res.status(500).send({ ok: false, error });
@@ -593,7 +593,7 @@ export async function partiesByUserIdJoined(req: express.Request, res: express.R
     res.status(500).send({ ok: false, error });
   }
 }
-  
+
 
 
 
