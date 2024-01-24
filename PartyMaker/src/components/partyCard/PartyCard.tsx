@@ -22,9 +22,9 @@ const PartyCard: React.FC<PartyCardProps> = ({ party }) => {
   return (
     <div className="partyCard">
       {party ? (
-        <div>
+        <div className='partyContent'>
           <h2 className='partyName'>{party.party_name}</h2>
-          <div className="partyContent">
+          <div className="cardBody">
             <div className="imageOverlay" style={{ backgroundImage: `url(data:image/png;base64,${party.party_img_data})` }}>
               {party.party_date !== null ? (
                 <div className='partyDetails'>

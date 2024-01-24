@@ -1,25 +1,12 @@
-.adminMain{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #F5F5F5;
-    .adminMain__title{
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
-    }
-    .adminMain__buttons{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        .adminMain__button{
-            width: 50%;
-            margin-bottom: 1rem;
-        }
-    }
+.adminMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+
+
+
+  
 }

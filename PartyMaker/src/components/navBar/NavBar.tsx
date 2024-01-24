@@ -57,8 +57,8 @@ const NavBar = () => {
             <button onClick={() => navigate("/addNewParty")} className="addNewParty">
              +New</button>
             <button onClick={hendalGoHome}>Home</button>
+            {user.role === "admin" && <button onClick={hendalAdminPage}>Admin</button>} 
             <button onClick={handelLogout}>Logout</button>
-            {user.role === "admin" && <button onClick={hendalAdminPage}>Admin</button>}
           </>
         ) : (
           <>

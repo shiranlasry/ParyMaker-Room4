@@ -8,6 +8,7 @@ import { useAppSelector } from '../../app/hook';
 import { useDispatch } from 'react-redux';
 import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
 import { updatePartyImgAPI } from '../../features/parties/partiesAPI';
+import GeneralBtn from '../generalBtn/GeneralBtn';
 
 interface EditPartyProps {
   party: Party | null;
@@ -124,8 +125,10 @@ const EditParty: React.FC<EditPartyProps> = ({ party, onSave, onClose }) => {
           onChange={handleFileChange}
         />
       </div>
-      <button onClick={handleSave}>Save Changes</button>
-      <button onClick={onClose}>Cancel</button>
+      <div className='editPartyBtns'>
+      <GeneralBtn buttonText="Save Changes" onClick={handleSave}/>
+      <GeneralBtn buttonText="Cancel" onClick={onClose}/>
+      </div>
     </div>
   );
 }
