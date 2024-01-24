@@ -1,22 +1,21 @@
 //navbar component
 
-import "./navBar.scss";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
 import { userSelector } from "../../features/loggedInUser/userSlice";
+import "./navBar.scss";
 
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { deleteTokenApi, getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getAllParties } from "../../features/parties/partiesAPI";
-import { isUserjoinedPartySelector, partiesSelector, resetIsUserjoinedParty ,resetIncomingParty} from "../../features/parties/partiesSlice";
+import { resetIncomingParty, resetIsUserjoinedParty } from "../../features/parties/partiesSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const user = useAppSelector(userSelector);
-  const parties = useAppSelector(partiesSelector);
-  const isParyPaties = useAppSelector(isUserjoinedPartySelector);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

@@ -1,17 +1,17 @@
 
 //addparty.tsx client side 
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hook';
+import GeneralBtn from "../../components/generalBtn/GeneralBtn";
+import NavBar from '../../components/navBar/NavBar';
+import { userSelector } from '../../features/loggedInUser/userSlice';
 import { createParty, saveImgtoDB } from '../../features/parties/partiesAPI';
+import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
 import { Party } from '../../types-env';
 import './addNewParty.scss';
-import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
-import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
-import { userSelector } from '../../features/loggedInUser/userSlice';
-import NavBar from '../../components/navBar/NavBar';
-import { useNavigate } from 'react-router-dom';
-import toast, { Toaster } from "react-hot-toast";
-import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 
 
 const AddNewParty = () => {

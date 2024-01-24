@@ -2,8 +2,8 @@
 
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { logInUserApi,editUserApi, getUserFromTokenApi, registerUserApi,deleteTokenApi } from "./userAPI"
-import {  User } from "../../types-env"
+import { User } from "../../types-env"
+import { deleteTokenApi, editUserApi, getUserFromTokenApi, logInUserApi, registerUserApi } from "./userAPI"
 
 
 

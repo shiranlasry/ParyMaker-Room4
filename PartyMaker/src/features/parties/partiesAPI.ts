@@ -1,10 +1,10 @@
 //partiesAPI.ts clinet side
 
-import axios from "axios";
-import { Party } from "../../types-env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import toast from "react-hot-toast";
 import { base_url } from "../../config/baseUrl";
+import { Party } from "../../types-env";
 
 
 export const saveImgtoDB = createAsyncThunk<{ ok: boolean; img_id: number }, FormData>(

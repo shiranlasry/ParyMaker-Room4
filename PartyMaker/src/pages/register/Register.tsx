@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
@@ -131,6 +132,6 @@ const Register = () => {
 };
 
 export default Register;
-function dispatch(registerUserApi: any): any {
-  throw new Error("Function not implemented.");
-}
+// function dispatch(registerUserApi: any): any {
+//   throw new Error("Function not implemented.");
+// }

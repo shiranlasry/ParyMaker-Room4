@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../types-env";
 import { RootState } from "../../app/store";
+import { User } from "../../types-env";
 import { getAllUsersAPI, getUsersByPartyIdAPI } from "./usersAPI";
 
 enum Status {

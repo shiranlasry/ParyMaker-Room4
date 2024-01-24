@@ -1,20 +1,20 @@
 //admin parties page
 
-import React, { useState } from "react";
-import NavBar from "../navBar/NavBar";
-import "./AdminParties.scss";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { partiesSelector } from "../../features/parties/partiesSlice";
+import { userSelector } from "../../features/loggedInUser/userSlice";
 import {
   deletePartyAPI,
   updatePartyAPI,
 } from "../../features/parties/partiesAPI";
-import { userSelector } from "../../features/loggedInUser/userSlice";
-import PartyCard from "../partyCard/PartyCard";
-import toast from "react-hot-toast";
+import { partiesSelector } from "../../features/parties/partiesSlice";
 import { Party } from "../../types-env";
 import EditParty from "../edit-party/EditParty";
 import GeneralBtn from "../generalBtn/GeneralBtn";
+import NavBar from "../navBar/NavBar";
+import PartyCard from "../partyCard/PartyCard";
+import "./AdminParties.scss";
 
 const AdminParties = () => {
   const parties = useAppSelector(partiesSelector);

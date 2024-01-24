@@ -1,9 +1,9 @@
 //users api client side
 
-import { createAsyncThunk } from "@reduxjs/toolkit"
-import { User } from "../../types-env";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { base_url } from "../../config/baseUrl";
+import { User } from "../../types-env";
 
 interface GetUserApiArgs {
     email: string;

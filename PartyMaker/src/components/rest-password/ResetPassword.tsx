@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./ResetPassword.scss";
 import { User } from "../../types-env";
+import "./ResetPassword.scss";
 
 interface ResetPasswordModalProps {
     user: User;

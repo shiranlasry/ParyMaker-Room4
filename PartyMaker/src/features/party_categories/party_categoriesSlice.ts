@@ -1,7 +1,7 @@
 //partiesSlice.ts   clinet side
 import { createSlice } from "@reduxjs/toolkit";
-import { Category, Party } from "../../types-env";
 import { RootState } from "../../app/store";
+import { Category } from "../../types-env";
 import { getAllCategories } from "./party_categoriesAPI";
 
 

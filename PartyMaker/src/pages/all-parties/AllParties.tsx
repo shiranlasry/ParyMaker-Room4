@@ -1,11 +1,11 @@
 
 
-import { partiesSelector } from '../../features/parties/partiesSlice'
-import { useAppDispatch, useAppSelector } from '../../app/hook'
-import PartyCard from '../../components/partyCard/PartyCard'
 import { useEffect, useState } from 'react'
-import { getAllParties } from '../../features/parties/partiesAPI'
+import { useAppDispatch, useAppSelector } from '../../app/hook'
 import NavBar from '../../components/navBar/NavBar'
+import PartyCard from '../../components/partyCard/PartyCard'
+import { getAllParties } from '../../features/parties/partiesAPI'
+import { partiesSelector } from '../../features/parties/partiesSlice'
 import './AllParties.scss'
 
 const AllParties = () => {

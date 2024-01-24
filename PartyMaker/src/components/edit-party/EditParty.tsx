@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 //edit party component
-import React, { useEffect, useState } from 'react'
-import { Party } from '../../types-env';
-import './editParty.scss';
-import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
-import { useAppSelector } from '../../app/hook';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+import { useAppSelector } from '../../app/hook';
 import { updatePartyImgAPI } from '../../features/parties/partiesAPI';
+import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
+import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
+import { Party } from '../../types-env';
 import GeneralBtn from '../generalBtn/GeneralBtn';
+import './editParty.scss';
 
 interface EditPartyProps {
   party: Party | null;

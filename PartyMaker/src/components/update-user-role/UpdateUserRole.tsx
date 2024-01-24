@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { User } from '../../types-env';
+import React from 'react';
 import { useAppDispatch } from '../../app/hook';
 import { updateUserRoleApi } from '../../features/loggedInUser/userAPI';
 import { getAllUsersAPI } from '../../features/users/usersAPI';
-import "./UpdateUserRole.scss"
+import { User } from '../../types-env';
+import "./UpdateUserRole.scss";
 
 type UserProps = {
   user: User;

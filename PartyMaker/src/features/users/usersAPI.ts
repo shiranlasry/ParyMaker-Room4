@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { User } from "../../types-env";
 import { base_url } from "../../config/baseUrl";
+import { User } from "../../types-env";
 
 export const getAllUsersAPI = createAsyncThunk<User[] | null>(
   "get-all-users",

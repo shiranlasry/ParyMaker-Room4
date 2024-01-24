@@ -1,8 +1,8 @@
 // PartyCard.jsx
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Party } from '../../types-env';
 import './partyCard.scss';
-import { useNavigate } from 'react-router-dom';
 
 type PartyCardProps = {
   party: Party;

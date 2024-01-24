@@ -1,19 +1,19 @@
 //partiesSlice.ts   clinet side
 import { createSlice } from "@reduxjs/toolkit";
-import { Party } from "../../types-env";
 import { RootState } from "../../app/store";
+import { Party } from "../../types-env";
 import {
-  createParty,
-  partiesByUserId,
-  getAllParties,
-  saveImgtoDB,
-  getPartyById,
-  deletePartyAPI,
-  updatePartyAPI,
-  isUserjoinedPartyAPI,
   addPartyPartcipantsAPI,
+  createParty,
+  deletePartyAPI,
   deletePartyPartcipantsAPI,
+  getAllParties,
+  getPartyById,
+  isUserjoinedPartyAPI,
+  partiesByUserId,
   partiesByUserIdJoined,
+  saveImgtoDB,
+  updatePartyAPI,
 } from "./partiesAPI";
 
 enum Status {
@@ -44,11 +44,11 @@ export const partiesSlice = createSlice({
   initialState,
   reducers: {
     resetIsUserjoinedParty: (state) => {
-     
+
       state.isUserjoinedParty = false;
     },
     resetIncomingParty: (state) => {
-     
+
       state.incomingParty = null;
     },
   },
@@ -148,7 +148,7 @@ export const partiesSlice = createSlice({
       .addCase(deletePartyPartcipantsAPI.pending, (state) => {
         state.status = Status.LOADING;
       })
-      .addCase(deletePartyPartcipantsAPI.fulfilled, (state, action) => {
+      .addCase(deletePartyPartcipantsAPI.fulfilled, (state) => {
         state.status = Status.IDLE;
         state.isUserjoinedParty = false;
       })
@@ -162,11 +162,11 @@ export const partiesSlice = createSlice({
       .addCase(partiesByUserIdJoined.rejected, (state) => {
         state.status = Status.FAILED;
       });
-      
+
   },
 });
-export const  {resetIsUserjoinedParty } = partiesSlice.actions;
-export const  {resetIncomingParty } = partiesSlice.actions;
+export const { resetIsUserjoinedParty } = partiesSlice.actions;
+export const { resetIncomingParty } = partiesSlice.actions;
 export const partiesSelector = (state: RootState) => state.parties.value;
 export const partiesImgIdSelector = (state: RootState) => state.parties.img_id;
 export const incomingPartySelector = (state: RootState) =>
@@ -178,6 +178,6 @@ export const partiesByUserIdSelector = (state: RootState) =>
 export const isUserjoinedPartySelector = (state: RootState) => state.parties.isUserjoinedParty;
 export const partiesByUserIdJoinedSelector = (state: RootState) =>
   state.parties.valueByUserIdJoined;
-  
+
 
 export default partiesSlice.reducer;

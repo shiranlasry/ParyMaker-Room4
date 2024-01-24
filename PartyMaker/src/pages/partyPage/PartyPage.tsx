@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import "./partyPage.scss";
-import NavBar from "../../components/navBar/NavBar";
-import { Party } from "../../types-env";
-import { incomingPartySelector, isUserjoinedPartySelector } from "../../features/parties/partiesSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { deletePartyAPI, deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI, updatePartyAPI } from "../../features/parties/partiesAPI";
-import { userSelector } from "../../features/loggedInUser/userSlice";
-import { addPartyPartcipantsAPI } from "../../features/parties/partiesAPI";
-import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
 import EditParty from "../../components/edit-party/EditParty";
-import { usersByPartyIdSelector } from "../../features/users/usersSlice";
-import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
-import UserCard from "../../components/user-card/UserCard";
 import GeneralBtn from "../../components/generalBtn/GeneralBtn";
+import NavBar from "../../components/navBar/NavBar";
+import UserCard from "../../components/user-card/UserCard";
+import { getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+import { userSelector } from "../../features/loggedInUser/userSlice";
+import { addPartyPartcipantsAPI, deletePartyAPI, deletePartyPartcipantsAPI, getPartyById, isUserjoinedPartyAPI, updatePartyAPI } from "../../features/parties/partiesAPI";
+import { incomingPartySelector, isUserjoinedPartySelector } from "../../features/parties/partiesSlice";
+import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
+import { usersByPartyIdSelector } from "../../features/users/usersSlice";
+import { Party } from "../../types-env";
+import "./partyPage.scss";
 
 
 const PartyPage = () => {

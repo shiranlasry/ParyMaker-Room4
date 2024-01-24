@@ -1,13 +1,13 @@
 //admin-users page  
-import NavBar from '../navBar/NavBar';
-import './AdminUsers.scss';
-import { useAppDispatch, useAppSelector } from '../../app/hook';
-import { getAllUsersAPI } from '../../features/users/usersAPI';
-import { User } from '../../types-env';
-import { usersSelector } from '../../features/users/usersSlice';
-import UserCard from '../user-card/UserCard';
 import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { useAppDispatch, useAppSelector } from '../../app/hook';
+import { getAllUsersAPI } from '../../features/users/usersAPI';
+import { usersSelector } from '../../features/users/usersSlice';
+import { User } from '../../types-env';
+import NavBar from '../navBar/NavBar';
+import UserCard from '../user-card/UserCard';
+import './AdminUsers.scss';
 
 const AdminUsers = () => {
   const users = useAppSelector(usersSelector);

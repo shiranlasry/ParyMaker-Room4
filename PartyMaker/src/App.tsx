@@ -1,19 +1,19 @@
 //App.tsx is the root component of the app.
-import './App.scss'
-import Home from './pages/home/Home'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Page404 from './pages/page404/Page404'
-import LogIn from './pages/logIn/LogIn'
-import Register from './pages/register/Register'
-import AddNewParty from './pages/addNewParty/AddNewParty'
-import UserPage from './pages/userPage/UserPage'
-import PartyPage from './pages/partyPage/PartyPage' 
-import AdminMain from './pages/admin-main/AdminMain'
+import './App.scss'
 import AdminParties from './components/admin-paries/AdminParties'
-import AdminUsers from './components/admin-users/AdminUsers'  
-import About from './pages/about/About';
-import Contact from './pages/contact/Contact';
-import AllParties from './pages/all-parties/AllParties';
+import AdminUsers from './components/admin-users/AdminUsers'
+import About from './pages/about/About'
+import AddNewParty from './pages/addNewParty/AddNewParty'
+import AdminMain from './pages/admin-main/AdminMain'
+import AllParties from './pages/all-parties/AllParties'
+import Contact from './pages/contact/Contact'
+import Home from './pages/home/Home'
+import LogIn from './pages/logIn/LogIn'
+import Page404 from './pages/page404/Page404'
+import PartyPage from './pages/partyPage/PartyPage'
+import Register from './pages/register/Register'
+import UserPage from './pages/userPage/UserPage'
 
 
 function App() {

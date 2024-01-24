@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hook";
+import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 import NavBar from "../../components/navBar/NavBar";
 import "./AdminMain.scss";
-import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 
 const AdminMain = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   return (
     <div className="adminMain">
       <NavBar />
