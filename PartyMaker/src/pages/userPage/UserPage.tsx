@@ -15,6 +15,7 @@ import {partiesByUserId, partiesByUserIdJoined} from "../../features/parties/par
 import PartyCard from "../../components/partyCard/PartyCard";
 import "./userPage.scss";
 import toast, { Toaster } from "react-hot-toast";
+import AddNewPartyBtn from "../../components/createNewPartyBtn/AddNewPartyBtn";
 
 
 const UserPage: React.FC = () => {
@@ -155,12 +156,12 @@ const UserPage: React.FC = () => {
                 <PartyCard key={party.party_id} party={party} />
               ))
             ) : (
-            <>
-             <h3>No parties created yet.</h3>
-             <button className="createPartyBtn" onClick={() => navigate("/addNewParty")}>
-        Create New Party
-      </button>
-            </>
+            <div>
+             <h3 className="noParties">No parties created yet.</h3>
+             <AddNewPartyBtn buttonText="Create New Party 🎉" onClick={() => navigate("/addNewParty")}/>
+        
+      
+            </div>
              
             )}
           </div>

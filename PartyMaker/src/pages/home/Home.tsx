@@ -1,3 +1,4 @@
+import React from 'react';
 import "./home.scss";
 import NavBar from "../../components/navBar/NavBar";
 import { useNavigate } from "react-router";
@@ -8,6 +9,7 @@ import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useAppSelector } from "../../app/hook";
 import { User } from "../../types-env";
 import { Toaster } from "react-hot-toast";
+import AddNewPartyBtn from './../../components/createNewPartyBtn/AddNewPartyBtn';
 
 const Home = () => {
   const user: User | null = useAppSelector(userSelector);
@@ -15,26 +17,24 @@ const Home = () => {
   const handelGoAllParties = () => {
     navigate("/allParties");
   };
+
   return (
     <>
-    <div className="HPcontainer">
-      <NavBar />
+      <div className="HPcontainer">
+        <NavBar />
+        <Hero />
+        
+        {user && (
+          <AddNewPartyBtn buttonText="Create New Party 🎉" onClick={() => navigate("/addNewParty")} />
+        )}
+        
+        <Toaster position="top-right"/>
+        <HOtParties />
+      </div>
       
-      <Hero />
-      {user && <button
-        onClick={() => navigate("/addNewParty")}
-        className="createPartyHP"
-      >
-        Create New Party 🎉
-      </button>}
-      <Toaster position="top-right"/>
-      <HOtParties />
-    
-      <button  className="createPartyHP" onClick={handelGoAllParties} >For All Parties 🎶🎉</button>
-    </div>
-    <div className="footer">
-    <Footer />
-    </div>
+      <div className="footer">
+        <Footer />
+      </div>
     </>
   );
 };

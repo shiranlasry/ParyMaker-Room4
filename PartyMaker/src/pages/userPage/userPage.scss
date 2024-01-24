@@ -48,19 +48,6 @@ $navy: #000080;
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
     }
   }
-  .createPartyUP {
-    background-color: $navy;
-    border-radius: 12px;
-    color: white;
-    font-size: 22px;
-    padding: 10px;
-
-    &:hover {
-      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
-        0 17px 50px 0 rgba(0, 0, 0, 0.19);
-      font-weight: bold;
-    }
-  }
   .parties-by-user-id {
     display: flex;
     flex-direction: row;
@@ -71,5 +58,8 @@ $navy: #000080;
   .myEventsTitle {
     font-size: 40px;
     text-shadow: 2px 3px 1px #fabce2;
+  }
+  .noParties {
+    margin: auto;
   }
 }
