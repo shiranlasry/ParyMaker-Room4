@@ -53,7 +53,7 @@ export const updatePassword = async (req: Request, res: Response) => {
 
     // Update the user's password in the database
     const query = `
-      UPDATE party_maker.users
+      UPDATE users
       SET password = ?
       WHERE user_id = ?;
     `;
@@ -85,7 +85,7 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
     }
     const decoded = jwt.verify(token, secret) as { user_id: number };
     const { user_id } = decoded;
-    const queryToken = `SELECT * FROM party_maker.users WHERE user_id = ?;`; 
+    const queryToken = `SELECT * FROM users WHERE user_id = ?;`; 
     connection.query(queryToken, [user_id], (err, results: RowDataPacket[], fields) => {
       try {
         if (err) throw err;
@@ -99,7 +99,7 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
         res.status(500).send({ ok: false, error });
       }
     });
-    const query = "SELECT * FROM  party_maker.users;"
+    const query = "SELECT * FROM  users;"
     connection.query(query, (err, results, fields) => {
       try {
         if (err) throw err;
@@ -120,7 +120,7 @@ export const getAllUsers = async (req: express.Request, res: express.Response) =
 
 export const getUserById = async (req: express.Request, res: express.Response) => {
   try {
-    const query = `SELECT * FROM  party_maker.users WHERE user_id = ${req.params.id};`
+    const query = `SELECT * FROM  users WHERE user_id = ${req.params.id};`
     connection.query(query, (err, results, fields) => {
       try {
         if (err) throw err;
@@ -144,7 +144,7 @@ export const loginUser = async (req: express.Request, res: express.Response) => 
       res.status(400).send({ ok: false, error: 'Missing email or password loginUser()' });
       return;
     }
-    const query = `SELECT * FROM party_maker.users WHERE email = ?;`;
+    const query = `SELECT * FROM users WHERE email = ?;`;
 
     connection.query(query, [email], async (err, results: RowDataPacket[], fields) => {
       try {
@@ -199,7 +199,7 @@ export const registerUser = async (req: express.Request, res: express.Response) 
     if (!hash) throw new Error("no hash password registerUser()")
 
     const query = `
-        INSERT INTO party_maker.users (email, password, username, first_name, last_name, phone_number, address, role)
+        INSERT INTO users (email, password, username, first_name, last_name, phone_number, address, role)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       `;
     connection.query(
@@ -214,7 +214,7 @@ export const registerUser = async (req: express.Request, res: express.Response) 
           
 
           // Retrieve the inserted user from the database
-          const selectQuery = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+          const selectQuery = `SELECT * FROM users WHERE user_id = ?;`;
 
           connection.query(selectQuery, [insertedUserId], (selectErr, selectResults: RowDataPacket[], selectFields) => {
             if (selectErr) throw selectErr;
@@ -260,7 +260,7 @@ export const getUserFromToken = async (req: express.Request, res: express.Respon
 
 
 
-    const query = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+    const query = `SELECT * FROM users WHERE user_id = ?;`;
     connection.query(query, [user_id], (err, results: RowDataPacket[], fields) => {
       try {
         if (err) throw err;
@@ -312,7 +312,7 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
     }
 
     const query = `
-        UPDATE party_maker.users SET email = ?, username = ?, first_name = ?, last_name = ?, phone_number = ?, address = ?
+        UPDATE users SET email = ?, username = ?, first_name = ?, last_name = ?, phone_number = ?, address = ?
         WHERE user_id = ?;
       `;
     connection.query(
@@ -323,7 +323,7 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
           if (err) throw err;
 
           // Retrieve the updated user from the database
-          const selectQuery = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+          const selectQuery = `SELECT * FROM users WHERE user_id = ?;`;
 
           connection.query(selectQuery, [user_id], (selectErr, selectResults: RowDataPacket[], selectFields) => {
             if (selectErr) throw selectErr;
@@ -374,8 +374,8 @@ export async function getUsersByPartyID(req, res) {
       if (!party_id) throw new Error("no party_id")
       // get users id from party participens and select join this party
 
-      const query= `SELECT * FROM party_maker.users WHERE user_id IN 
-      (SELECT user_id FROM party_maker.party_participants WHERE party_id = ${party_id});`;
+      const query= `SELECT * FROM users WHERE user_id IN 
+      (SELECT user_id FROM party_participants WHERE party_id = ${party_id});`;
       connection.query(query, (err, results) => {
           try {
               if (err) throw err;
@@ -411,7 +411,7 @@ export async function updateUserRole(req, res) {
         }
       const decoded = jwt.verify(token, secret) as { user_id: number };
       const { user_id: user_id_token } = decoded;
-      const queryToken = `SELECT * FROM party_maker.users WHERE user_id = ?;`;
+      const queryToken = `SELECT * FROM users WHERE user_id = ?;`;
       connection.query(queryToken, [user_id_token], (err, results: RowDataPacket[], fields) => {
           try {
               if (err) throw err;
@@ -426,7 +426,7 @@ export async function updateUserRole(req, res) {
           }
       });
 
-      const query= `UPDATE party_maker.users SET role = '${role}' WHERE user_id = ${user_id};`;
+      const query= `UPDATE users SET role = '${role}' WHERE user_id = ${user_id};`;
       connection.query(query, (err, results) => {
           try {
               if (err) throw err;

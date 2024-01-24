@@ -18,7 +18,7 @@ export const saveImgtoDB = async (req: express.Request, res: express.Response) =
     const file_name = `${Date.now()}_${file.originalname}`;
 
     const query = `
-    INSERT INTO party_maker.party_img (party_img_name, party_img_data)
+    INSERT INTO party_img (party_img_name, party_img_data)
     VALUES (?, ?);
   `;
     
@@ -51,7 +51,7 @@ export const updatePartyImg = async (req: express.Request, res: express.Response
     const file_name = `${Date.now()}_${file.originalname}`;
 
     const query = `
-      UPDATE party_maker.party_img
+      UPDATE party_img
       SET party_img_name = ?, party_img_data = ?
       WHERE party_img_id = ?;
     `;
@@ -75,9 +75,9 @@ export const getAllParties = async (req: express.Request, res: express.Response)
   try {
     const query = `
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+      FROM parties p
+      JOIN party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
     `;
 
     connection.query(query, (err, results: any[], fields) => {
@@ -105,7 +105,7 @@ export const getAllCategories = async (req: express.Request, res: express.Respon
     try {
       const query = `
         SELECT *
-        FROM party_maker.party_categories;
+        FROM party_categories;
       `;
       connection.query(query, (err, results, fields) => {
         try {
@@ -153,7 +153,7 @@ console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_dat
 
 
     const query = `
-      INSERT INTO party_maker.parties 
+      INSERT INTO parties 
       (party_name, party_date, party_location, party_category_id, party_description, party_price, party_image_id, party_creator_id, things_to_bring, created_time)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
@@ -177,8 +177,8 @@ console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_dat
           const partyId = results.insertId;
           const selectQuery = `
             SELECT p.*, pc.category_description
-            FROM party_maker.parties p
-            JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
+            FROM parties p
+            JOIN party_categories pc ON p.party_category_id = pc.category_id
             WHERE p.party_id = ?;
           `;
           connection.query(selectQuery, [partyId], (selectErr, selectResults, selectFields) => {
@@ -212,9 +212,9 @@ export const getPartyById = async (req: express.Request, res: express.Response) 
 
     const query = `
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+      FROM parties p
+      JOIN party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id
       WHERE p.party_id = ?;
     `;
 
@@ -246,9 +246,9 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
     const { user_id } = req.params;
     const query = `
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
+      FROM parties p
+      JOIN party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id
       WHERE p.party_creator_id = ?;
     `;
 
@@ -280,7 +280,7 @@ export async function deleteParty(req, res) {
     if (role !== 'admin') {
       // get user id from token
       const selectByIdQuery = `
-        SELECT party_creator_id FROM party_maker.parties WHERE party_id = ?;
+        SELECT party_creator_id FROM parties WHERE party_id = ?;
       `;
       connection.query(selectByIdQuery, [party_id], (err, results: any[], fields) => {
         try {
@@ -317,7 +317,7 @@ export async function deleteParty(req, res) {
     function performDeletion() {
     // delete from party_participants
     const deleteQuery = `
-      DELETE FROM party_maker.party_participants WHERE party_id = ?;
+      DELETE FROM party_participants WHERE party_id = ?;
     `;
     connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
       try {
@@ -325,7 +325,7 @@ export async function deleteParty(req, res) {
        
         // delete from parties
         const deleteQuery = `
-          DELETE FROM party_maker.parties WHERE party_id = ?;
+          DELETE FROM parties WHERE party_id = ?;
         `;
         connection.query(deleteQuery, [party_id], (err, results: any[], fields) => {
           try {
@@ -333,9 +333,9 @@ export async function deleteParty(req, res) {
            
             const selectAllquery = `
               SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-              FROM party_maker.parties p
-              JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-              LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+              FROM parties p
+              JOIN party_categories pc ON p.party_category_id = pc.category_id
+              LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
             `;
             connection.query(selectAllquery, (err, results: any[], fields) => {
               try {
@@ -392,7 +392,7 @@ export async function updateParty(req: express.Request, res: express.Response) {
       }
       const decoded = jwt.verify(token, secret) as { user_id: number };
       const user_id = decoded.user_id;
-      const userSelectQuery = ` SELECT * FROM party_maker.users WHERE user_id = ?;`;
+      const userSelectQuery = ` SELECT * FROM users WHERE user_id = ?;`;
       connection.query(userSelectQuery, [user_id], (err, results: any[], fields) => {
         try {
           if (err) throw err;
@@ -410,7 +410,7 @@ export async function updateParty(req: express.Request, res: express.Response) {
 
      
     const query = `
-      UPDATE party_maker.parties
+      UPDATE parties
       SET party_name = ?, party_date = ?, party_location = ?, party_category_id = ?, party_description = ?, party_price = ?, party_image_id = ?, party_creator_id = ?, things_to_bring = ?, created_time = ?
       WHERE party_id = ?;
     `;
@@ -427,9 +427,9 @@ export async function updateParty(req: express.Request, res: express.Response) {
           if (err) throw err;
           const selectQuery =`
           SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-          FROM party_maker.parties p
-          JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-          LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id;
+          FROM parties p
+          JOIN party_categories pc ON p.party_category_id = pc.category_id
+          LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
         `;
           connection.query(selectQuery,  (selectErr, selectResults:any, selectFields) => {
             try {
@@ -469,7 +469,7 @@ export async function addPartyParticipants(req: express.Request, res: express.Re
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for addPartyParticipants()");
     // check if user exists in this party
     const selectQuery = `
-      SELECT * FROM party_maker.party_participants WHERE party_id = ? AND user_id = ?;
+      SELECT * FROM party_participants WHERE party_id = ? AND user_id = ?;
     `;
     connection.query(selectQuery, [party_id, user_id], (err, results: any[], fields) => {
       try {
@@ -480,7 +480,7 @@ export async function addPartyParticipants(req: express.Request, res: express.Re
         }
         else{
           const queryINSERT = `
-          INSERT INTO party_maker.party_participants (party_id, user_id)
+          INSERT INTO party_participants (party_id, user_id)
           VALUES (?, ?);
         `;
     
@@ -512,7 +512,7 @@ export async function IsPartyParticipants(req: express.Request, res: express.Res
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for IsPartyParticipants()");
     // check if user exists in this party
     const selectQuery = `
-      SELECT * FROM party_maker.party_participants WHERE party_id = ? AND user_id = ?;
+      SELECT * FROM party_participants WHERE party_id = ? AND user_id = ?;
     `;
     connection.query(selectQuery, [party_id, user_id], (err, results: any[], fields) => {
       try {
@@ -543,7 +543,7 @@ export async function deletePartyParticipants(req: express.Request, res: express
     if (!party_id || !user_id) throw new Error("No party_id or user_id provided for deletePartyParticipants()");
     // delete if user exists in this party
     const deleteQuery = `
-      DELETE FROM party_maker.party_participants WHERE party_id = ? AND user_id = ?;
+      DELETE FROM party_participants WHERE party_id = ? AND user_id = ?;
     `;
     connection.query(deleteQuery, [party_id, user_id], (err, results: any[], fields) => {
       try {
@@ -568,10 +568,10 @@ export async function partiesByUserIdJoined(req: express.Request, res: express.R
     const { user_id } = req.params;
     const query = `
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
-      FROM party_maker.parties p
-      JOIN party_maker.party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_maker.party_img pi ON p.party_image_id = pi.party_img_id
-      JOIN party_maker.party_participants pp ON p.party_id = pp.party_id
+      FROM parties p
+      JOIN party_categories pc ON p.party_category_id = pc.category_id
+      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id
+      JOIN party_participants pp ON p.party_id = pp.party_id
       WHERE pp.user_id = ?;
     `;
 
