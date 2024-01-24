@@ -9,6 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { getAllUsersAPI } from '../../features/users/usersAPI';
 import ResetPassword from '../rest-password/ResetPassword';
 import UpdateUserRole from '../update-user-role/UpdateUserRole';
+import GeneralBtn from '../generalBtn/GeneralBtn';
 type UserCardProps = {
   user: User;
 };
@@ -80,19 +81,21 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
 
   return (
-    <div className='userCard-main'>
+    <div className='userCardMain'>
        <Toaster position="top-right"/>
-      <img className='userCard-main-img' src={randomImages[Math.floor(Math.random() * randomImages.length)]} alt="user" />
-      <p className='userCard-main-email'>{user.email}</p>
-      <p className='userCard-main-username'>{user.username}</p>
-      <p className='userCard-main-phone_number'>{user.role}</p>
+       <div className='cardContent'>
+       <h2 className='userCardUsername'>{user.username}</h2>
+      <img className='imageOverlay' src={randomImages[Math.floor(Math.random() * randomImages.length)]} alt="user" />
+      <p className='userCardEmail'>{user.email}</p>
+      <p className='userCardPhone'>{user.role}</p>
       {/* if user is admin or user is the same user that is logged in */}
       {logInUser && logInUser.role === 'admin' &&
-        <>
-          <button onClick={() => onResetPassword()}>Reset Password</button>
-          <button onClick={() => onUpdateUser()}>Update User</button>
-          <button onClick={() => onUpdateRole()}>Update Role</button>
-        </>
+        <div className='upBtns'>
+          
+          <button className='updateUser' onClick={() => onUpdateUser()}>Update User</button>
+          <button className='resetPassword' onClick={() => onResetPassword()}>Reset Password</button>
+          <button className='updateRole' onClick={() => onUpdateRole()}>Update Role</button>
+        </div>
       }
       {
         showEditForm &&
@@ -112,7 +115,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
          <UpdateUserRole user={user!} onClose={handleClose}  />
         </div>
       }
-
+</div>
     </div>
   )
 }

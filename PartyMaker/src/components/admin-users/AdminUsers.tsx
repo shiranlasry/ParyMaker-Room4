@@ -29,9 +29,10 @@ const AdminUsers = () => {
     <div className='mainAdminUsers'>
        <Toaster position="top-right"/>
       <NavBar />
-      <div>
+      <div className='titleSearch'>
         <h1>Users Admin management</h1>
         <input
+        className='adminSearch'
           type='text'
           placeholder='Search by name, email, or role...'
           value={searchTerm}

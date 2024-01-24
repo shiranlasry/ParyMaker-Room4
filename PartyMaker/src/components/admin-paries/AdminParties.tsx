@@ -73,8 +73,8 @@ const AdminParties = () => {
   return (
     <div className="mainAdminParties">
       <NavBar />
+      <div className="titleSearch">
       <h1>Admin Parties</h1>
-
       <input
         className="adminSearch"
         type="text"
@@ -82,10 +82,11 @@ const AdminParties = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
+</div>
+<div className="partyCardsAdmin">
       {filteredParties &&
         filteredParties.map((party) => (
-          <div className="party-card-admin">
+          <div>
             <div className="adminCard">
               <PartyCard key={party.party_id} party={party} />
             </div>
@@ -106,6 +107,7 @@ const AdminParties = () => {
             )}
           </div>
         ))}
+    </div>
     </div>
   );
 };

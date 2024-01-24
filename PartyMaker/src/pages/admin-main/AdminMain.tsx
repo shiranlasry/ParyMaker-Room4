@@ -10,12 +10,14 @@ const AdminMain = () => {
   return (
     <div className="adminMain">
       <NavBar />
-      <h1>Admin Main</h1>
+      <h1>Admin Main 👀</h1>
+      <div>
       <GeneralBtn
         buttonText="Parties"
         onClick={() => navigate("/admin/parties")}
       />
       <GeneralBtn buttonText="Users" onClick={() => navigate("/admin/users")} />
+      </div>
     </div>
   );
 };
