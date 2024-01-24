@@ -41,7 +41,7 @@ return (
      
     {filteredParties &&
         filteredParties.map((party) => (
-          <div className="partyCard">
+          <div className="allPartyCard">
         
               <PartyCard key={party.party_id} party={party} />
 
