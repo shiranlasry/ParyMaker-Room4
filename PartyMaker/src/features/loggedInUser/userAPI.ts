@@ -3,6 +3,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { User } from "../../types-env";
 import axios from "axios";
+import { base_url } from "../../config/baseUrl";
 
 interface GetUserApiArgs {
     email: string;
@@ -11,7 +12,7 @@ interface GetUserApiArgs {
 
 export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-user', async (arg) => {
     try {
-        const response = await axios.post("/api/users/login", arg);
+        const response = await axios.post(`/${base_url}/api/users/login`, arg);
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials getUserApi()");
@@ -23,9 +24,9 @@ export const logInUserApi = createAsyncThunk<User | null, GetUserApiArgs>('get-u
         return null;
     }
 })
-export const registerUserApi = createAsyncThunk<User | null,User>('register-user', async (arg) => {
+export const registerUserApi = createAsyncThunk<User | null, User>('register-user', async (arg) => {
     try {
-        const response = await axios.post("/api/users/register", arg);
+        const response = await axios.post(`/${base_url}/api/users/register`, arg);
 
         const { ok, user } = response.data;
 
@@ -43,7 +44,7 @@ export const registerUserApi = createAsyncThunk<User | null,User>('register-user
 export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-token', async () => {
     try {
 
-        const response = await axios.get("/api/users/user-from-token");
+        const response = await axios.get(`/${base_url}/api/users/user-from-token`);
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials getUserFromTokenApi()");
@@ -57,7 +58,7 @@ export const getUserFromTokenApi = createAsyncThunk<User | null>('get-user-from-
 })
 export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
     try {
-        const response = await axios.delete("/api/users/delete-token");
+        const response = await axios.delete(`/${base_url}/api/users/delete-token`);
         const { ok } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials deleteTokenApi()");
@@ -71,7 +72,7 @@ export const deleteTokenApi = createAsyncThunk('delete-token', async () => {
 })
 export const editUserApi = createAsyncThunk<User | null, User>('edit-user', async (arg) => {
     try {
-        const response = await axios.put("/api/users/edit-user", arg);
+        const response = await axios.put(`/${base_url}/api/users/edit-user`, arg);
         console.log(response)
         const { ok, user } = response.data;
         if (!ok) {
@@ -84,9 +85,9 @@ export const editUserApi = createAsyncThunk<User | null, User>('edit-user', asyn
         return null;
     }
 })
-export const updatePasswordApi = createAsyncThunk<User | null, { user_id:number,password: string, newPassword: string,role:string }>('update-password', async (arg) => {
+export const updatePasswordApi = createAsyncThunk<User | null, { user_id: number, password: string, newPassword: string, role: string }>('update-password', async (arg) => {
     try {
-        const response = await axios.put("/api/users/update-password", arg);
+        const response = await axios.put(`/${base_url}/api/users/update-password`, arg);
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials updatePasswordApi()");
@@ -98,9 +99,9 @@ export const updatePasswordApi = createAsyncThunk<User | null, { user_id:number,
         return null;
     }
 })
-export const updateUserRoleApi = createAsyncThunk<User | null, { user_id:number,role:string }>('update-user-role', async (arg) => {
+export const updateUserRoleApi = createAsyncThunk<User | null, { user_id: number, role: string }>('update-user-role', async (arg) => {
     try {
-        const response = await axios.put("/api/users/update-user-role", arg);
+        const response = await axios.put(`/${base_url}/api/users/update-user-role`, arg);
         const { ok, user } = response.data;
         if (!ok) {
             throw new Error("Invalid credentials updateUserRoleApi()");
