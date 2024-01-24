@@ -11,7 +11,7 @@ export const saveImgtoDB = createAsyncThunk<{ ok: boolean; img_id: number }, For
   'save-img-to-db',
   async (file) => {
     try {
-      const response = await axios.post(`/${base_url}/api/parties/save-img-to-db`, file);
+      const response = await axios.post(`${base_url}/api/parties/save-img-to-db`, file);
       console.log(response)
 
       const { ok, img_id } = response.data;
@@ -35,7 +35,7 @@ export const updatePartyImgAPI = createAsyncThunk<boolean, UpdatePartyImgArgs>(
   'update-party-img',
   async ({ formData, party_image_id }) => {
     try {
-      const response = await axios.post(`/${base_url}/api/parties/update-party-img/${party_image_id}`, formData);
+      const response = await axios.post(`${base_url}/api/parties/update-party-img/${party_image_id}`, formData);
       const { ok } = response.data;
 
       if (!ok) {
@@ -53,7 +53,7 @@ export const getPartyById = createAsyncThunk<Party | null, number>(
   'get-party-by-id',
   async (party_id) => {
     try {
-      const response = await axios.get(`/${base_url}/api/parties/get-party-by-id/${party_id}`);
+      const response = await axios.get(`${base_url}/api/parties/get-party-by-id/${party_id}`);
 
       const { ok, result } = response.data;
       if (!ok) {
@@ -68,7 +68,7 @@ export const getPartyById = createAsyncThunk<Party | null, number>(
 );
 export const getAllParties = createAsyncThunk<Party[] | null>('get-all-parties', async () => {
   try {
-    const response = await axios.get(`/${base_url}/api/parties/get-all-parties`);
+    const response = await axios.get(`${base_url}/api/parties/get-all-parties`);
     const { ok, results } = response.data;
     if (!ok) {
       throw new Error("Invalid credentials getAllParties()");
@@ -85,7 +85,7 @@ export const createParty = createAsyncThunk<Party, Party>(
   async (partyData) => {
     try {
 
-      const response = await axios.post(`/${base_url}/api/parties/create-party`, partyData);
+      const response = await axios.post(`${base_url}/api/parties/create-party`, partyData);
       const { ok, incomingParty } = response.data;
       if (!ok) {
         throw new Error("Error creating party");
@@ -103,7 +103,7 @@ export const partiesByUserId = createAsyncThunk<Party[] | null, number | null>(
   async (userId) => {
     try {
 
-      const response = await axios.get(`/${base_url}/api/parties/parties-by-user-id/${userId}`);
+      const response = await axios.get(`${base_url}/api/parties/parties-by-user-id/${userId}`);
 
       const { ok, results } = response.data;
       if (!ok) {
@@ -125,7 +125,7 @@ export const deletePartyAPI = createAsyncThunk<Party[] | null, deletePartyArg>(
   async (args) => {
     try {
 
-      const response = await axios.delete(`/${base_url}/api/parties/delete`, { data: args });
+      const response = await axios.delete(`${base_url}/api/parties/delete`, { data: args });
       const { ok, results } = response.data;
 
       if (!ok) {
@@ -147,7 +147,7 @@ export const updatePartyAPI = createAsyncThunk<Party[] | null, Party>(
         const formattedPartyDate = new Date(party.party_date).toISOString().split('T')[0];
         const formattedCretedDate = new Date(party.created_time).toISOString().split('T')[0];
         const updatedParty = { ...party, party_date: formattedPartyDate, created_time: formattedCretedDate };
-        const response = await axios.put(`/${base_url}/api/parties/${party.party_id}`, updatedParty);
+        const response = await axios.put(`${base_url}/api/parties/${party.party_id}`, updatedParty);
         const { ok, results } = response.data;
         if (!ok) {
           throw new Error("Error updating party");
@@ -168,7 +168,7 @@ export const addPartyPartcipantsAPI = createAsyncThunk<boolean, AddPartyPartcipa
   'add-party-participants',
   async (args) => {
     try {
-      const response = await axios.post(`/${base_url}/api/parties/add-party-participants`, args);
+      const response = await axios.post(`${base_url}/api/parties/add-party-participants`, args);
       const { ok, error } = response.data;
 
       if (!ok) {
@@ -188,7 +188,7 @@ export const isUserjoinedPartyAPI = createAsyncThunk<boolean, AddPartyPartcipant
   async (args) => {
     try {
 
-      const response = await axios.post(`/${base_url}/api/parties/is-user-joined-party`, args);
+      const response = await axios.post(`${base_url}/api/parties/is-user-joined-party`, args);
       const { ok, results } = response.data;
 
       console.log(`isUserjoinedPartyAPI ${results} ${ok}`)
@@ -203,7 +203,7 @@ export const deletePartyPartcipantsAPI = createAsyncThunk<boolean, AddPartyPartc
   'delete-party-participants',
   async (args) => {
     try {
-      const response = await axios.delete(`/${base_url}/api/parties/delete-party-participants`, { data: args });
+      const response = await axios.delete(`${base_url}/api/parties/delete-party-participants`, { data: args });
       const { ok } = response.data;
       if (!ok) {
         throw new Error("Invalid credentials getUserApi()");
@@ -219,7 +219,7 @@ export const partiesByUserIdJoined = createAsyncThunk<Party[] | null, number | n
   'parties-by-user-id-joined',
   async (user_id) => {
     try {
-      const response = await axios.get(`/${base_url}/api/parties/parties-by-user-id-joined/${user_id}`);
+      const response = await axios.get(`${base_url}/api/parties/parties-by-user-id-joined/${user_id}`);
       const { ok, results } = response.data;
       if (!ok) {
         throw new Error("Invalid credentials getUserApi()");
