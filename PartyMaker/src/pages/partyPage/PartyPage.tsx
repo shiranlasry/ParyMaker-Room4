@@ -13,7 +13,7 @@ import { incomingPartySelector, isUserjoinedPartySelector } from "../../features
 import { getUsersByPartyIdAPI } from "../../features/users/usersAPI";
 import { usersByPartyIdSelector } from "../../features/users/usersSlice";
 import { Party } from "../../types-env";
-import "./partyPage.scss";
+import "./PartyPage.scss";
 
 
 const PartyPage = () => {

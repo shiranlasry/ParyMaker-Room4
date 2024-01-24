@@ -6,7 +6,7 @@ import NavBar from '../../components/navBar/NavBar'
 import PartyCard from '../../components/partyCard/PartyCard'
 import { getAllParties } from '../../features/parties/partiesAPI'
 import { partiesSelector } from '../../features/parties/partiesSlice'
-import './AllParties.scss'
+import './allParties.scss'
 
 const AllParties = () => {
 const parties = useAppSelector(partiesSelector) || []; 

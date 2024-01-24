@@ -1,6 +1,6 @@
 // GeneralBtn.tsx
 import React from 'react';
-import './GeneralBtn.scss';
+import './generalBtn.scss';
 
 interface GeneralBtnProps {
   buttonText: string;

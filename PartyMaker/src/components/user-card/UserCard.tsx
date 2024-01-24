@@ -12,7 +12,7 @@ import { User } from "../../types-env";
 import EditProfileModal from "../editProfile/EditProfile";
 import ResetPassword from "../rest-password/ResetPassword";
 import UpdateUserRole from "../update-user-role/UpdateUserRole";
-import "./userCard.scss";
+import "./UserCard.scss";
 
 type UserCardProps = {
   user: User;

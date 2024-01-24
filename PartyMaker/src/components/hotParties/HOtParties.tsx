@@ -1,5 +1,5 @@
 
-  import './hotParties.scss'
+  import './HotParties.scss'
   import { partiesSelector } from '../../features/parties/partiesSlice'
   import { useAppSelector } from '../../app/hook'
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User } from "../../types-env";
-import "../editProfile/editProfile.scss";
+import "./editProfile.scss";
 
 interface EditProfileModalProps {
   user: User;
