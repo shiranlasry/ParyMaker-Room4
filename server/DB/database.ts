@@ -5,11 +5,11 @@ const sqlPassword = process.env.SQLPASSWORD;
 
 //@ts-ignore
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: "sql11678324",
   port: "3306",
-  user: "root",
+  user: "sql11678324",
   password: sqlPassword,
-  database: "party_maker"
+  database: "sql11678324"
 })
 
 connection.connect((err) => {
