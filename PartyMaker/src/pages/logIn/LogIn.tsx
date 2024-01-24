@@ -1,12 +1,11 @@
 //login page
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./logIn.scss";
-import NavBar from "../../components/navBar/NavBar";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { logInUserApi, getUserFromTokenApi } from "../../features/loggedInUser/userAPI";
+import NavBar from "../../components/navBar/NavBar";
+import { logInUserApi } from "../../features/loggedInUser/userAPI";
 import { userSelector } from "../../features/loggedInUser/userSlice";
-import { Footer } from "../../components/footer/Footer";
+import "./logIn.scss";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -67,7 +66,10 @@ const LogIn = () => {
               type="email"
               value={email}
               onChange={handleEmailChange}
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               required
+              title="Enter a valid email address"
+
             />
           </label>
           <label>

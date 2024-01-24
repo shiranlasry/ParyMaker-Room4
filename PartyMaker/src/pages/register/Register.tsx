@@ -1,14 +1,13 @@
-import "../../pages/home/home.scss";
-import "./register.scss";
-import NavBar from "../../components/navBar/NavBar";
-import { User } from "../../types-env";
 import { useEffect, useState } from "react";
-import { getUserFromTokenApi, registerUserApi } from "../../features/loggedInUser/userAPI";
-import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { userSelector } from "../../features/loggedInUser/userSlice";
 import { useNavigate } from "react-router";
-import { Footer } from "../../components/footer/Footer";
+import { useAppDispatch, useAppSelector } from "../../app/hook";
 import GeneralBtn from "../../components/generalBtn/GeneralBtn";
+import NavBar from "../../components/navBar/NavBar";
+import { registerUserApi } from "../../features/loggedInUser/userAPI";
+import { userSelector } from "../../features/loggedInUser/userSlice";
+import "../../pages/home/home.scss";
+import { User } from "../../types-env";
+import "./register.scss";
 
 const Register = () => {
   const initialUserState: User = {
@@ -67,7 +66,9 @@ const Register = () => {
           name="email"
           value={newUser.email}
           onChange={handleInputChange}
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
           required
+          title="Enter a valid email address"
         />
         <label>Password:</label>
         <input
