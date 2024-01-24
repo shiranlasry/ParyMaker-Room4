@@ -147,7 +147,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
               alt="user"
             />
             <p className="userCardEmail">{user.email}</p>
-            <p className="userCardPhone">{user.role}</p>
+            <p className="userCardPhone">{user.phone_number}</p>
 
             {logInUser && logInUser.role === "admin" && (
               <div className="upBtns">
