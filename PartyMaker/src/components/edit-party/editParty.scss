@@ -1,15 +1,35 @@
 .editPartyWrap{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 22px;
+    border: 1px solid #ddd;
+    margin: .3rem;
+    width: 280px;
+    height: 620px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.555);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     justify-content: center;
-    height: 450px;
-    width: 300px;
-    margin: auto;
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-top: 150px;
+
+    
+    input, select, textarea {
+      display: block;
+      margin: 0.5rem;
+      height: 25px;
+      border-radius: 7px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .file {
+        width: 220px;
+        margin-bottom: .3rem ;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
     &-Details{
         display: flex;
         flex-direction: column;
