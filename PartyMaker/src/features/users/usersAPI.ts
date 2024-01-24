@@ -7,7 +7,7 @@ export const getAllUsersAPI = createAsyncThunk<User[] | null>(
   "get-all-users",
   async () => {
     try {
-      const response = await axios.get(`${base_url}/api/users/`);
+      const response = await axios.get(`${base_url}/api/users`);
       const { ok, results } = response.data;
 
       if (!ok) {
