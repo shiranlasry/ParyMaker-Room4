@@ -146,6 +146,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
               src={randomImages[Math.floor(Math.random() * randomImages.length)]}
               alt="user"
             />
+            <p className="userName">{user.first_name} {user.last_name}</p>
             <p className="userCardEmail">{user.email}</p>
             <p className="userCardPhone">{user.phone_number}</p>
 
