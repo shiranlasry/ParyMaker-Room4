@@ -1,7 +1,7 @@
 $navy: #000080;
 
 .userCardMain {
-    display: flex;
+  display: flex;
   border: 1px solid #ddd;
   margin: 1rem;
   width: 340px;
@@ -14,37 +14,41 @@ $navy: #000080;
   font-weight: bold;
   flex-direction: column;
   justify-content: center;
-  
 
+  &.buttonClicked {
+    margin-bottom: 400px; // Adjust the margin as needed
+  }
+}
 
+.cardContent {
+  width: 330px;
 
-  .cardContent {
-    width: 330px;
-    
+  .imageOverlay {
+    height: 230px;
+    width: 280px;
+  }
 
-    .imageOverlay {
-      height: 230px;
-      width: 280px;
+  .upBtns {
+    .updateUser,
+    .resetPassword,
+    .updateRole {
+      color: white;
+      border-radius: 7px;
+      margin: 0.2rem;
+      padding: 5px;
+      font-size: 14px;
+      background-color: $navy;
+      margin-bottom: 2rem;
+
+      &:hover {
+        font-weight: bold;
+        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+          0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      }
     }
 
-    .upBtns {
-      .updateUser,
-      .resetPassword,
-      .updateRole {
-        color: white;
-        border-radius: 7px;
-        margin: 0.2rem;
-        padding: 5px;
-        font-size: 14px;
-        background-color: $navy;
-        margin-bottom: 2rem;
-
-        &:hover {
-          font-weight: bold;
-          box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
-            0 17px 50px 0 rgba(0, 0, 0, 0.19);
-        }
-      }
+    &.buttonClicked {
+      margin-bottom: 20px; // Adjust the margin as needed
     }
   }
 }

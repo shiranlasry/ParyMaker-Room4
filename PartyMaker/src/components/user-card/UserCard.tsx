@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { User } from "../../types-env";
-import "./userCard.scss";
+import toast, { Toaster } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../../app/hook";
-import { userSelector } from "../../features/loggedInUser/userSlice";
 import {
   editUserApi,
   getUserFromTokenApi,
   updatePasswordApi,
 } from "../../features/loggedInUser/userAPI";
-import EditProfileModal from "../editProfile/EditProfile";
-import toast, { Toaster } from "react-hot-toast";
+import { userSelector } from "../../features/loggedInUser/userSlice";
 import { getAllUsersAPI } from "../../features/users/usersAPI";
+import { User } from "../../types-env";
+import EditProfileModal from "../editProfile/EditProfile";
 import ResetPassword from "../rest-password/ResetPassword";
 import UpdateUserRole from "../update-user-role/UpdateUserRole";
-import GeneralBtn from "../generalBtn/GeneralBtn";
+import "./userCard.scss";
+
 type UserCardProps = {
   user: User;
 };
 
 const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const randomImages: string[] = [
+    
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlhoggWrGd9lCH5w1U1beZzf9p7RY1jKaH6Q&usqp=CAU",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTamq95RbRKnL2w1p8KyhKTu2VQ3PjSM_Kig&usqp=CAU",
     "https://img.freepik.com/free-photo/handsome-man-with-glasses_144627-18665.jpg?size=626&ext=jpg&uid=R96966099&ga=GA1.2.9697832.1687471476&semt=ais",
@@ -34,41 +35,51 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
   const [showEditRole, setShowEditRole] = useState(false);
+
   const logInUser = useAppSelector(userSelector);
+
   useEffect(() => {
     if (!user) dispatch(getUserFromTokenApi());
   }, []);
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const onResetPassword = () => {
     setShowResetPassword(true);
     setShowEditForm(false);
     setShowEditRole(false);
+    setIsUpdating(true);
   };
+
   const onUpdateUser = () => {
     setShowEditForm(true);
     setShowResetPassword(false);
     setShowEditRole(false);
+    setIsUpdating(true);
   };
+
   const onUpdateRole = () => {
     setShowEditRole(true);
     setShowEditForm(false);
     setShowResetPassword(false);
+    setIsUpdating(true);
   };
+
   const handleSaveProfile = async (editedUser: User) => {
     try {
-      const respons = await dispatch(editUserApi(editedUser));
-      debugger;
-      if (respons) {
+      const response = await dispatch(editUserApi(editedUser));
+      if (response) {
         toast.success("Profile updated successfully");
         dispatch(getAllUsersAPI());
-        //navigate("/");
       }
 
       setShowEditForm(false);
+      setIsUpdating(false);
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleSaveResetPassword = async (
     user_id: number,
     password: string,
@@ -81,69 +92,77 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
       if (response) {
         toast.success("Password updated successfully");
-        // navigate("/");
       }
 
       setShowResetPassword(false);
+      setIsUpdating(false);
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleClose = () => {
-    // set show edit form / password to false
     setShowEditForm(false);
     setShowResetPassword(false);
     setShowEditRole(false);
+    setIsUpdating(false);
   };
 
   return (
-    <div className="userCardMain">
+    <div className={`userCardMain ${isUpdating ? 'buttonClicked' : ''}`}>
       <Toaster position="top-right" />
       <div className="cardContent">
-        <h2 className="userCardUsername">{user.username}</h2>
-        <img
-          className="imageOverlay"
-          src={randomImages[Math.floor(Math.random() * randomImages.length)]}
-          alt="user"
-        />
-        <p className="userCardEmail">{user.email}</p>
-        <p className="userCardPhone">{user.role}</p>
-        {/* if user is admin or user is the same user that is logged in */}
-        {logInUser && logInUser.role === "admin" && (
-          <div className="upBtns">
-            <button className="updateUser" onClick={() => onUpdateUser()}>
-              Update User
-            </button>
-            <button className="resetPassword" onClick={() => onResetPassword()}>
-              Reset Password
-            </button>
-            <button className="updateRole" onClick={() => onUpdateRole()}>
-              Update Role
-            </button>
+        {isUpdating ? (
+          <div className="formContainer">
+            {showEditForm && (
+              <div className="editForm">
+                <EditProfileModal
+                  user={user!}
+                  onSave={handleSaveProfile}
+                  onClose={handleClose}
+                />
+              </div>
+            )}
+            {showResetPassword && (
+              <div className="resetPassword">
+                <ResetPassword
+                  user={user!}
+                  onClose={handleClose}
+                  onSave={handleSaveResetPassword}
+                />
+              </div>
+            )}
+            {showEditRole && (
+              <div className="editRole">
+                <UpdateUserRole user={user!} onClose={handleClose} />
+              </div>
+            )}
           </div>
-        )}
-        {showEditForm && (
-          <div className="editForm">
-            <EditProfileModal
-              user={user!}
-              onSave={handleSaveProfile}
-              onClose={handleClose}
+        ) : (
+          <>
+            <h2 className="userCardUsername">{user.username}</h2>
+            <img
+              className="imageOverlay"
+              src={randomImages[Math.floor(Math.random() * randomImages.length)]}
+              alt="user"
             />
-          </div>
-        )}
-        {showResetPassword && (
-          <div className="resetPassword">
-            <ResetPassword
-              user={user!}
-              onClose={handleClose}
-              onSave={handleSaveResetPassword}
-            />
-          </div>
-        )}
-        {showEditRole && (
-          <div className="editRole">
-            <UpdateUserRole user={user!} onClose={handleClose} />
-          </div>
+            <p className="userCardEmail">{user.email}</p>
+            <p className="userCardPhone">{user.role}</p>
+
+            {logInUser && logInUser.role === "admin" && (
+              <div className="upBtns">
+                <button className="updateUser" onClick={() => onUpdateUser()}>
+                  Update User
+                </button>
+                <button className="resetPassword" onClick={() => onResetPassword()}>
+                  Reset Password
+                </button>
+                <button className="updateRole" onClick={() => onUpdateRole()}>
+                  Update Role
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

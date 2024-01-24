@@ -1,0 +1,27 @@
+$navy: #000080;
+
+
+.cancel,
+.updateRole {
+
+  color: white;
+  background-color: $navy;
+  margin-left: 0.3rem;
+  padding: 8px;
+  border-radius: 7px;
+
+
+  
+
+  &:hover {
+    font-weight: bold;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.271),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  
+}
+
+select {
+    height: 28px;
+  }

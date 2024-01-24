@@ -3,6 +3,7 @@ import { User } from '../../types-env';
 import { useAppDispatch } from '../../app/hook';
 import { updateUserRoleApi } from '../../features/loggedInUser/userAPI';
 import { getAllUsersAPI } from '../../features/users/usersAPI';
+import "./UpdateUserRole.scss"
 
 type UserProps = {
   user: User;
@@ -36,12 +37,12 @@ const UpdateUserRole: React.FC<UserProps> = ({ user, onClose }) => {
     <div>
       <form onSubmit={handelSaveRole}>
         <select name="role" id="role">
-          <option value="">Select Role</option>
+          <option className='selectRole' value="">Select Role</option>
           <option value="Admin">Admin</option>
           <option value="User">User</option>
         </select>
-        <input type="submit" value="Update Role" />
-        <input type="reset" value="Cancel" onClick={onClose} />
+        <input className='updateRole' type="submit" value="Update Role" />
+        <input  className='cancel' type="reset" value="Cancel" onClick={onClose} />
       </form>
     </div>
   );
