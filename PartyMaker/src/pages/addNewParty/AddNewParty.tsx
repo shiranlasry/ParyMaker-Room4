@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hook';
 import GeneralBtn from "../../components/generalBtn/GeneralBtn";
 import NavBar from '../../components/navBar/NavBar';
 import { userSelector } from '../../features/loggedInUser/userSlice';
-import { createParty, saveImgtoDB } from '../../features/parties/partiesAPI';
+import { createParty } from '../../features/parties/partiesAPI';
 import { getAllCategories } from '../../features/party_categories/party_categoriesAPI';
 import { partiesCategoriesSelector } from '../../features/party_categories/party_categoriesSlice';
 import { Party } from '../../types-env';
@@ -18,9 +18,9 @@ const AddNewParty = () => {
   const createdDate = new Date();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [file, setFile] = useState<File>();
+  // const [file, setFile] = useState<File>();
   const user = useAppSelector(userSelector)
- 
+
   const initialPartyState: Party = {
     party_id: null,
     party_name: '',
@@ -31,8 +31,8 @@ const AddNewParty = () => {
     party_description: '',
     party_price: null,
     party_image_id: null,
-    party_img_name: '',
-    party_img_data: '',
+    // party_img_name: '',
+    // party_img_data: '',
     party_creator_id: user ? user.user_id : null,
     things_to_bring: "nothing",
     // created_time: `${createdDate.getDate}`
@@ -44,10 +44,10 @@ const AddNewParty = () => {
   useEffect(() => {
     dispatch(getAllCategories());
   }, []);
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
-    setFile(file);
-  }
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files![0];
+  //   setFile(file);
+  // }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -59,19 +59,20 @@ const AddNewParty = () => {
     ev.preventDefault();
     try {
       if (!user) throw new Error('You must be logged in to create a party');
-      if (!file) throw new Error('You must upload an image');
+      // if (!file) throw new Error('You must upload an image');
 
-      const formData = new FormData();
-      formData.append('file', file);
+      // const formData = new FormData();
+      // formData.append('file', file);
 
-      const response = await dispatch(saveImgtoDB(formData));
+      // const response = await dispatch(saveImgtoDB(formData));
       // Access img_id after the Promise has resolved
-      const img_id = (response.payload as { img_id: number }).img_id || null;
+      // const img_id = (response.payload as { img_id: number }).img_id || null;
 
-      if (!img_id) {
-        throw new Error('Error saving image to DB');
-      }
-      const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
+      // if (!img_id) {
+      //   throw new Error('Error saving image to DB');
+      // }
+      // const updatedParty = { ...newParty, party_creator_id: user.user_id, party_image_id: img_id };
+      const updatedParty = { ...newParty, party_creator_id: user.user_id };
 
       const responseCreateParty = await dispatch(createParty(updatedParty));
 
@@ -151,10 +152,10 @@ const AddNewParty = () => {
           onChange={handleInputChange}
         />
         <label>Add Image Party:</label>
-        <input className="file" type="file"
+        {/* //  <input className="file" type="file"
           name="file"
           onChange={handleFileChange}
-        />
+        /> */}
         <label>Things to Bring:</label>
         <textarea
           className='bring'

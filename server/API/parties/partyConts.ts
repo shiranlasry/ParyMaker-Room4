@@ -77,7 +77,7 @@ export const getAllParties = async (req: express.Request, res: express.Response)
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
       FROM parties p
       JOIN party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id;
+     
     `;
 
     connection.query(query, (err, results: any[], fields) => {
@@ -131,12 +131,12 @@ export const createNewParty = async (req: express.Request, res: express.Response
       party_category_id,
       party_description,
       party_price,
-      party_image_id,
+    
       party_creator_id,
       things_to_bring,
       created_time,
     } = req.body;
-    console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_date}, party_location: ${party_location}, party_category_id: ${party_category_id}, party_description: ${party_description}, party_price: ${party_price}, party_image_id: ${party_image_id}, party_creator_id: ${party_creator_id}, things_to_bring: ${things_to_bring}, created_time: ${created_time}`);
+    console.log(`createNewParty() party_name: ${party_name}, party_date: ${party_date}, party_location: ${party_location}, party_category_id: ${party_category_id}, party_description: ${party_description}, party_price: ${party_price}, party_creator_id: ${party_creator_id}, things_to_bring: ${things_to_bring}, created_time: ${created_time}`);
     if (
       !party_name ||
       !party_date ||
@@ -144,7 +144,7 @@ export const createNewParty = async (req: express.Request, res: express.Response
       !party_category_id ||
       !party_description ||
       !party_price ||
-      !party_image_id ||
+    
       !party_creator_id ||
       !things_to_bring ||
       !created_time
@@ -166,7 +166,7 @@ export const createNewParty = async (req: express.Request, res: express.Response
         party_category_id,
         party_description,
         party_price,
-        party_image_id,
+       
         party_creator_id,
         things_to_bring,
         created_time,
@@ -214,7 +214,7 @@ export const getPartyById = async (req: express.Request, res: express.Response) 
       SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
       FROM parties p
       JOIN party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id
+      
       WHERE p.party_id = ?;
     `;
 
@@ -245,10 +245,10 @@ export const getPartiesByUserId = async (req: express.Request, res: express.Resp
   try {
     const { user_id } = req.params;
     const query = `
-      SELECT p.*, pc.category_description, pi.party_img_name, pi.party_img_data
+      SELECT p.*, pc.category_description
       FROM parties p
       JOIN party_categories pc ON p.party_category_id = pc.category_id
-      LEFT JOIN party_img pi ON p.party_image_id = pi.party_img_id
+     
       WHERE p.party_creator_id = ?;
     `;
 
